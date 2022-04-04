@@ -168,7 +168,7 @@ sup {
 }
 
 a {
-    color: #007bff;
+    color: black;
     text-decoration: none;
     background-color: transparent
 }
@@ -3525,13 +3525,13 @@ fieldset:disabled a.btn {
 }
 
 .btn-link {
-    font-weight: 400;
-    color: #007bff;
+    font-weight: 500;
+    /* color: #007bff; */
     text-decoration: none
 }
 
 .btn-link:hover {
-    color: #0056b3;
+    color: #ee4d2d;
     text-decoration: underline
 }
 
@@ -7026,7 +7026,8 @@ a.close.disabled {
 .carousel-inner {
     position: relative;
     width: 100%;
-    overflow: hidden
+    overflow: hidden;
+    border-radius: .25rem
 }
 
 .carousel-inner::after {
