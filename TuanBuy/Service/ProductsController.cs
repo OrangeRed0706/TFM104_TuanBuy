@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Linq;
-using System.Net.NetworkInformation;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.CodeAnalysis.Operations;
 using TuanBuy.Models;
 using TuanBuy.Models.Entities;
 using TuanBuy.Models.Interface;
@@ -22,14 +18,13 @@ namespace TuanBuy.Service
         private readonly IWebHostEnvironment _environment;
         private readonly IRepository<Product> _productsRepository;
         private readonly IRepository<User> _userRepository;
-        private readonly TuanBuyContext _dbContext;
+
         public ProductsController(GenericRepository<Product> productsRepository, IWebHostEnvironment environment,
-            GenericRepository<User> userRepository, TuanBuyContext dbContext)
+            GenericRepository<User> userRepository)
         {
             _productsRepository = productsRepository;
             _environment = environment;
             _userRepository = userRepository;
-            _dbContext = dbContext;
         }
 
         // GET: api/Products
@@ -38,51 +33,22 @@ namespace TuanBuy.Service
         public ActionResult<IEnumerable<ProductViewModel>> GetMyProducts()
         {
             var targetUser = GetTargetUser();
+            var byproducts = _productsRepository.GetAll().Where(a => a.User == targetUser && a.Disable == false)
+                .ToList();
 
-
-            var product = _dbContext.Product.ToList().GroupJoin(
-             _dbContext.ProductPics.ToList(),
-             product => product,
-             productPic => productPic.Product,
-             (p, pic) => new
-             {
-                 User = p.User,
-                 Disable = p.Disable,
-                 Id = p.Id,
-                 Name = p.Name,
-                 Description = p.Description,
-                 Content = p.Content,
-                 Category = p.Category,
-                 PicPath = "/productpicture/" + pic.FirstOrDefault()?.PicPath,
-                 EndTime = p.EndTime,
-                 Price = p.Price,
-                 Href = "/Product/DemoProduct/" + p.Id
-             }
-             ).ToList();
-
-            var products = new List<ProductViewModel>();
-            foreach (var p in product)
-            {
-                if (p.User == targetUser && p.Disable == false)
+            return byproducts.Select(p => new ProductViewModel
                 {
-                    var prod = new ProductViewModel
-                    {
-                        Id = p.Id,
-                        Name = p.Name,
-                        Description = p.Description,
-                        Content = p.Content,
-                        Category = p.Category,
-                        PicPath = p.PicPath,
-                        EndTime = p.EndTime,
-                        Price = p.Price,
-                        Href = "/Product/DemoProduct/" + p.Id
-                    };
-                    products.Add(prod);
-                }
-            }
-          
-            return products;
-
+                    Id = p.Id,
+                    Name = p.Name,
+                    Description = p.Description,
+                    Content = p.Content,
+                    Category = p.Category,
+                    PicPath = "/productpicture/" + p.PicPath,
+                    EndTime = p.EndTime,
+                    Price = p.Price,
+                    Href = "/Product/DemoProduct/" + p.Id
+                })
+                .ToList();
         }
 
         // GET: api/Products
@@ -130,7 +96,7 @@ namespace TuanBuy.Service
 
 
         [HttpPut]
-        public IActionResult PutProduct([FromBody] UpDateProductViewModel product)
+        public IActionResult PutProduct([FromBody]UpDateProductViewModel product)
         {
             var p = _productsRepository.Get(a => a.Id == Convert.ToInt32(product.Id));
             p.Price = product.Price;
@@ -142,7 +108,40 @@ namespace TuanBuy.Service
             return Ok();
         }
 
+        // POST: api/Products
+        [HttpPost]
+        public IActionResult PostProduct(AddProductViewModel product)
+        {
+            var path = _environment.WebRootPath + "/ProductPicture";
 
+            var pic = product.PicPath.FirstOrDefault();
+
+            if (pic != null)
+            {
+                var fileName = DateTime.Now.Ticks + pic.FileName;
+
+                using (var fs = System.IO.File.Create($"{path}/{fileName}"))
+                {
+                    pic.CopyTo(fs);
+                }
+
+                _productsRepository.Create(new Product
+                {
+                    Name = product.Name,
+                    PicPath = fileName,
+                    Content = product.Content,
+                    Category = product.Category,
+                    Description = product.Description,
+                    CreateTime = DateTime.Now,
+                    EndTime = product.EndTime,
+                    Price = product.Price
+                });
+                _productsRepository.SaveChanges();
+                return Ok();
+            }
+
+            return BadRequest();
+        }
 
         // DELETE: api/Products/5
         [HttpDelete("{id}")]
@@ -163,7 +162,6 @@ namespace TuanBuy.Service
             return false;
         }
 
-        //抓取當前User
         private User GetTargetUser()
         {
             var claim = HttpContext.User.Claims;

@@ -50,17 +50,14 @@
 
             <div class="col-lg-12">
                 
-                <template v-if="preview_list.length">
-                    <div v-for="item, index in preview_list" v-bind:key="index">
-                        <img v-bind:src="item" class="img-fluid" width="200" height="200"/>
-                        <p class="mb-0">file name: {{ image_list[index].name }}</p>
-                        <p>size: {{ image_list[index].size/1024 }}KB</p>
-                    </div>
-                </template>
+                <temlate v-if="preview">
+                    <img v-bind:src="preview"/>
+                </temlate>
+                
 
             </div>
             <div>
-                <input type="file" class="form-control" id="PicPath" accept="image/*" multiple v-on:change="previewMultiImage">
+                <input type="file" class="form-control" id="PicPath" multiple v-on:change="up">
             </div>
             <div><button v-on:click="addProduct">刊登</button></div>
         </div>
@@ -79,20 +76,16 @@
                 price:300,
                 description:"描述",
                 content:"內容",
-                picPath:[ ],
+                picPath:null,
                 category:"商品種類",
                 endTime:null
             },
-            preview:null,
-            image: null,
-            preview_list: [],
-            image_list: []
+            preview:null
         },
         methods: {
             up: function (event) {
                 console.log(event);
-                //this.product.picPath = event.target.files[0];
-                this.product.picPath = event.target.files;
+                this.product.picPath = event.target.files[0];
                 var input = event.target;
                 if (input.files) {
                     var reader = new FileReader();
@@ -102,24 +95,9 @@
                     this.image = input.files[0];
                     reader.readAsDataURL(input.files[0]);
                 }
+
+
                 alert("上傳成功");
-            },
-            previewMultiImage: function(event) {
-                this.product.picPath = event.target.files;
-                var input = event.target;
-                var count = input.files.length;
-                var index = 0;
-                if (input.files) {
-                    while(count --) {
-                        var reader = new FileReader();
-                        reader.onload = (e) => {
-                            this.preview_list.push(e.target.result);
-                        }
-                        this.image_list.push(input.files[index]);
-                        reader.readAsDataURL(input.files[index]);
-                        index ++;
-                    }
-                }
             },
             addProduct:function() {
                 var bodyFormData = new FormData();
@@ -127,13 +105,9 @@
                 bodyFormData.append("Price", this.product.price);
                 bodyFormData.append("Content", this.product.content);
                 bodyFormData.append("Description", this.product.description);
-                //bodyFormData.append("PicPath", this.product.picPath);
-                for(let i =0; i <  this.product.picPath.length; i++) {
-                    bodyFormData.append("PicPath", this.product.picPath[i]);
-                }
+                bodyFormData.append("PicPath", this.product.picPath);
                 bodyFormData.append("Category", this.product.category);
                 bodyFormData.append("EndTime", this.product.endTime);
-                console.log(bodyFormData);
                 axios({
                         method: "post",
                         url: "/Product/PostProduct",

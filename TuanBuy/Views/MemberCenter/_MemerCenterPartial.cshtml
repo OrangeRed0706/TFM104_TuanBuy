@@ -1,9 +1,8 @@
-﻿Vue.component('test', {
-    // options
-    template: `
-   <div class="col-lg-2" >
+﻿<div class="col-lg-2" id="ppa">
     <div >
-        <img v-bind:src="user.picPath" alt="頭像" id="testUserImg" width="100" height="100">
+        @*<img src="https://img.league-funny.com/imgur/148292128067.jpg" alt="頭像">*@
+        @*<img v-bind:src="user.picPath" alt="頭像">*@
+        <img src="" alt="頭像" id="testUserImg" width="100" height="100">
     </div>
     <div class="accordion" id="accordionExample">
         <div class="collapsecard">
@@ -18,7 +17,7 @@
             <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
                  data-parent="#accordionExample">
                 <div class="collapsecard-body">
-                    <a href="/MemberCenter/Index">個人檔案</a>
+                    <a href=@Url.Action("Index","MemberCenter")>個人檔案</a>
                 </div>
             </div>
             <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
@@ -30,7 +29,7 @@
             <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
                  data-parent="#accordionExample">
                 <div class="collapsecard-body">
-                    <a href="/MemberCenter/ResetPassword">更改密碼</a>
+                    <a href=@Url.Action("ResetPassword","MemberCenter")>更改密碼</a>
                 </div>
             </div>
         </div>
@@ -81,24 +80,27 @@
                     <a href="#">我的優惠券</a>
                 </div>
             </div>
-        </div>  
+        </div>
     </div>
 </div>
-  `,
-    props: {
-        user: {
-            name: "",
-            phone: "",
-            birth: "",
-            address: "",
-            sex: "",
-            picPath: ""
-        }
-    },
-    methods: {
-        getUserDate:function() {
+
+@*<script>
+    var userImg = new Vue({
+        el: "#ppa",
+        data: {
+            user: {
+                name: "",
+                phone: "",
+                birth: "",
+                address: "",
+                sex: "",
+                picPath: ""
+            }
+        },
+        methods: {},    
+        mounted: function () {
             let self = this;
             axios.get("api/MemberCenter/").then((resp) => { this.user = resp.data });
         }
-    }
-});
+    });
+</script>*@

@@ -3,36 +3,11 @@ body {
   display: flex;
   /* min-height: 100vh; */
   flex-direction: column;
-  background-color: #F5F5F5;
 }
 
 footer {
   margin-top: auto;
 }
-
-.bgcf5 {
-  background-color: #F5F5F5;
-}
-
-.bgcf5:hover a {
-  color: #ee4d2d;
-}
-
-.mtb2rem {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-}
-
-.mgindextop {
-  margin-top: 2rem;
-}
-
-
-
-.colerwhite {
-  background-color: white;
-}
-
 
 .headnamesize {
   font-size: 20px;
@@ -352,50 +327,21 @@ footer {
 .acpabord {
   border-bottom: 1px solid rgba(0, 0, 0, .125);
   width: 100%;
-  padding: 0 0 1.125rem;
-  margin-bottom: 2rem;
 }
 
 .acccolor {
-  background-color: white;
-  border-radius: .25rem;
-  height: 100%;
+  background-color: #ced4da;
+  height: auto;
   width: 100%;
-  padding: 2%;
-}
-
-
-.mtbot {
-  margin-bottom: 1.5rem;
 }
 
 .aldrd {
   text-align: right;
 }
 
-.abtnright {
-  float: right;
-}
-
-
-
 .backgroundhover:hover {
   background-color: white;
 }
-
-
-.acctext {
-  margin-right: 3rem;
-}
-
-.acctextphone {
-  margin-right: 1.25rem;
-}
-
-.accsave {
-  margin-left: 5rem;
-}
-
 
 /* 開團 */
 .gprdleft {
@@ -493,7 +439,7 @@ footer {
   background-clip: border-box;
 }
 
-.collapsecardhead {
+.collapsecardhead{
   margin-bottom: 0;
 }
 
@@ -505,136 +451,5 @@ footer {
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
   min-height: 1px;
-  padding-left: 1.25rem;
-  padding-top: .25rem;
-}
-
-
-
-
-.sellborder {
-  border: 2px solid rgba(0, 0, 0, .125);
-  border-radius: .25rem;
-  padding: 1%;
-  height: 10rem;
-  width: 100%;
-  overflow: hidden;
-  margin: 2rem auto;
-  position: relative;
-  max-width: 35rem;
-}
-
-.sellp {
-  font-size: 1.25rem;
-  line-height: 1.5rem;
-  max-height: 3rem;
-  font-weight: 500;
-  margin-bottom: .3125rem;
-  margin-top: 0;
-  overflow: hidden;
-  word-wrap: break-word;
-  white-space: nowrap;
-  position: relative;
-  max-width: 38rem;
-  position: relative;
-}
-
-.sellbtn {
-  max-width: 15rem;
-  width: 100%;
-  margin-top: .5rem;
-  position: relative;
-}
-
-/* purchase */
-
-.purchaseimgborder {
-  border-top: 2px solid rgba(0, 0, 0, .125);
-  border-bottom: 2px solid rgba(0, 0, 0, .125);
-  margin: .5rem 0;
-  padding: .5rem;
-}
-
-.purchaseowner {
-  max-width: 200px;
-  font-size: 20px;
-  font-weight: 600;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 35px;
-}
-
-.purchasebtn {
-  background-color: #ee4d2d;
-  color: #fff;
-}
-
-.purchasebtn2 {
-  background-color: white;
-  color: black;
-}
-
-.purchasebtnsize {
-  padding: 4px 8px;
-  font-size: 16px;
-  text-transform: capitalize;
-  outline: none;
-  border-radius: 2px;
-  border: 1px solid transparent;
-  vertical-align: middle;
-}
-
-
-.purchasebuybtnsize {
-  min-width: 150px;
-  min-height: 40px;
-  padding: 8px 20px;
-  outline: none;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-transform: capitalize;
-  border-radius: 2px;
-  outline: 0;
-}
-
-
-
-.purchaseend {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.purchaseallmoney {
-  color: #ee4d2d;
-  font-size: 24px;
-  line-height: 30px;
-  margin-bottom: 1%;
-}
-
-
-.purchaseorder {
-  line-height: 30px;
-  margin-bottom: 1%;
-  margin-right: 2%;
-}
-
-.purchasenumber {
-  margin-top: 2rem;
-  display: flex;
-}
-
-.purchasecount {
-  justify-content: end;
-}
-
-.purchaseback{
-  margin: 1% 0;
-  padding: 1% 0;
-background-color: white;
-}
-
-.purchasecolor {
-  border-radius: .25rem;
-  height: 100%;
-  width: 100%;
+  padding: 1.25rem;
 }

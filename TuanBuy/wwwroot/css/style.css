@@ -2011,9 +2011,7 @@ ol {
 	-ms-flex-pack: center;
 	justify-content: center;
 	position: relative;
-	/* margin-bottom: 40px; */
-	background-color: white;
-	padding: 16px 0;
+	margin-bottom: 40px;
 }
 
 .nav::before {
@@ -2022,7 +2020,7 @@ ol {
 	top: 13px;
 	height: 1px;
 	width: 335px;
-	/* background: #e1e1e1; */
+	background: #e1e1e1;
 	content: "";
 }
 
@@ -2032,7 +2030,7 @@ ol {
 	top: 13px;
 	height: 1px;
 	width: 335px;
-	/* background: #e1e1e1; */
+	background: #e1e1e1;
 	content: "";
 }
 
@@ -2055,7 +2053,7 @@ ol {
 }
 
 .nav-item .nav-link.active {
-	color: #ee4d2d;
+	color: #111111;
 }
 
 .tab-content .tab-pane h6 {
