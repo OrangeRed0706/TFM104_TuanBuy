@@ -443,10 +443,10 @@
                                                     <h5>
                                                         <strong style="color: black">{{hot.hotProductTitle}}</strong>
                                                     </h5>
-                                                    <p>
+                                                    <a v-bind:href="hot.hotProductSellerhref">
                                                         團主 by
                                                         <a v-bind:href="hot.hotProductSellerhref">{{hot.hotProductSeller}}</a>
-                                                    </p>
+                                                    </a>
                                                     <p>{{hot.hotProductDescribe}}</p>
                                                 </div>
                                                 <div>
