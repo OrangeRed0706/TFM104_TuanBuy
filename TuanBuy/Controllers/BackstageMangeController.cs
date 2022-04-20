@@ -134,14 +134,16 @@ namespace TuanBuy.Controllers
         public HomeBackMangeViewModel Homeinformation()
         {
             var usercount = _dbcontext.User.Count();
-            //var productcount = _dbcontext.Product.Count();
             var productCount = _dbcontext.Product.Where(x => x.Disable == false).Count();
             var processOrder = _dbcontext.Order.Where(x => x.StateId == 2).Count();
             var finishOrder = _dbcontext.Order.Where(x => x.StateId == 4).Count();
             var totalSales = _dbcontext.OrderDetail.Select(x => x.Price).Sum();
-            var hotProduct = _dbcontext.OrderDetail.OrderBy(x => x.Count).Take(3);
-            var productName = hotProduct.Select(x => new { name = x.Product.Name });
-            HomeBackMangeViewModel homeBackMangeViewModel = new HomeBackMangeViewModel()
+            //var hotProduct = _dbcontext.OrderDetail.GroupJoin(
+                
+            //    )
+            //var hotProduct = _dbcontext.OrderDetail.OrderBy(x => x.Count).Take(3);
+            //var productName= hotProduct.Select(x => new { name = x.Product.Name });
+            HomeBackMangeViewModel homeBackMangeViewModel = new HomeBackMangeViewModel() 
             {
                 UserCount = usercount,
                 ProductCount = productCount,
@@ -149,11 +151,10 @@ namespace TuanBuy.Controllers
                 FinishOrder = finishOrder,
                 TotalSales = totalSales,
                 //HotproductCount = Convert.ToInt32(hotProduct),
-                ProductName = productName.ToString()
+                //ProductName = productName.ToString()
             };
             return homeBackMangeViewModel;
-            //var productcount = _dbcontext.Product.Count(x => x.Id == productCount);
-            //var orderstate = _dbcontext.OrderState.
+            
 
 
         }

@@ -44,7 +44,7 @@
                 </thead>
                 <tbody>
                     <!--分頁設定-->
-                    <tr v-for="item in ordermanages.slice(pageStart, pageStart + countOfPage)" v-if="search=='' || item.orderId==search || item.userName==search || item.productName==search">
+                    <tr v-for="item in ordermanages.slice(pageStart, pageStart + countOfPage)" v-if="search=='' || item.orderId==search || item.userName==search || item.productName==search ">
                         <th scope="row">{{item.orderId}}</th>
                         <td>{{item.userName}}</td>
                         <td>{{item.productName}}</td>

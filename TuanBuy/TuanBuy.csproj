@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Views\TestBackMange\ProductMangeup.cshtml" />
     <Content Remove="wwwroot\css\StyleSheet.css" />
     <Content Remove="wwwroot\css\義傑原版\bootstrap.min.css" />
     <Content Remove="wwwroot\css\義傑原版\StyleSheet.css" />

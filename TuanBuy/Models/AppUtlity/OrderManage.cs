@@ -20,7 +20,7 @@ namespace TuanBuy.Models.Entities
         {
             var product = from products in _dbContext.Product
                           join productpics in _dbContext.ProductPics on products.Id equals productpics.Id
-                          join users  in _dbContext.User on products.Id equals users.Id
+                          join users  in _dbContext.User on products.UserId equals users.Id
                           select new ProductBackMangeViewModel()
                           {
                               PicPath = "/ProductPicture/" + productpics.PicPath,

@@ -430,106 +430,28 @@
                                 </div>
                                 <div class="col-4">
                                     <!--廣告-->
-                                    <div class="ad">
+                                    <div class="ad" v-for="hot in hotProducts">
                                         <div class="adcss">
                                             <div class="adhot">
                                                 HOT
                                             </div>
-                                            <a href="">
+                                            <a v-bind:href="hot.hotProducthref">
                                                 <div style="text-align: center;">
                                                     <img src="" alt="">
                                                 </div>
                                                 <div>
                                                     <h5>
-                                                        <strong style="color: black">ATOLL 快轉機身環 | 最靈活的相機角度調整配件</strong>
+                                                        <strong style="color: black">{{hot.hotProductTitle}}</strong>
                                                     </h5>
                                                     <p>
                                                         團主 by
-                                                        <a href="">Harry Wang</a>
+                                                        <a v-bind:href="hot.hotProductSellerhref">{{hot.hotProductSeller}}</a>
                                                     </p>
-                                                    <p>ATOLL 是相機的角度調整環，具有腳架環的功能，但裝在機身上，超便利流暢的操作體驗，彷如相機的一部份</p>
+                                                    <p>{{hot.hotProductDescribe}}</p>
                                                 </div>
                                                 <div>
-                                                    <span>剩餘14天</span>
-                                                    <span>金額987</span>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="ad">
-                                        <div class="adcss">
-                                            <div class="adhot">
-                                                HOT
-                                            </div>
-                                            <a href="">
-                                                <div style="text-align: center;">
-                                                    <img src="" alt="">
-                                                </div>
-                                                <div>
-                                                    <h5>
-                                                        <strong style="color: black">ATOLL 快轉機身環 | 最靈活的相機角度調整配件</strong>
-                                                    </h5>
-                                                    <p>
-                                                        團主 by
-                                                        <a href="">Harry Wang</a>
-                                                    </p>
-                                                    <p>ATOLL 是相機的角度調整環，具有腳架環的功能，但裝在機身上，超便利流暢的操作體驗，彷如相機的一部份</p>
-                                                </div>
-                                                <div>
-                                                    <span>剩餘14天</span>
-                                                    <span>金額987</span>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="ad">
-                                        <div class="adcss">
-                                            <div class="adhot">
-                                                HOT
-                                            </div>
-                                            <a href="">
-                                                <div style="text-align: center;">
-                                                    <img src="" alt="">
-                                                </div>
-                                                <div>
-                                                    <h5>
-                                                        <strong style="color: black">ATOLL 快轉機身環 | 最靈活的相機角度調整配件</strong>
-                                                    </h5>
-                                                    <p>
-                                                        團主 by
-                                                        <a href="">Harry Wang</a>
-                                                    </p>
-                                                    <p>ATOLL 是相機的角度調整環，具有腳架環的功能，但裝在機身上，超便利流暢的操作體驗，彷如相機的一部份</p>
-                                                </div>
-                                                <div>
-                                                    <span>剩餘14天</span>
-                                                    <span>金額987</span>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="ad">
-                                        <div class="adcss">
-                                            <div class="adhot">
-                                                HOT
-                                            </div>
-                                            <a href="">
-                                                <div style="text-align: center;">
-                                                    <img src="" alt="">
-                                                </div>
-                                                <div>
-                                                    <h5>
-                                                        <strong style="color: black">ATOLL 快轉機身環 | 最靈活的相機角度調整配件</strong>
-                                                    </h5>
-                                                    <p>
-                                                        團主 by
-                                                        <a href="">Harry Wang</a>
-                                                    </p>
-                                                    <p>ATOLL 是相機的角度調整環，具有腳架環的功能，但裝在機身上，超便利流暢的操作體驗，彷如相機的一部份</p>
-                                                </div>
-                                                <div>
-                                                    <span>剩餘14天</span>
-                                                    <span>金額987</span>
+                                                    <span>剩餘{{hot.hotProductLastTime}}天</span>
+                                                    <span>金額${{hot.hotProductPrice}}</span>
                                                 </div>
                                             </a>
                                         </div>
@@ -638,6 +560,7 @@
                 sellerId: null,
                 sellerName :null,
                 leaveMessages: [],
+                hotProducts:[],
             },
             methods: {
                 getMessage: function () {
@@ -794,13 +717,14 @@
                         this.productData.buyersSumPrice = resp.data.buyersSumPrice;
                         this.productData.color = resp.data.color;
                         this.productData.percentage = resp.data.percentage;
+                        //熱門商品陣列
+                        this.hotProducts = resp.data.hotProducts;
                         app.sellerId = resp.data.sellerId;
                         app.sellerName = resp.data.seller
                         for (var item in resp.data.productPicPath) {
                             this.productData.productPicPath.push(resp.data.productPicPath[item]);
                         }
-                        console.log(app.sellerId);
-                        console.log(app.useUserId);
+                        console.log(this.hotProducts);
                     }),
                     axios.get("/Member/GetOnlineMember/").then((resp) => {
                         app.useUserId = resp.data.id;
