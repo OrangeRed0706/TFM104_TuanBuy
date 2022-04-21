@@ -203,15 +203,35 @@ namespace TuanBuy.Models
             {
                 using (_dbContext)
                 {
-                    ChatRoom chatRoom = new ChatRoom() { };
-                    List<ChatRoomMember> chatRoomMembers = new List<ChatRoomMember>()
-                {
-                     new ChatRoomMember() {MemberId=SellerId ,ChatRoomId=chatRoom.ChatRoomId},
-                     new ChatRoomMember() {MemberId=MemberId ,ChatRoomId=chatRoom.ChatRoomId}
-                };
-                    chatRoom.ChatRoomMembers = chatRoomMembers;
-                    _dbContext.ChatRooms.Add(chatRoom);
-                    _dbContext.SaveChanges();
+                    var member = _dbContext.Member_Chats.Where(x => x.MemberId == MemberId).Select(x=>new { x.ChatRoomId ,x.MemberId});
+                    var result = (from sellers in _dbContext.Member_Chats
+                                 join chat in _dbContext.ChatRooms on sellers.ChatRoomId equals chat.ChatRoomId           
+                                 where (member.Select(x=> x.ChatRoomId).Contains(sellers.ChatRoomId) 
+                                 && member.Select(x=>x.MemberId).Contains(sellers.MemberId))
+                                 select new { sellers,chat}).ToList().GroupBy(x=>x.sellers.ChatRoomId);
+                    if(result.Count()==0)
+                    {
+                        ChatRoom chatRoom = new ChatRoom() { };
+                        List<ChatRoomMember> chatRoomMembers = new List<ChatRoomMember>()
+                        {
+                        new ChatRoomMember() {MemberId=SellerId ,ChatRoomId=chatRoom.ChatRoomId},
+                         new ChatRoomMember() {MemberId=MemberId ,ChatRoomId=chatRoom.ChatRoomId}
+                        };
+                        chatRoom.ChatRoomMembers = chatRoomMembers;
+                        _dbContext.ChatRooms.Add(chatRoom);
+                        _dbContext.SaveChanges();
+                    }
+                    //else
+                    //{
+                    //    foreach (var i in result)
+                    //    {
+                    //        var chat = i.Select(x => x.chat);
+                    //        if (chat.Any(x => x.ChatRoomTitle != null))
+                    //        {
+                    //            Console.WriteLine("加入賣家群組");
+                    //        }
+                    //    }
+                    //}
                 }
             }
             //_dbContext.User.Add(new User()

@@ -8,7 +8,7 @@ namespace TuanBuy.ViewModel
     public class OrderViewModel
     {
         //訂單ID
-        public int OrderId { get; set; }
+        public string OrderId { get; set; }
         //訂單備註
         public string Description { get; set; }
         //商品ID
@@ -33,14 +33,24 @@ namespace TuanBuy.ViewModel
         public string SellerName { get; set; }
         //訂單狀態
         public int OrderState { get; set; }
+        //訂單金額
+        public decimal OrderPrice { get; set; }
     }
 
     public class SellerOrderViewModel
     {
         //訂單ID
-        public int OrderId { get; set; }
+        public string OrderId { get; set; }
+        //DateTime
+        public DateTime CreateTime { get; set; } 
         //商品名稱
         public string ProductName { get; set; }
+        //商品描述
+        public string ProductDescription { get; set; }
+        //商品數量
+        public int ProductCount { get; set; }
+        //訂單描述
+        public string OrderDescription { get; set; }
         //訂單金額
         public decimal Total { get; set; }
         //訂單日期
@@ -49,5 +59,10 @@ namespace TuanBuy.ViewModel
         public string Address { get; set; }
         //買家姓名
         public string BuyerName { get; set; }
+        //訂單狀態
+        public int OrderState { get; set; }
+
     }
+
+
 }

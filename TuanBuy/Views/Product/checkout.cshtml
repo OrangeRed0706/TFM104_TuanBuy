@@ -82,7 +82,7 @@
                 <div class="checkmgright">團購折價券</div>
                 <!-- 修改 -->
                 <button type="button" class="btn check-ddd" data-toggle="modal" data-target="#exampleModal"
-                        data-whatever="選擇折價券">
+                        data-whatever="選擇折價券" v-on:click="GetVoucher()">
                     選擇折價券
                 </button>
 
@@ -97,29 +97,30 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form>
-                                    <div class="checkcostdiv">
-                                        <span>新增折價券</span>
-                                        <input class="checkcosttext" type="text">
-                                        <button class="checktextbtn">使用</button>
-                                    </div>
-                                    <div class="checkchosediv">
-                                        <img src="https://beautiful666.com/images/10/2s.jpg" alt="折價券" width="100" height="100">
-                                        <p class="checkchosep">折價券內容折折價券內容折折價券內容折折價券內容折折價券內容折折價折價券內容折折價券內容折折價券內容折折價券內容折折價券內容折券內容折折價券內容折</p>
-                                        <input class="checkcheckbox" type="checkbox" name="" id="">
-                                    </div>
-                                    <!-- 複製 -->
-                                    <div class="checkchosediv">
-                                        <img src="https://beautiful666.com/images/10/2s.jpg" alt="折價券" width="100" height="100">
-                                        <p class="checkchosep">折價券內容折折價券內容折折價券內容折折價券內容折折價券內容折折價折價券內容折折價券內容折折價券內容折折價券內容折折價券內容折券內容折折價券內容折</p>
-                                        <input class="checkcheckbox" type="checkbox" name="" id="">
-                                    </div>
-                                    <!-- 複製 -->
-                                </form>
+                                <div class="checkcostdiv">
+                                    <span>新增折價券</span>
+                                    <input class="checkcosttext" type="text" v-model="couponCode">
+                                    <button class="checktextbtn" v-on:click="AddVoucher()">使用</button>
+                                </div>
+                                <div>
+                                    <label :for="voucher.vouchersId" class="checkout-flix"  v-for="voucher in vouchersData">
+                                        <div class="checkout-div">
+                                            <div>
+                                                <img src="https://beautiful666.com/images/10/2s.jpg" alt="折價券" width="100" height="100">
+                                            </div>
+                                            <div class="checkout-p-div">
+                                                <p class="coupon-p-title checkout-p-right-mg">折價卷的標題</p>
+                                                <p class="coupon-p checkout-p-right-mg">{{voucher.vouchersDescribe}}</p>
+                                                <p class="coupon-date checkout-p-right-mg">{{voucher.discountDescribe}}</p>
+                                            </div>
+                                            <input class="checkcheckbox" type="checkbox" name="" :id="voucher.vouchersId" :value="voucher.vouchersId" v-model="checkVouchers">
+                                        </div>
+                                    </label>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                                <button type="button" class="btn checkokbtn">選擇</button>
+                                <button type="button" class="btn checkokbtn" data-dismiss="modal">選擇</button>
                             </div>
                         </div>
                     </div>
@@ -136,11 +137,21 @@
         </div>
     </div>
     <form id="form1" action="/Bank/SpgatewayPayBill" method="post" hidden="hidden">
-        <p><input name="ordernumber" id="ordernumber" type="text" /></p>
-        <p><input name="amount" id="amount" type="number" /></p>
-        <p><input name="PayMethod" id="PayMethod" type="text" /></p>
-        <p><button type="submit" value="插入" id="send" /></p>
-        <p><div id="success"></div></p>
+        <p>
+            <input name="ordernumber" id="ordernumber" type="text" />
+        </p>
+        <p>
+            <input name="amount" id="amount" type="number" />
+        </p>
+        <p>
+            <input name="PayMethod" id="PayMethod" type="text" />
+        </p>
+        <p>
+            <button type="submit" value="插入" id="send" />
+        </p>
+        <p>
+            <div id="success"></div>
+        </p>
     </form>
 </body>
 </html>
@@ -177,7 +188,15 @@
             //勾選想要購買的商品編號
             checkProduct: [],
             //勾選確認購買的相關商品資訊
-            checkProductResult :[],
+            checkProductResult: [],
+            //使用者輸入的優惠碼
+            couponCode: '',
+            //使用者優惠卷
+            vouchersData: [],
+            //使用者選擇使用的優惠卷
+            checkVouchers: [],
+            //使用者優惠卷暫折扣金額
+            vouchersSum: 0,
         },
         methods: {
             DeleteProduct: function (e) {
@@ -202,7 +221,7 @@
             },
 
             AddOrder: function () {
-                if (app.checkPayFun != null && app.checkProduct.length>0) {
+                if (app.checkPayFun != null && app.checkProduct.length > 0) {
                     $.ajax({
                         type: "POST",
                         url: "/Product/AddOrder",
@@ -213,11 +232,12 @@
                             BuyerId: app.buyerData.buyerId,
                             PaymentType: app.checkPayFun,
                             ProductId: app.checkProduct,
-                            shoppingCartViewModels: app.checkProductResult
+                            shoppingCartViewModels: app.checkProductResult,
+                            VouchersSum: app.productshoppingAddSum,
                         },
                         success: function (response) {
                             document.getElementById('ordernumber').value = response.ordernumber;
-                            document.getElementById('amount').value = response.amount;
+                            document.getElementById('amount').value = app.productshoppingAddSum;
                             document.getElementById('PayMethod').value = response.payMethod;
                             var btn = document.getElementById('send');
                             btn.click();
@@ -234,16 +254,69 @@
 
             checkPayType: function (index) {
                 app.checkPayFun = index;
+            },
+
+            //使用者新增優惠卷
+            AddVoucher: function () {
+                $.ajax({
+                    type: "POST",
+                    url: "/Product/AddVoucher",
+                    data: {
+                        UserId: app.buyerData.buyerId,
+                        VoucherName: app.couponCode,
+                    },
+                    success: function (response) {
+                        //將新增成功的優惠卷回傳
+                        app.vouchersData = response;
+                    },
+                    error: function (response) {
+                        alert('該則優惠卷已經使用過囉!');
+                    }
+                });
+            },
+
+            //取得使用者折價卷
+            GetVoucher: function () {
+                console.log('取得使用者折價卷');
+                $.ajax({
+                    type: "POST",
+                    url: "/Product/GetUserVoucher",
+                    data: {
+                        UserId: app.buyerData.buyerId,
+                    },
+                    success: function (response) {
+                        console.log(response);
+                        app.vouchersData = response;
+                    },
+                    error: function (response) {
+                        alert(response);
+                    }
+                });
+            },
+
+            //檢查使用者有沒有套用優惠卷
+            checkUserVoucher: function () {
+                //檢查使用者目前有沒有套用優惠卷
+                for (let i = 0; i < app.checkVouchers.length; i++) {
+                    let result = app.vouchersData.find(x => x.vouchersId == app.checkVouchers[i])
+                    console.log(result);
+                    if (app.productshoppingAddSum >= result.vouchersAvlAmount) {
+                        let sum = app.productshoppingAddSum - result.vouchersDiscount;
+                        app.productshoppingAddSum = sum;
+                    }
+                }
             }
         },
         mounted: function () {
             axios.get("/Product/GetUserShoppingCart/").then((resp) => {
+                console.log(resp);
                 for (let i = 0; i < resp.data.length; i++) {
                     var shoppingObject = new ProductShopping();
                     app.buyerData.buyerId = resp.data[i].buyerId;
                     app.buyerData.buyerName = resp.data[i].buyerName;
                     app.buyerData.buyerPhone = resp.data[i].buyerPhone;
                     app.buyerData.buyerAddress = resp.data[i].buyerAddress;
+                    shoppingObject.productCount = resp.data[i].productCount;
                     shoppingObject.productDescription = resp.data[i].productDescription;
                     shoppingObject.productId = resp.data[i].productId;
                     shoppingObject.productPicPath = '/ProductPicture/' + resp.data[i].productPicPath;
@@ -263,9 +336,15 @@
                         //尋找所有購物車商品中有勾選的商品
                         let result = app.productShoppings.find(x => x.productId == prd);
                         app.productshoppingAddSum += (result.productPrice * result.productCount);
+                        //預存上一次折扣前的總額
+                        app.vouchersSum = app.productshoppingAddSum;
+
+                        //檢查使用者目前有沒有套用優惠卷
+                        app.checkUserVoucher();
                     }
                 }, deep: true
             },
+
             //找出目前勾選的產品商品總額
             checkProduct: {
                 handler(val, oldVal) {
@@ -278,12 +357,28 @@
                         app.checkProductResult.push(result);
                         sum = result.productCount * result.productPrice;
                         app.productshoppingAddSum += sum;
+                        //預存待會可能使用折價卷的金額
+                        //預存上一次折扣前的總額
+                        app.vouchersSum = app.productshoppingAddSum;
                         sum = 0;
+                        //檢查使用者目前有沒有套用優惠卷
+                        app.checkUserVoucher();
                     }
                     console.log(app.checkProductResult);
                 }, deep: true
-            }
+            },
 
+            //使用者套用的優惠卷
+            checkVouchers: {
+                handler(val, oldVal) {
+                    //檢查使用者返回勾選那些優惠卷
+                    /*使用者所擁有的優惠卷清單*/
+                    //先將預存金額賦予給目前總金額
+                    app.productshoppingAddSum = app.vouchersSum;
+                    //從使用者勾選的優惠卷陣列中扣除
+                    app.checkUserVoucher();
+                }, deep: true
+            }
         },
         computed: {
             //計算商品單價總額

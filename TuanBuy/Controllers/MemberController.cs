@@ -12,6 +12,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Topic.Hubs;
 using TuanBuy.Models;
+using TuanBuy.Models.AppUtlity;
 using TuanBuy.Models.Entities;
 using TuanBuy.ViewModel;
 
@@ -41,7 +42,7 @@ namespace TuanBuy.Controllers
         }
 
         #region 取得存在放Session的目前使用者
-        public User GetOnlineMember()
+        public object GetOnlineMember()
         {
             string userjsonData = HttpContext.Session.GetString("userData");
             if (!String.IsNullOrEmpty(userjsonData))
@@ -50,7 +51,7 @@ namespace TuanBuy.Controllers
                 var data = Newtonsoft.Json.JsonConvert.DeserializeObject<User>(userjsonData);
                 return data;
             }
-            return null;
+            return BadRequest();
         }
         #endregion
 
@@ -141,6 +142,8 @@ namespace TuanBuy.Controllers
 
         #region 將賣家加入聊天室
         [Authorize(Roles = "FullUser")]
+        [Authorize(Roles = "SystemAdmin")]
+
         public IActionResult AddChatRoom(int SellerId,int MemberId)
         {
             if(SellerId!=0 && MemberId !=0)

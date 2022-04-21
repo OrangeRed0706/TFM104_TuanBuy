@@ -13,7 +13,7 @@ namespace TuanBuy.Models.Entities
 
         //關連到訂單ID
         [Key]
-        public int OrderId { get; set; }
+        public string OrderId { get; set; }
         //商品數量
         public int Count { get; set; }
         //商品單價

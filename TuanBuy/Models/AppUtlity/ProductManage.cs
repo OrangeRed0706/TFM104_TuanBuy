@@ -42,8 +42,26 @@ namespace TuanBuy.Models.Entities
                         //order => order.Product,
                         orderDetail => orderDetail.ProductId,
                         (user, order) => new {user});
+            //目前最熱門的三筆商品
+            var hotProduct = _dbContext.Product.ToList().GroupJoin(_dbContext.OrderDetail,
+                    prd => prd.Id,
+                    order => order.ProductId,
+                    (product, order) => new { product, order }
+                ).Select(x => new HotProductViewModel
+                {
+                    HotProductPrice = x.order.Sum(y => y.Count * x.product.Price),
+                    HotProductDescribe = x.product.Description,
+                    //前端方便轉址用直接帶href
+                    HotProducthref = "/Product/DemoProduct/" + x.product.Id,
+                    HotProductSeller = x.product.User.Name,
+                    HotProductSellerhref = "/MemberCenter/mystoresell/"+x.product.User.Id,
+                    HotProductTitle = x.product.Name,
+                    HotProductLastTime = x.product.EndTime.Subtract(x.product.CreateTime).Duration().Days.ToString()
+                }
+                ).OrderByDescending(x=>x.HotProductPrice).Take(3);
             DemoProductViewModel demoProductViewModel = new DemoProductViewModel();
             List<string> productPicPath = new List<string>();
+            List<HotProductViewModel> hotProductViewModels = new List<HotProductViewModel>();
             foreach (var item in result)
             {
                 
@@ -63,15 +81,11 @@ namespace TuanBuy.Models.Entities
                 demoProductViewModel.SellerId = item.user.prd.product.User.Id;
                 demoProductViewModel.Seller = item.user.prd.product.User.NickName;
                 //目前團購已訂購人數
-
                 if (item.user.prd.product.OrderDetails != null)
                 {
                     demoProductViewModel.Buyers = item.user.prd.product.OrderDetails.Count.ToString();
                     //將目前團購累計金額傳入
-                    foreach(var buyesSumPrice in item.user.prd.product.OrderDetails)
-                    {
-                        demoProductViewModel.BuyersSumPrice += (buyesSumPrice.Price*buyesSumPrice.Count);
-                    }
+                    demoProductViewModel.BuyersSumPrice = item.user.prd.product.OrderDetails.Sum(x => x.Count * item.user.prd.product.Price);
                     //透過目前團購金額在後端進行進度條及金額百分比計算
                     var i = demoProductViewModel.BuyersSumPrice;
                     if (i != 0 && item.user.prd.product.Total != 0)
@@ -101,7 +115,14 @@ namespace TuanBuy.Models.Entities
                         productPicPath.Add($"/ProductPicture/{picpath.PicPath}");
                     }
                 }
+                //最熱門的前三筆商品
+                foreach(var hot in hotProduct)
+                {
+                    hotProductViewModels.Add(hot);
+                }
+
                 demoProductViewModel.ProductPicPath = productPicPath;
+                demoProductViewModel.HotProducts = hotProductViewModels;
             }
             return demoProductViewModel;
         }
@@ -340,6 +361,58 @@ namespace TuanBuy.Models.Entities
                 }
             ).ToList();
             return product;
+        }
+        #endregion
+
+        #region 會員輸入優惠碼增加優惠卷方法
+        public List<UserVouchersViewModel> AddVoucher(int UserId, string VoucherName)
+        {
+            using (_dbContext)
+            {
+                var result = _dbContext.Vouchers.FirstOrDefault(x => x.VoucherName == VoucherName);
+                if(result!=null)
+                {
+                    UserVoucher user = new UserVoucher();                   
+                    user.VoucherId = result.Id;
+                    user.MemberId = UserId;
+                    try
+                    {
+                        _dbContext.UserVouchers.Add(user);
+                        _dbContext.SaveChanges();
+                        //返回剛才新增優惠卷資料
+                        var userVouchers = GetUserVoucher(UserId);
+                        return userVouchers;
+                    }
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }                   
+                }
+            }
+            return null;
+        }
+        #endregion
+
+        #region 取得使用者優惠卷
+        public List<UserVouchersViewModel> GetUserVoucher(int UserId)
+        {
+            using (_dbContext)
+            {
+                var userVouchers = from user in _dbContext.UserVouchers
+                             join vouccher in _dbContext.Vouchers on user.VoucherId equals vouccher.Id
+                             where user.MemberId == UserId
+                             select new UserVouchersViewModel() { 
+                                 VouchersTitle = vouccher.VoucherName,
+                                 VouchersDescribe = vouccher.VoucherDescribe,
+                                 VouchersDiscount = vouccher.VouchersDiscount,
+                                 VouchersId = vouccher.Id,
+                                 VouchersPicPath = vouccher.PicPath,
+                                 DiscountDescribe = vouccher.DiscountDescribe,
+                                 VouchersAvlAmount = vouccher.VouchersAvlAmount,
+                             };
+                var result = userVouchers.ToList();
+                return result;
+            }
         }
         #endregion
 

@@ -1,7 +1,268 @@
-﻿<!--昌浚寫的 後端志輝-->
+﻿<!--測試按鈕-->
+<style>
+    svg {
+        cursor: pointer;
+        overflow: visible;
+        width: 60px;
+    }
+
+        svg #heart {
+            transform-origin: center;
+            animation: animateHeartOut 0.3s linear forwards;
+        }
+
+        svg #main-circ {
+            transform-origin: 29.5px 29.5px;
+        }
+
+    #checkbox {
+        display: none;
+    }
+
+        #checkbox:checked + label svg #heart {
+            transform: scale(0.2);
+            fill: #E2264D;
+            animation: animateHeart 0.3s linear forwards 0.25s;
+        }
+
+        #checkbox:checked + label svg #main-circ {
+            transition: all 2s;
+            animation: animateCircle 0.3s linear forwards;
+            opacity: 1;
+        }
+
+        #checkbox:checked + label svg #grp1 {
+            opacity: 1;
+            transition: 0.1s all 0.3s;
+        }
+
+            #checkbox:checked + label svg #grp1 #oval1 {
+                transform: scale(0) translate(0, -30px);
+                transform-origin: 0 0 0;
+                transition: 0.5s transform 0.3s;
+            }
+
+            #checkbox:checked + label svg #grp1 #oval2 {
+                transform: scale(0) translate(10px, -50px);
+                transform-origin: 0 0 0;
+                transition: 1.5s transform 0.3s;
+            }
+
+        #checkbox:checked + label svg #grp2 {
+            opacity: 1;
+            transition: 0.1s all 0.3s;
+        }
+
+            #checkbox:checked + label svg #grp2 #oval1 {
+                transform: scale(0) translate(30px, -15px);
+                transform-origin: 0 0 0;
+                transition: 0.5s transform 0.3s;
+            }
+
+            #checkbox:checked + label svg #grp2 #oval2 {
+                transform: scale(0) translate(60px, -15px);
+                transform-origin: 0 0 0;
+                transition: 1.5s transform 0.3s;
+            }
+
+        #checkbox:checked + label svg #grp3 {
+            opacity: 1;
+            transition: 0.1s all 0.3s;
+        }
+
+            #checkbox:checked + label svg #grp3 #oval1 {
+                transform: scale(0) translate(30px, 0px);
+                transform-origin: 0 0 0;
+                transition: 0.5s transform 0.3s;
+            }
+
+            #checkbox:checked + label svg #grp3 #oval2 {
+                transform: scale(0) translate(60px, 10px);
+                transform-origin: 0 0 0;
+                transition: 1.5s transform 0.3s;
+            }
+
+        #checkbox:checked + label svg #grp4 {
+            opacity: 1;
+            transition: 0.1s all 0.3s;
+        }
+
+            #checkbox:checked + label svg #grp4 #oval1 {
+                transform: scale(0) translate(30px, 15px);
+                transform-origin: 0 0 0;
+                transition: 0.5s transform 0.3s;
+            }
+
+            #checkbox:checked + label svg #grp4 #oval2 {
+                transform: scale(0) translate(40px, 50px);
+                transform-origin: 0 0 0;
+                transition: 1.5s transform 0.3s;
+            }
+
+        #checkbox:checked + label svg #grp5 {
+            opacity: 1;
+            transition: 0.1s all 0.3s;
+        }
+
+            #checkbox:checked + label svg #grp5 #oval1 {
+                transform: scale(0) translate(-10px, 20px);
+                transform-origin: 0 0 0;
+                transition: 0.5s transform 0.3s;
+            }
+
+            #checkbox:checked + label svg #grp5 #oval2 {
+                transform: scale(0) translate(-60px, 30px);
+                transform-origin: 0 0 0;
+                transition: 1.5s transform 0.3s;
+            }
+
+        #checkbox:checked + label svg #grp6 {
+            opacity: 1;
+            transition: 0.1s all 0.3s;
+        }
+
+            #checkbox:checked + label svg #grp6 #oval1 {
+                transform: scale(0) translate(-30px, 0px);
+                transform-origin: 0 0 0;
+                transition: 0.5s transform 0.3s;
+            }
+
+            #checkbox:checked + label svg #grp6 #oval2 {
+                transform: scale(0) translate(-60px, -5px);
+                transform-origin: 0 0 0;
+                transition: 1.5s transform 0.3s;
+            }
+
+        #checkbox:checked + label svg #grp7 {
+            opacity: 1;
+            transition: 0.1s all 0.3s;
+        }
+
+            #checkbox:checked + label svg #grp7 #oval1 {
+                transform: scale(0) translate(-30px, -15px);
+                transform-origin: 0 0 0;
+                transition: 0.5s transform 0.3s;
+            }
+
+            #checkbox:checked + label svg #grp7 #oval2 {
+                transform: scale(0) translate(-55px, -30px);
+                transform-origin: 0 0 0;
+                transition: 1.5s transform 0.3s;
+            }
+
+        #checkbox:checked + label svg #grp2 {
+            opacity: 1;
+            transition: 0.1s opacity 0.3s;
+        }
+
+        #checkbox:checked + label svg #grp3 {
+            opacity: 1;
+            transition: 0.1s opacity 0.3s;
+        }
+
+        #checkbox:checked + label svg #grp4 {
+            opacity: 1;
+            transition: 0.1s opacity 0.3s;
+        }
+
+        #checkbox:checked + label svg #grp5 {
+            opacity: 1;
+            transition: 0.1s opacity 0.3s;
+        }
+
+        #checkbox:checked + label svg #grp6 {
+            opacity: 1;
+            transition: 0.1s opacity 0.3s;
+        }
+
+        #checkbox:checked + label svg #grp7 {
+            opacity: 1;
+            transition: 0.1s opacity 0.3s;
+        }
+
+    @@keyframes animateCircle {
+        40% {
+            transform: scale(10);
+            opacity: 1;
+            fill: #DD4688;
+        }
+
+        55% {
+            transform: scale(11);
+            opacity: 1;
+            fill: #D46ABF;
+        }
+
+        65% {
+            transform: scale(12);
+            opacity: 1;
+            fill: #CC8EF5;
+        }
+
+        75% {
+            transform: scale(13);
+            opacity: 1;
+            fill: transparent;
+            stroke: #CC8EF5;
+            stroke-width: 0.5;
+        }
+
+        85% {
+            transform: scale(17);
+            opacity: 1;
+            fill: transparent;
+            stroke: #CC8EF5;
+            stroke-width: 0.2;
+        }
+
+        95% {
+            transform: scale(18);
+            opacity: 1;
+            fill: transparent;
+            stroke: #CC8EF5;
+            stroke-width: 0.1;
+        }
+
+        100% {
+            transform: scale(19);
+            opacity: 1;
+            fill: transparent;
+            stroke: #CC8EF5;
+            stroke-width: 0;
+        }
+    }
+
+    @@keyframes animateHeart {
+        0% {
+            transform: scale(0.2);
+        }
+
+        40% {
+            transform: scale(1.2);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    @@keyframes animateHeartOut {
+        0% {
+            transform: scale(1.4);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
+</style>
+
+
+<!--測試按鈕-->
+<!--昌浚寫的 後端志輝-->
 <link rel="stylesheet" href="~/css/image.css" type="text/css">
 <body class="colerwhite">
-    <div class="container" id="app">
+    <div class="container mt2rem" id="app">
         <div class="row">
             <div class="col-lg-8">
                 <!--商品圖片-->
@@ -44,21 +305,70 @@
                     </a>
                     <div class="concern">
                         <span class="master">團主</span>
-                        <a class="personname" v-bind:href="productData.sellerhref">{{productData.seller}}</a>
-                        <a v-on:click="AddChat" v-if="sellerId!==useUserId && useUserId!==undefined">聊聊</a>
+                        <a class="personname demoproduct-personname-btn" v-bind:href="productData.sellerhref">{{productData.seller}}</a>
+                        <a class="demoproduct-addchat-btn" v-on:click="AddChat" style="cursor:pointer" v-if="sellerId!==useUserId && useUserId!==undefined">聊聊</a>
                     </div>
                     <!--商品內容-->
                     <p>{{productData.productDescription}}</p>
                     <div class="price">
                         <div class="price">目標金額NT${{productData.productTargetPrice}}</div>
+                        <div class="price">目前累積金額NT{{productData.buyersSumPrice}}</div>
                         <div class="progress">
                             <div class="progress-bar" role="progressbar" v-bind:style="{width:productData.percentage,borderColor:productData.color}" aria-valuenow="25"
-                                 aria-valuemin="0" aria-valuemax="100">{{productData.percentage}}</div>
+                                 aria-valuemin="0" aria-valuemax="100">
+                                {{productData.percentage}}
+                            </div>
                         </div>
-                        <div class="price">單價NT${{productData.productPrice}}</div>
-                        <div class="line">
-                            <div class="nav nav-list"></div>
+                        <div class="price">
+                            單價NT${{productData.productPrice}}
+                            <!--收藏按鈕-->
+                            <input type="checkbox" id="checkbox" v-on:click="addFavicon($event)" />
+                            <label for="checkbox">
+                                <svg id="heart-svg" viewBox="467 392 58 57" xmlns="http://www.w3.org/2000/svg">
+                                    <g id="Group" fill="none" fill-rule="evenodd" transform="translate(467 392)">
+                                        <path d="M29.144 20.773c-.063-.13-4.227-8.67-11.44-2.59C7.63 28.795 28.94 43.256 29.143 43.394c.204-.138 21.513-14.6 11.44-25.213-7.214-6.08-11.377 2.46-11.44 2.59z" id="heart" fill="#AAB8C2" />
+                                        <circle id="main-circ" fill="#E2264D" opacity="0" cx="29.5" cy="29.5" r="1.5" />
+
+                                        <g id="grp7" opacity="0" transform="translate(7 6)">
+                                            <circle id="oval1" fill="#9CD8C3" cx="2" cy="6" r="2" />
+                                            <circle id="oval2" fill="#8CE8C3" cx="5" cy="2" r="2" />
+                                        </g>
+
+                                        <g id="grp6" opacity="0" transform="translate(0 28)">
+                                            <circle id="oval1" fill="#CC8EF5" cx="2" cy="7" r="2" />
+                                            <circle id="oval2" fill="#91D2FA" cx="3" cy="2" r="2" />
+                                        </g>
+
+                                        <g id="grp3" opacity="0" transform="translate(52 28)">
+                                            <circle id="oval2" fill="#9CD8C3" cx="2" cy="7" r="2" />
+                                            <circle id="oval1" fill="#8CE8C3" cx="4" cy="2" r="2" />
+                                        </g>
+
+                                        <g id="grp2" opacity="0" transform="translate(44 6)">
+                                            <circle id="oval2" fill="#CC8EF5" cx="5" cy="6" r="2" />
+                                            <circle id="oval1" fill="#CC8EF5" cx="2" cy="2" r="2" />
+                                        </g>
+
+                                        <g id="grp5" opacity="0" transform="translate(14 50)">
+                                            <circle id="oval1" fill="#91D2FA" cx="6" cy="5" r="2" />
+                                            <circle id="oval2" fill="#91D2FA" cx="2" cy="2" r="2" />
+                                        </g>
+
+                                        <g id="grp4" opacity="0" transform="translate(35 50)">
+                                            <circle id="oval1" fill="#F48EA7" cx="6" cy="5" r="2" />
+                                            <circle id="oval2" fill="#F48EA7" cx="2" cy="2" r="2" />
+                                        </g>
+
+                                        <g id="grp1" opacity="0" transform="translate(24)">
+                                            <circle id="oval1" fill="#9FC7FA" cx="2.5" cy="3" r="2" />
+                                            <circle id="oval2" fill="#9FC7FA" cx="7.5" cy="2" r="2" />
+                                        </g>
+                                    </g>
+                                </svg>
+                            </label>
+                            <!--收藏按鈕-->
                         </div>
+
                         <div class="purchase">
                             <span>參與團購人數</span>
                             <span>{{productData.buyers}}</span>
@@ -71,11 +381,12 @@
                             <span>時程</span>
                             <span>{{productData.productStartTime}}~{{productData.productEndTime}}</span>
                         </div>
+
                         <div class="Buy">
                             <span class="stepper">
-                                <button>–</button>
-                                <input type="number" id="stepper" value="1" min="0" max="100" step="1" readonly>
-                                <button>+</button>
+                                <button v-on:click="productData.productCount -= 1">–</button>
+                                <input type="number"  min="0" max="100"  v-model="productData.productCount" readonly>
+                                <button v-on:click="productData.productCount += 1">+</button>
                             </span>
                             <button type="button" class="btn btn-danger" v-on:click="AddProductToMe">加入團購</button>
                         </div>
@@ -105,33 +416,12 @@
                                     <div>
                                         <tr>
                                             <td>
-                                                <h2>
+                                                @*<h2 v-html="productData.productDescription">
                                                     {{productData.productDescription}}
-                                                    <img src="" alt="">
-                                                </h2>
-                                                <div class="item">
-                                                    <img src="" alt="">
-                                                </div>
-                                                <div class="item">
-                                                    <img src="" alt="">
-                                                </div>
-
-                                                <div class="item">
-                                                    <h6></h6>
-                                                    <img src="" alt="">
-                                                    <h6 class="productfont">
+                                                </h2>*@
+                                                <div class="demoproduct-item">
+                                                    <h6 class="productfont" v-html="productData.productSummary">
                                                         {{productData.productSummary}}
-                                                    </h6>
-                                                </div>
-                                                <div class="item">
-                                                    <img src="" alt="">
-                                                    <h6 class="productfont">
-                                                        而火的既視感被德國特製陶瓷玻璃看得不要不要，啪滋啪滋聲就是露營追求的信仰聲 .ᐟ
-
-                                                        偷偷跟你說 … PILMOA
-                                                        迷你露營燒柴爐跟同價位的燒柴爐相比，唯一有超耐熱玻璃窗。讓火不再是只可遠觀，不可褻玩焉。盡情在露營時，愛火、玩火、觀火
-                                                        .ᐟ
-                                                        是貨真價實的好「火」伴 .ᐟ
                                                     </h6>
                                                 </div>
                                             </td>
@@ -140,106 +430,28 @@
                                 </div>
                                 <div class="col-4">
                                     <!--廣告-->
-                                    <div class="ad">
+                                    <div class="ad" v-for="hot in hotProducts">
                                         <div class="adcss">
                                             <div class="adhot">
                                                 HOT
                                             </div>
-                                            <a href="">
+                                            <a v-bind:href="hot.hotProducthref">
                                                 <div style="text-align: center;">
                                                     <img src="" alt="">
                                                 </div>
                                                 <div>
                                                     <h5>
-                                                        <strong style="color: black">ATOLL 快轉機身環 | 最靈活的相機角度調整配件</strong>
+                                                        <strong style="color: black">{{hot.hotProductTitle}}</strong>
                                                     </h5>
-                                                    <p>
+                                                    <a v-bind:href="hot.hotProductSellerhref">
                                                         團主 by
-                                                        <a href="">Harry Wang</a>
-                                                    </p>
-                                                    <p>ATOLL 是相機的角度調整環，具有腳架環的功能，但裝在機身上，超便利流暢的操作體驗，彷如相機的一部份</p>
+                                                        <a v-bind:href="hot.hotProductSellerhref">{{hot.hotProductSeller}}</a>
+                                                    </a>
+                                                    <p>{{hot.hotProductDescribe}}</p>
                                                 </div>
                                                 <div>
-                                                    <span>剩餘14天</span>
-                                                    <span>金額987</span>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="ad">
-                                        <div class="adcss">
-                                            <div class="adhot">
-                                                HOT
-                                            </div>
-                                            <a href="">
-                                                <div style="text-align: center;">
-                                                    <img src="" alt="">
-                                                </div>
-                                                <div>
-                                                    <h5>
-                                                        <strong style="color: black">ATOLL 快轉機身環 | 最靈活的相機角度調整配件</strong>
-                                                    </h5>
-                                                    <p>
-                                                        團主 by
-                                                        <a href="">Harry Wang</a>
-                                                    </p>
-                                                    <p>ATOLL 是相機的角度調整環，具有腳架環的功能，但裝在機身上，超便利流暢的操作體驗，彷如相機的一部份</p>
-                                                </div>
-                                                <div>
-                                                    <span>剩餘14天</span>
-                                                    <span>金額987</span>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="ad">
-                                        <div class="adcss">
-                                            <div class="adhot">
-                                                HOT
-                                            </div>
-                                            <a href="">
-                                                <div style="text-align: center;">
-                                                    <img src="" alt="">
-                                                </div>
-                                                <div>
-                                                    <h5>
-                                                        <strong style="color: black">ATOLL 快轉機身環 | 最靈活的相機角度調整配件</strong>
-                                                    </h5>
-                                                    <p>
-                                                        團主 by
-                                                        <a href="">Harry Wang</a>
-                                                    </p>
-                                                    <p>ATOLL 是相機的角度調整環，具有腳架環的功能，但裝在機身上，超便利流暢的操作體驗，彷如相機的一部份</p>
-                                                </div>
-                                                <div>
-                                                    <span>剩餘14天</span>
-                                                    <span>金額987</span>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="ad">
-                                        <div class="adcss">
-                                            <div class="adhot">
-                                                HOT
-                                            </div>
-                                            <a href="">
-                                                <div style="text-align: center;">
-                                                    <img src="" alt="">
-                                                </div>
-                                                <div>
-                                                    <h5>
-                                                        <strong style="color: black">ATOLL 快轉機身環 | 最靈活的相機角度調整配件</strong>
-                                                    </h5>
-                                                    <p>
-                                                        團主 by
-                                                        <a href="">Harry Wang</a>
-                                                    </p>
-                                                    <p>ATOLL 是相機的角度調整環，具有腳架環的功能，但裝在機身上，超便利流暢的操作體驗，彷如相機的一部份</p>
-                                                </div>
-                                                <div>
-                                                    <span>剩餘14天</span>
-                                                    <span>金額987</span>
+                                                    <span>剩餘{{hot.hotProductLastTime}}天</span>
+                                                    <span>金額${{hot.hotProductPrice}}</span>
                                                 </div>
                                             </a>
                                         </div>
@@ -294,256 +506,292 @@
     </div>
 </body>
 <script>
-    const options = {
-        year: 'numeric',    // 年: 使用4位數
-        month: '2-digit',   // 月: 使用2數位
-        day: '2-digit',     // 日: 使用2數位
-        hour12: false,      // 12小時制: 不使用
-    };
-    //抓取Url資訊
-    let str = window.location.pathname.split("/");
-    /*抓取Url id*/
-    let prdid = str[str.length - 1];    
-    class ProductData {
-        productId = 0;
-        buyers = 0;
-        buyersSumPrice = 0;
-        buyersSumPricePT = 0;
-        productCategory = '';
-        productDescription = '';
-        productEndTime = '';
-        productLastTime = '';
-        productStartTime = '';
-        productSummary = '';
-        productTargetPrice = 0;
-        productPrice = 0;
-        productTitle = '';
-        productPicPath = [];
-        sellerhref = '';
-        sellerChatHref = '';
-        seller = '';
-        sellerId = 0;
-        percentage = null;
-        color = null;
-    }
-    class Message {
-        messageId = 0;
-        messageName = '';
-        messagePicPaht = '';
-        messageDateTime = '';
-        messageContent = '';
-        sellerName = '';
-        sellerReply = '';
-        replyDateTime = '';
-    }
-    var app = new Vue({
-        el: "#app",
-        data: {
-            productData: new ProductData(),
-            messageSendContent: '',
-            useUserId: null,
-            userUserPicPath: null,
-            userUserName:null,
-            sellerId: null,
-            sellerName :null,
-            leaveMessages: [],
-        },
-        methods: {
-            getMessage: function () {
-                console.log('點擊取得留言');
-                $.ajax({
-                    type: "get",
-                    url: "/Product/GetProductMessage?id=" + this.productData.productId,
-                    success: function (response) {
-                        //將先前留言清空
-                        app.leaveMessages = [];
-                        console.log(response);
-                        for (let i = 0; i < response.length; i++) {
-                            var messageObject = new Message();
-                            messageObject.messageId = response[i].messageId;
-                            messageObject.messageDateTime = new Date(response[i].messageDateTime).toLocaleString();
-                            messageObject.messageContent = response[i].messageContent;
-                            messageObject.messageName = response[i].messageName;
-                            messageObject.messagePicPaht = '/MemberPicture/' + response[i].messagePicPaht;
-                            messageObject.replyDateTime = new Date(response[i].replyDateTime).toLocaleString();
-                            messageObject.sellerReply = response[i].sellerReply;
-                            messageObject.sellerName = response[i].sellerName;
-                            app.leaveMessages.push(messageObject);
+        const options = {
+            year: 'numeric',    // 年: 使用4位數
+            month: '2-digit',   // 月: 使用2數位
+            day: '2-digit',     // 日: 使用2數位
+            hour12: false,      // 12小時制: 不使用
+        };
+        //抓取Url資訊
+        let str = window.location.pathname.split("/");
+        /*抓取Url id*/
+        let prdid = str[str.length - 1];
+        class ProductData {
+            productId = 0;
+            buyers = 0;
+            buyersSumPrice = 0;
+            buyersSumPricePT = 0;
+            productCategory = '';
+            productDescription = '';
+            productEndTime = '';
+            productLastTime = '';
+            productStartTime = '';
+            productSummary = '';
+            productTargetPrice = 0;
+            productPrice = 0;
+            productTitle = '';
+            productPicPath = [];
+            sellerhref = '';
+            sellerChatHref = '';
+            seller = '';
+            sellerId = 0;
+            percentage = null;
+            color = null;
+            productCount = 1;
+        }
+        class Message {
+            messageId = 0;
+            messageName = '';
+            messagePicPaht = '';
+            messageDateTime = '';
+            messageContent = '';
+            sellerName = '';
+            sellerReply = '';
+            replyDateTime = '';
+        }
+        var app = new Vue({
+            el: "#app",
+            data: {
+                productData: new ProductData(),
+                messageSendContent: '',
+                useUserId: null,
+                userUserPicPath: null,
+                userUserName:null,
+                sellerId: null,
+                sellerName :null,
+                leaveMessages: [],
+                hotProducts:[],
+            },
+            methods: {
+                getMessage: function () {
+                    console.log('點擊取得留言');
+                    $.ajax({
+                        type: "get",
+                        url: "/Product/GetProductMessage?id=" + this.productData.productId,
+                        success: function (response) {
+                            //將先前留言清空
+                            app.leaveMessages = [];
+                            console.log(response);
+                            for (let i = 0; i < response.length; i++) {
+                                var messageObject = new Message();
+                                messageObject.messageId = response[i].messageId;
+                                messageObject.messageDateTime = new Date(response[i].messageDateTime).toLocaleString();
+                                messageObject.messageContent = response[i].messageContent;
+                                messageObject.messageName = response[i].messageName;
+                                messageObject.messagePicPaht = '/MemberPicture/' + response[i].messagePicPaht;
+                                messageObject.replyDateTime = new Date(response[i].replyDateTime).toLocaleString();
+                                messageObject.sellerReply = response[i].sellerReply;
+                                messageObject.sellerName = response[i].sellerName;
+                                app.leaveMessages.push(messageObject);
+                            }
+                            console.log(app.leaveMessages);
+                        },
+                        error: function (response) {
+                            alert(response);
                         }
-                        console.log(app.leaveMessages);
-                    },
-                    error: function (response) {
-                        alert(response);
-                    }
-                });
-            },
+                    });
+                },
 
-            sendMessage: function () {
-                $.ajax({
-                    type: "POST",
-                    url: "/Product/AddProductMessage",
-                    data: {
-                        ProductId: app.productData.productId,
-                        UserId: app.useUserId,
-                        MessageContent: app.messageSendContent
-                    },
-                    success: function (response) {
-                        var leaveObject = new Message();
-                        leaveObject.messageContent = app.messageSendContent;
-                        leaveObject.messageName = app.userUserName;
-                        leaveObject.messagePicPaht = app.userUserPicPath;
-                        //將資料存入陣列第一個元素 unshift
-                        app.leaveMessages.unshift(leaveObject);
-                        app.messageSendContent = '';
-                    },
-                    error: function (response) {
-                        alert(response);
-                    }
-                });
-            },
+                sendMessage: function () {
+                    $.ajax({
+                        type: "POST",
+                        url: "/Product/AddProductMessage",
+                        data: {
+                            ProductId: app.productData.productId,
+                            UserId: app.useUserId,
+                            MessageContent: app.messageSendContent
+                        },
+                        success: function (response) {
+                            var leaveObject = new Message();
+                            leaveObject.messageContent = app.messageSendContent;
+                            leaveObject.messageName = app.userUserName;
+                            leaveObject.messagePicPaht = app.userUserPicPath;
+                            //將資料存入陣列第一個元素 unshift
+                            app.leaveMessages.unshift(leaveObject);
+                            app.messageSendContent = '';
+                        },
+                        error: function (response) {
+                            alert(response);
+                        }
+                    });
+                },
 
-            sendSellerReply: function (event,index) {
-                console.log(event.target);
-                console.log(app.leaveMessages);               
-                $.ajax({
-                    type: "POST",
-                    url: "/Product/AddSellerMessage",
-                    data: {
-                        ProductMessageId: event.target.id,
-                        SellerId: app.sellerId,
-                        MessageContent: event.target.value
-                    },
-                    success: function (response) {
-                        var result = app.leaveMessages.find(x => x.messageId == event.target.id);
-                        result.sellerName = app.sellerName;
-                        result.sellerReply = event.target.value;
-                    },
-                    error: function (response) {
-                        alert(response);
-                    }
-                });
-            },
+                sendSellerReply: function (event,index) {
+                    console.log(event.target);
+                    console.log(app.leaveMessages);
+                    $.ajax({
+                        type: "POST",
+                        url: "/Product/AddSellerMessage",
+                        data: {
+                            ProductMessageId: event.target.id,
+                            SellerId: app.sellerId,
+                            MessageContent: event.target.value
+                        },
+                        success: function (response) {
+                            var result = app.leaveMessages.find(x => x.messageId == event.target.id);
+                            result.sellerName = app.sellerName;
+                            result.sellerReply = event.target.value;
+                        },
+                        error: function (response) {
+                            alert(response);
+                        }
+                    });
+                },
 
-            AddChat: function () {
-                $.ajax({
-                    type: "POST",
-                    url: "/Member/AddChatRoom",
-                    data: {
-                        SellerId: app.sellerId,
-                        MemberId: app.useUserId
-                    },
-                    success: function (response) {
-                        window.location.href = '/Member/chatRoom/';
-                    },
-                    error: function (response) {
-                        alert(response);
+                AddChat: function () {
+                    $.ajax({
+                        type: "POST",
+                        url: "/Member/AddChatRoom",
+                        data: {
+                            SellerId: app.sellerId,
+                            MemberId: app.useUserId,
+                            ProductName: app.productData.productTitle,
+                            },
+                        success: function (response) {
+                            window.location.href = '/Member/chatRoom/';
+                        },
+                        error: function (response) {
+                            alert(response);
+                        }
+                    });
+                },
+
+                AddProductToMe: function () {
+                    console.log(app.productData.productCount);
+                    $.ajax({
+                        type: "POST",
+                        url: "/Product/AddProductOrder",
+                        data: {
+                            UserId: app.useUserId,
+                            ProductId: app.productData.productId,
+                            ProductCount: app.productData.productCount
+                        },
+                        success: function (response) {
+                            window.location.href = '/Product/checkout/';
+                        },
+                        error: function (response) {
+                            alert(response);
+                        }
+                    });
+                },
+                //撈取是否對這商品收藏然後點擊
+                addFavicon: function(event) { 
+                    if (event.isTrusted) {
+                        axios.get("/Product/AddFavicon?id=" + prdid)
+                            .then(res => {
+                                if (res.data == true) {
+                                    console.log("收藏完成");
+                                    //document.getElementById("checkbox").click();
+                                }
+                                else {
+                                    console.log("已移除收藏");
+                                    // document.getElementById("checkbox").click();
+                                }
+                            })
+                            .catch(res => console.log(res.data));
                     }
-                });
-            }
-            ,
-            AddProductToMe: function () {
-                $.ajax({
-                    type: "POST",
-                    url: "/Product/AddProductOrder",
-                    data: {
-                        UserId: app.useUserId,
-                        ProductId: app.productData.productId,
-                    },
-                    success: function (response) {
-                        window.location.href = '/Product/checkout/';
-                    },
-                    error: function (response) {
-                        alert(response);
-                    }
-                });
-            },
-        },
-        mounted: function () {
-            axios.get("/Product/GetProductData/" + prdid).then((resp) => {
-                console.log(resp);
-                this.productData.productId = resp.data.id;
-                if (resp.data.buyers !== null) { this.productData.buyers = resp.data.buyers; }
-                this.productData.productCategory = resp.data.productCategory;
-                this.productData.productDescription = resp.data.productDescription;
-                this.productData.productId = resp.data.id;
-                this.productData.productStartTime = new Intl.DateTimeFormat('zh-TW', options).format(new Date(resp.data.productStartTime));
-                this.productData.productEndTime = new Intl.DateTimeFormat('zh-TW', options).format(new Date(resp.data.productEndTime));
-                this.productData.productLastTime = resp.data.productLastTime;
-                this.productData.productSummary = resp.data.productSummary;
-                this.productData.productTargetPrice = resp.data.productTargetPrice;
-                this.productData.productPrice = resp.data.productPrice;
-                this.productData.productTitle = resp.data.productTitle;
-                this.productData.sellerhref = '/MemberCenter/mystoresell/' + resp.data.sellerId;
-                this.productData.sellerChatHref = '/Member/AddChatRoom/' + resp.data.sellerId;
-                this.productData.seller = resp.data.seller;
-                this.productData.sellerId = resp.data.sellerId;
-                this.productData.buyersSumPrice = resp.data.buyersSumPrice;
-                this.productData.color = resp.data.color;
-                this.productData.percentage = resp.data.percentage;
-                app.sellerId = resp.data.sellerId;
-                app.sellerName = resp.data.seller
-                for (var item in resp.data.productPicPath) {
-                    this.productData.productPicPath.push(resp.data.productPicPath[item]);
+                    //https://localhost:5001/Product/CheckFavicon?id=7
                 }
-                console.log(app.sellerId);
-                console.log(app.useUserId);
-            }),
-
-            axios.get("/Member/GetOnlineMember/").then((resp) => {
-                    app.useUserId = resp.data.id;
-                    app.userUserPicPath = '/MemberPicture/' + resp.data.picPath;
-                    app.userUserName = resp.data.nickName;
-                    console.log(resp);
-                }),
-                console.log(this.productData);
-        },
-        computed: {
-            //計算商品單價總額
-            productShoppingSum: function () {
-                return (index) => {
-                    return app.productShoppings[index].productPrice * app.productShoppings[index].productCount
-                }
-                /*return app.productShoppings[index].productPrice * app.productShoppings[index].productCount;*/
             },
-        },
-    });
+            mounted: function () {
+                axios.get("/Product/GetProductData/" + prdid).then((resp) => {
+                        console.log(resp);
+                        this.productData.productId = resp.data.id;
+                        if (resp.data.buyers !== null) {
+                            this.productData.buyers = resp.data.buyers;
+                        }
+                        this.productData.productCategory = resp.data.productCategory;
+                        this.productData.productDescription = resp.data.productDescription;
+                        this.productData.productId = resp.data.id;
+                        this.productData.productStartTime = new Intl.DateTimeFormat('zh-TW', options).format(new Date(resp.data.productStartTime));
+                        this.productData.productEndTime = new Intl.DateTimeFormat('zh-TW', options).format(new Date(resp.data.productEndTime));
+                        this.productData.productLastTime = resp.data.productLastTime;
+                        this.productData.productSummary = resp.data.productSummary;
+                        this.productData.productTargetPrice = resp.data.productTargetPrice;
+                        this.productData.productPrice = resp.data.productPrice;
+                        this.productData.productTitle = resp.data.productTitle;
+                        this.productData.sellerhref = '/MemberCenter/mystoresell/' + resp.data.sellerId;
+                        this.productData.sellerChatHref = '/Member/AddChatRoom/' + resp.data.sellerId;
+                        this.productData.seller = resp.data.seller;
+                        this.productData.sellerId = resp.data.sellerId;
+                        this.productData.buyersSumPrice = resp.data.buyersSumPrice;
+                        this.productData.color = resp.data.color;
+                        this.productData.percentage = resp.data.percentage;
+                        //熱門商品陣列
+                        this.hotProducts = resp.data.hotProducts;
+                        app.sellerId = resp.data.sellerId;
+                        app.sellerName = resp.data.seller
+                        for (var item in resp.data.productPicPath) {
+                            this.productData.productPicPath.push(resp.data.productPicPath[item]);
+                        }
+                        console.log(this.hotProducts);
+                    }),
+                    axios.get("/Member/GetOnlineMember/").then((resp) => {
+                        app.useUserId = resp.data.id;
+                        app.userUserPicPath = '/MemberPicture/' + resp.data.picPath;
+                        app.userUserName = resp.data.nickName;
+                        console.log(resp);
+                    }),
+                    axios.get("/Product/CheckFavicon?id=" + prdid)
+                        .then(res => {
+                            console.log(res.data);
+                            if (res.data == true) {
+                                //console.log("確認有收藏");
+                                document.getElementById("checkbox").click();
+                            } else {
+                                //console.log("沒有收藏");
+                            }
+                        }),
+                    console.log(this.productData);
+            },
+            computed: {
+                //計算商品單價總額
+                productShoppingSum: function () {
+                    return (index) => {
+                        return app.productShoppings[index].productPrice * app.productShoppings[index].productCount
+                    }
+                    /*return app.productShoppings[index].productPrice * app.productShoppings[index].productCount;*/
+                },
+            },
+            selected: true,
+        });
 
 </script>
 
 <!--切換分頁-->
 
 <script>
-    var inc = document.getElementsByClassName("stepper");
-    for (i = 0; i < inc.length; i++) {
-        var incI = inc[i].querySelector("input"),
-            id = incI.getAttribute("id"),
-            min = incI.getAttribute("min"),
-            max = incI.getAttribute("max"),
-            step = incI.getAttribute("step");
-        document
-            .getElementById(id)
-            .previousElementSibling.setAttribute(
-                "onclick",
-                "stepperInput('" + id + "', -" + step + ", " + min + ")"
-            );
-        document
-            .getElementById(id)
-            .nextElementSibling.setAttribute(
-                "onclick",
-                "stepperInput('" + id + "', " + step + ", " + max + ")"
-            );
-    }
-    //團購按鈕
-    function stepperInput(id, s, m) {
-        var el = document.getElementById(id);
-        if (s > 0) {
-            if (parseInt(el.value) < m) {
-                el.value = parseInt(el.value) + s;
-            }
-        } else {
-            if (parseInt(el.value) > m) {
-                el.value = parseInt(el.value) + s;
-            }
-        }
-    }
+    //var inc = document.getElementsByClassName("stepper");
+    //for (i = 0; i < inc.length; i++) {
+    //    var incI = inc[i].querySelector("input"),
+    //        id = incI.getAttribute("id"),
+    //        min = incI.getAttribute("min"),
+    //        max = incI.getAttribute("max"),
+    //        step = incI.getAttribute("step");
+    //    document
+    //        .getElementById(id)
+    //        .previousElementSibling.setAttribute(
+    //            "onclick",
+    //            "stepperInput('" + id + "', -" + step + ", " + min + ")"
+    //        );
+    //    document
+    //        .getElementById(id)
+    //        .nextElementSibling.setAttribute(
+    //            "onclick",
+    //            "stepperInput('" + id + "', " + step + ", " + max + ")"
+    //        );
+    //}
+    ////團購按鈕
+    //function stepperInput(id, s, m) {
+    //    var el = document.getElementById(id);
+    //    if (s > 0) {
+    //        if (parseInt(el.value) < m) {
+    //            el.value = parseInt(el.value) + s;
+    //        }
+    //    } else {
+    //        if (parseInt(el.value) > m) {
+    //            el.value = parseInt(el.value) + s;
+    //        }
+    //    }
+    //}
 </script>

@@ -73,7 +73,7 @@
                         <div id="collapseFour" class="collapse" aria-labelledby="headingFour"
                             data-parent="#accordionExample">
                             <div class="collapsecard-body bgcf5">
-                                <a href="#">我的優惠券</a>
+                                <a href="/MemberCenter/Coupon">我的優惠券</a>
                             </div>
                         </div>
                     </div>

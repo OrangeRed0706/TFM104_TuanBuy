@@ -1,142 +1,170 @@
 ﻿<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-<!-- 熱門按鈕 -->
 <body class="colerwhite">
-    <div class="container">
-        <div class="mt4 bt pt3 tc mb3 mb0-l bb">
-            <div class="db nowrap overflow-auto pb3 pt1">
-                <a class="f6 ph3 pv2 b link mid-gray mh1" href="#">精選</a>
-                <a class="f6 ph3 pv2 b link mid-gray mh1" href="#">乾糧</a>
-                <a class="f6 ph3 pv2 b link mid-gray mh1" href="#">票券</a>
-                <a class="f6 ph3 pv2 b link mid-gray mh1" href="#">美食</a>
-                <a class="f6 ph3 pv2 b link mid-gray mh1" href="#">用品</a>
-                <a class="f6 ph3 pv2 b link mid-gray mh1" href="#">3C</a>
+    <div id="productCard">
+        <!-- 圖片輪播 -->
+
+        <div class="container mt2rem">
+            <div id="demo" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ul class="carousel-indicators">
+                    <li data-target="#demo" data-slide-to="0" class="active"></li>
+                    <li data-target="#demo" data-slide-to="1"></li>
+                    <li data-target="#demo" data-slide-to="2"></li>
+                </ul>
+
+
+                <!-- The slideshow -->
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="https://picsum.photos/1000/400" alt="Los Angeles" width=100% height=auto>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://picsum.photos/1000/400" alt="Chicago" width=100% height=auto>
+                        <img src="https://picsum.photos/1000/400" alt="Chicago" width=100% height=auto>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://picsum.photos/1000/400" alt="New York" width=100% height=auto>
+                    </div>
+                </div>
+
+                <!-- Left and right controls -->
+                <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </a>
+                <a class="carousel-control-next" href="#demo" data-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </a>
             </div>
         </div>
-    </div>
 
 
-    <!-- 圖片輪播 -->
-
-    <div class="container">
-        <div id="demo" class="carousel slide" data-ride="carousel">
-            <!-- Indicators -->
-            <ul class="carousel-indicators">
-                <li data-target="#demo" data-slide-to="0" class="active"></li>
-                <li data-target="#demo" data-slide-to="1"></li>
-                <li data-target="#demo" data-slide-to="2"></li>
-            </ul>
-
-
-            <!-- The slideshow -->
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="https://picsum.photos/1000/400" alt="Los Angeles" width=100% height=auto>
-                </div>
-                <div class="carousel-item">
-                    <img src="https://picsum.photos/1000/400" alt="Chicago" width=100% height=auto>
-                </div>
-                <div class="carousel-item">
-                    <img src="https://picsum.photos/1000/400" alt="New York" width=100% height=auto>
-                </div>
-            </div>
-
-            <!-- Left and right controls -->
-            <a class="carousel-control-prev" href="#demo" data-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
-            </a>
-            <a class="carousel-control-next" href="#demo" data-slide="next">
-                <span class="carousel-control-next-icon"></span>
-            </a>
-        </div>
-    </div>
-
-    <br />
-    <br />
-    <br />
-
-    <!-- 商品卡 -->
-    @*https://picsum.photos/300/150*@
-
-
-    <div class="container" id="productCard">
-        <div class="row">
-            <div class="col-md-4" v-for="item in products">
-                <div class="card ">
-                    <a v-bind:href="item.href">
-                        <img class="card-img-top"
-                             v-bind:src="item.picPath"
-                             alt="Card image" style="width: 100%" width="320" height="200">
-                        <div class="card-body">
-
-                            @*商品創立時間*@
-                            <h5>{{item.createTime}}</h5>
-                            @*商品名稱*@
-                            <h4 class="card-title">{{item.name}}</h4>
-                            @*商品描述*@
-                            <p class="card-text">{{item.description}}</p>
-                            <div class="progressbargreen" v-bind:style="{width:item.percentage,borderColor:item.color}"></div>
-                            <div class="bridto"></div>
-
-                            <div class="ntless">NT${{item.total}}</div>
-                            <span class="fday">
-                                <i class="material-icons lessicon">timelapse</i> 剩下 {{item.lastTime}}
-                            </span>
-                        </div>
-                    </a>
+        <!-- 熱門按鈕 -->
+        <<div class="container ">
+            <div class="bt pt3 tc mb3 mb0-l bb">
+                <div class="db nowrap overflow-auto pb3 pt1">
+                    <a class="f6 ph3 pv2 b link mid-gray mh1" style="cursor:pointer" v-on:click="filterClass(event)" id="全部">全部</a>
+                    <a class="f6 ph3 pv2 b link mid-gray mh1" style="cursor:pointer" v-on:click="filterClass(event)" id="精選">精選</a>
+                    <a class="f6 ph3 pv2 b link mid-gray mh1" style="cursor:pointer" v-on:click="filterClass(event)" id="乾糧">乾糧</a>
+                    <a class="f6 ph3 pv2 b link mid-gray mh1" style="cursor:pointer" v-on:click="filterClass(event)" id="票卷">票卷</a>
+                    <a class="f6 ph3 pv2 b link mid-gray mh1" style="cursor:pointer" v-on:click="filterClass(event)" id="美食">美食</a>
+                    <a class="f6 ph3 pv2 b link mid-gray mh1" style="cursor:pointer" v-on:click="filterClass(event)" id="用品">用品</a>
+                    <a class="f6 ph3 pv2 b link mid-gray mh1" style="cursor:pointer" v-on:click="filterClass(event)" id="3C">3C</a>
                 </div>
             </div>
         </div>
 
-    </div>
 
-    <!-- 上一頁、下一頁 -->
-    <div class="container">
-        <div class="row">
-            <div class="center col-lg-12">
-                <div class="margin-3">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item"><a class="page-link" href="#">上一頁</a> </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">下一頁</a></li>
-                    </ul>
+        <!-- 商品卡 -->
+        @*https://picsum.photos/300/150*@
+        <!-- 商品卡 -->
+        @*https://picsum.photos/300/150*@
+
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4" v-for="item in products" v-if="search=='' || item.category ==search">
+                    <div class="card ">
+                        <a v-bind:href="item.href">
+                            <img class="card-img-top"
+                                 v-bind:src="item.picPath"
+                                 alt="Card image" style="width: 100%" width="320" height="200">
+                            <div class="card-body">
+
+                                @*商品創立時間*@
+                                <h5>{{item.createTime}}</h5>
+                                @*商品名稱*@
+                                <h4 class="card-title">{{item.name}}</h4>
+                                @*商品描述*@
+                                <p class="card-text">{{item.description}}</p>
+                                <div class="progressbargreen" v-bind:style="{width:item.percentage,borderColor:item.color}"></div>
+                                <div class="bridto"></div>
+
+                                <div class="ntless">NT${{item.total}}</div>
+                                <span class="fday">
+                                    <i class="material-icons lessicon">timelapse</i> 剩下 {{item.lastTime}}
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                @*熱門商品陣列*@
+                <div class="col-md-4" v-for="items in hotProducts" v-if="search=='精選' || items.category ==search ">
+                    <div class="card ">
+                        <a v-bind:href="items.href">
+                            <img class="card-img-top"
+                                 v-bind:src="items.picPath"
+                                 alt="Card image" style="width: 100%" width="320" height="200">
+                            <div class="card-body">
+
+                                @*商品創立時間*@
+                                <h5>{{items.createTime}}</h5>
+                                @*商品名稱*@
+                                <h4 class="card-title">{{items.name}}</h4>
+                                @*商品描述*@
+                                <p class="card-text">{{items.description}}</p>
+                                <div class="progressbargreen" v-bind:style="{width:items.percentage,borderColor:items.color}"></div>
+                                <div class="bridto"></div>
+
+                                <div class="ntless">NT${{items.total}}</div>
+                                <span class="fday">
+                                    <i class="material-icons lessicon">timelapse</i> 剩下 {{items.lastTime}}
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 上一頁、下一頁 -->
+        <div class="container">
+            <div class="row">
+                <div class="center col-lg-12">
+                    <div class="margin-3">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item"><a class="page-link" href="#">上一頁</a> </li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">下一頁</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </body>
 <script>
-
-
-    //測試資料
-    // var testData = {
-    //    list:[
-    //        {createTime:"1996/07/06",name:"商品名稱", description:"商品描述"},
-    //        {createTime:"1996/07/06",name:"商品名稱", description:"商品描述"},
-    //        {createTime:"1996/07/06",name:"商品名稱", description:"商品描述"},
-    //        {createTime:"1996/07/06",name:"商品名稱", description:"商品描述"},
-    //        {createTime:"1996/07/06",name:"商品名稱", description:"商品描述"},
-    //        {createTime:"1996/07/06",name:"商品名稱", description:"商品描述"},
-    //        {createTime:"1996/07/06",name:"商品名稱", description:"商品描述"},
-    //        {createTime:"1996/07/06",name:"商品名稱", description:"商品描述"}
-    //    ]
-    //}
-
     var app = new Vue({
         el: "#productCard",
         data: {
             //data: testData,
-            products: []
+            products: [],
+            search: '',
+            hotProducts: [],
         },
-        methods: {},
+        methods: {
+            filterClass: function (event) {
+                app.search = event.target.id;
+                if (event.target.id == '全部') {
+                    app.search = '';
+                }
+            }
+        },
         mounted: function () {
             let self = this;
             axios.get("/api/Products").then((resp) => {
                 self.products = resp.data;
+                /*self.products.category = parseFloat(resp.data.percentage) >= parseFloat("60%") ? '精選' : resp.data.category;*/
                 console.log(self.products);
-            });
+            }),
+                //取得精選商品
+                axios.get("/api/Products/HotProducts").then((resp) => {
+                    app.hotProducts = resp.data;
+                    /*self.products.category = parseFloat(resp.data.percentage) >= parseFloat("60%") ? '精選' : resp.data.category;*/
+                    console.log(self.hotProducts);
+                });
         }
         //{
         //    getStyle(data) {

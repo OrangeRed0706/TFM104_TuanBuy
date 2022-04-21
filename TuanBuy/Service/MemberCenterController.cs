@@ -136,9 +136,10 @@ namespace TuanBuy.Service
                         new("PicPath",targetUser.PicPath),
                     };
 
-                    if (targetUser.State == "普通會員") claims.Add(new Claim(ClaimTypes.Role, "User"));
-                    if (targetUser.State == "正式會員") claims.Add(new Claim(ClaimTypes.Role, "FullUser"));
-
+                    claims.Add(new Claim(ClaimTypes.Role, "HelloMember"));
+                    if (targetUser.State == "普通會員" | targetUser.State == "正式會員" | targetUser.State == "系統管理員") claims.Add(new Claim(ClaimTypes.Role, "User"));
+                    if (targetUser.State == "正式會員" | targetUser.State == "系統管理員") { claims.Add(new Claim(ClaimTypes.Role, "FullUser")); }
+                    if (targetUser.State == "系統管理員") { claims.Add(new Claim(ClaimTypes.Role, "SystemAdmin")); }
                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                     var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
                     HttpContext.SignInAsync(claimsPrincipal);

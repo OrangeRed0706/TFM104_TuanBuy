@@ -1,14 +1,40 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TypeScriptTarget>ES6</TypeScriptTarget>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <TypeScriptTarget>ES6</TypeScriptTarget>
+  </PropertyGroup>
+
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\**" />
+    <Content Remove="Migrations\**" />
+    <EmbeddedResource Remove="Migrations\**" />
+    <None Remove="Migrations\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Views\MemberCenter\coupon.cshtml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\TestBackMange\ProductMangeup.cshtml" />
     <Content Remove="wwwroot\css\StyleSheet.css" />
     <Content Remove="wwwroot\css\義傑原版\bootstrap.min.css" />
     <Content Remove="wwwroot\css\義傑原版\StyleSheet.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Migrations\20220421071614_1232.cs" />
+    <Compile Include="Migrations\20220421071614_1232.Designer.cs" />
+    <Compile Include="Migrations\TuanBuyContextModelSnapshot.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +60,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Models\Extension\" />
     <Folder Include="wwwroot\css\義傑原版\" />
     <Folder Include="Models\Bank\Extensions\" />
     <Folder Include="Models\Bank\Utlity\" />

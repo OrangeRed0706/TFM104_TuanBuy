@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace TuanBuy.Models.Bank.Extensions
 {
@@ -30,6 +32,11 @@ namespace TuanBuy.Models.Bank.Extensions
             }
 
             return result;
+        }
+
+        public static string GetValueByKey(this IEnumerable<KeyValuePair<string, string>> data, string text)
+        {
+            return data.FirstOrDefault(x => x.Key.ToLower().Contains(text)).Value;
         }
     }
 }

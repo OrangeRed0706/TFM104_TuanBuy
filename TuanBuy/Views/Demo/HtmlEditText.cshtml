@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://cdn.tiny.cloud/1/ae0u9492k71mx60vj8ngvhw6a1mbqyjbfzl4fza87g9relu9/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+    <script>
+        tinymce.init({
+            selector: '#mytextarea',
+            plugins: [
+                'a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'export',
+                'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks',
+                'powerpaste', 'fullscreen', 'formatpainter', 'insertdatetime', 'media', 'table', 'help', 'wordcount'
+            ],
+            toolbar: 'undo redo | formatpainter casechange blocks | bold italic backcolor | ' +
+                'alignleft aligncenter alignright alignjustify | ' +
+                'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help'
+        });
+    </script>
+
+</head>
+
+<body>
+    <div id="app">
+        <form method="post" action="/Demo/HtmlEditText">
+            <textarea id="mytextarea" name="TextContent"></textarea>
+            <button type="submit">送出</button>
+        </form>
+        <button v-on:click="checktext()">check</button>
+    </div>
+
+</body>
+</html>
+<script>
+    var app = new Vue({
+        el: "#app",
+        data: {
+            TextContent: '1',
+            text1:'',
+        },
+        methods: {
+            checktext: function () {
+                console.log(app.text1);
+                var result = document.getElementById('tinymce');
+                console.log(result);
+            }
+        },
+        mounted: function () {
+
+        },
+        watch: {
+            TextContent: {
+                handler(val, oldVal) {
+                    console.log(app.TextContent);
+                }, deep: true
+            }
+        },
+        computed: {
+
+        },
+    });
+</script>

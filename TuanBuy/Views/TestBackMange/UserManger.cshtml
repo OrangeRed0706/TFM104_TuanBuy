@@ -29,10 +29,9 @@
                 <div class="search1">
                     <div class="form-group has-search">
                         <span class="fa fa-search form-control-feedback"></span>
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" class="form-control" placeholder="Search"v-model="search">
                     </div>
                 </div>
-
                 <table class="table table-striped col-gl-12 dropdown table-hover aaa bbb">
                     <thead class="thead-dark">
                         <tr>
@@ -40,10 +39,10 @@
                             <th scope="col">會員名稱</th>
                             <th scope="col">使用者身分</th>
                             <th scope="col">編輯</th>
-                        </tr>
+                        </tr>   
                     </thead>
                     <tbody>
-                        <tr v-for="item in users.slice( pageStart,  pageStart + countOfPage)">
+                        <tr v-for="item in users.slice( pageStart,  pageStart + countOfPage)"v-if="search=='' || item.email==search || item.name==search">
                             <th scope="row">{{item.email}}</th>
                             <td>{{item.name}}</td>
                             <td>{{item.state}}</td>
@@ -77,9 +76,9 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">修改使用者資料</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
+                                <h5 class="modal-title dialogtitle" id="exampleModalLabel">修改使用者資料</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="background-color: transparent; border:0px;">
+                                    <span style="font-size: 1.5rem; font-weight: 700; opacity: .5;" aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
@@ -116,7 +115,7 @@
                                     取消
                                 </button>
                                 <!--觸發事件修改-->
-                                <button type="button" class="btn btn-ddd" v-on:click="readyUpdate">確認修改</button>
+                                <button type="button" class="btn btn-ddd" v-on:click="readyUpdate"style="background-color: #007bff; color: #fff">確認修改</button>
                             </div>
                         </div>
                     </div>
@@ -124,12 +123,12 @@
 
                 <!--刪除使用者的對話盒-->
                 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
+                    <div class="modal-dialog" role="document" style="margin-top:150px;">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="deleteModalLabel">刪除使用者</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="background-color: transparent; border: 0px;">
+                                    <span style="font-size: 1.5rem; font-weight: 700; opacity: .5;" aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
@@ -141,7 +140,7 @@
                                     取消
                                 </button>
                                 <!--按下按鈕觸發刪除的API-->
-                                <button type="button" class="btn btn-ddd" v-on:click="deleteUser">刪除</button>
+                                <button type="button" class="btn btn-danger" v-on:click="deleteUser">刪除</button>
                             </div>
                         </div>
                     </div>
@@ -178,6 +177,7 @@
                 phone: "",
                 state: ""
             },
+            search: '',
             target: null,
             currPage: 1,
             countOfPage: 6

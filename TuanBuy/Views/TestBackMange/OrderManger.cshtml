@@ -44,7 +44,7 @@
                 </thead>
                 <tbody>
                     <!--分頁設定-->
-                    <tr v-for="item in ordermanages.slice(pageStart, pageStart + countOfPage)">
+                    <tr v-for="item in ordermanages.slice(pageStart, pageStart + countOfPage)" v-if="search=='' || item.orderId==search || item.userName==search || item.productName==search ">
                         <th scope="row">{{item.orderId}}</th>
                         <td>{{item.userName}}</td>
                         <td>{{item.productName}}</td>
@@ -82,7 +82,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content" style="width:850px;margin-left:-160px;margin-top:80px">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">修改訂單資料</h5>
+                            <h5 class="modal-title dialogtitle" id="exampleModalLabel">修改訂單資料</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Closes" style="background-color: transparent; border:0px;">
                                 <span style="font-size: 1.5rem; font-weight: 700; opacity: .5;" aria-hidden="true">&times;</span>
                             </button>
@@ -243,31 +243,17 @@
                 }
                 this.currPage = idx;
             }
-            //ordermanages: function () {
-            //    var search = this.search;
-
-            //    if (search) {
-            //        return this.ordermanages.filter(function (ordermanage) {
-            //            return Object.keys(ordermanage).some(function (key) {
-            //                return String(ordermanage[key]).toLowerCase().indexOf(search) > -1
-            //            })
-            //        })
-            //    }
-
-            //    return this.ordermanage;
-            //}
-
         },
         mounted: function () {
             let self = this;
             axios.get("/BackstageMange/TestJoin")
                 .then((resp) => {
                     self.ordermanages = resp.data;
-                    console.log(self.ordermanages)
+                    console.log(self.ordermanages);
                 })
                 .catch((res) => {
                     console.log("錯誤訊息");
-                    console.log(res.response.data)
+                    console.log(res.response.data);
                 });
         }
     })

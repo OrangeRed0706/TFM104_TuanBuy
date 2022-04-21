@@ -14,17 +14,17 @@
     margin: 10px;
 }
 
-.container{
+/*.container{
     margin-top: 30px;
-}
+}*/
 .purchase{
     font-size: 15px;
 }
 
-.item{
+/*.item{
     width: 650px;
     margin: 10px;
-}
+}*/
 .hot1{
     width: 200px;
     position: absolute;
@@ -49,10 +49,10 @@
     margin-top: 10px;
     margin-left: 100px ;
 }
-.item{
+/*.item{
     margin: 10px;
     
-}
+}*/
 .productfont{
     margin: 20px;
     padding: 10px;

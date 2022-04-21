@@ -1,78 +1,406 @@
-﻿<div class="container">
+﻿<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<!--測試按鈕-->
+<style>
+    svg {
+        cursor: pointer;
+        overflow: visible;
+        width: 60px;
+    }
+
+        svg #heart {
+            transform-origin: center;
+            animation: animateHeartOut 0.3s linear forwards;
+        }
+
+        svg #main-circ {
+            transform-origin: 29.5px 29.5px;
+        }
+
+    .myHeart {
+        display: none;
+    }
+
+        .myHeart:checked + label svg #heart {
+            transform: scale(0.2);
+            fill: #E2264D;
+            animation: animateHeart 0.3s linear forwards 0.25s;
+        }
+
+        .myHeart:checked + label svg #main-circ {
+            transition: all 2s;
+            animation: animateCircle 0.3s linear forwards;
+            opacity: 1;
+        }
+
+        .myHeart:checked + label svg #grp1 {
+            opacity: 1;
+            transition: 0.1s all 0.3s;
+        }
+
+            .myHeart:checked + label svg #grp1 #oval1 {
+                transform: scale(0) translate(0, -30px);
+                transform-origin: 0 0 0;
+                transition: 0.5s transform 0.3s;
+            }
+
+            .myHeart:checked + label svg #grp1 #oval2 {
+                transform: scale(0) translate(10px, -50px);
+                transform-origin: 0 0 0;
+                transition: 1.5s transform 0.3s;
+            }
+
+        .myHeart:checked + label svg #grp2 {
+            opacity: 1;
+            transition: 0.1s all 0.3s;
+        }
+
+            .myHeart:checked + label svg #grp2 #oval1 {
+                transform: scale(0) translate(30px, -15px);
+                transform-origin: 0 0 0;
+                transition: 0.5s transform 0.3s;
+            }
+
+            .myHeart:checked + label svg #grp2 #oval2 {
+                transform: scale(0) translate(60px, -15px);
+                transform-origin: 0 0 0;
+                transition: 1.5s transform 0.3s;
+            }
+
+        .myHeart:checked + label svg #grp3 {
+            opacity: 1;
+            transition: 0.1s all 0.3s;
+        }
+
+            .myHeart:checked + label svg #grp3 #oval1 {
+                transform: scale(0) translate(30px, 0px);
+                transform-origin: 0 0 0;
+                transition: 0.5s transform 0.3s;
+            }
+
+            .myHeart:checked + label svg #grp3 #oval2 {
+                transform: scale(0) translate(60px, 10px);
+                transform-origin: 0 0 0;
+                transition: 1.5s transform 0.3s;
+            }
+
+        .myHeart:checked + label svg #grp4 {
+            opacity: 1;
+            transition: 0.1s all 0.3s;
+        }
+
+            .myHeart:checked + label svg #grp4 #oval1 {
+                transform: scale(0) translate(30px, 15px);
+                transform-origin: 0 0 0;
+                transition: 0.5s transform 0.3s;
+            }
+
+            .myHeart:checked + label svg #grp4 #oval2 {
+                transform: scale(0) translate(40px, 50px);
+                transform-origin: 0 0 0;
+                transition: 1.5s transform 0.3s;
+            }
+
+        .myHeart:checked + label svg #grp5 {
+            opacity: 1;
+            transition: 0.1s all 0.3s;
+        }
+
+            .myHeart:checked + label svg #grp5 #oval1 {
+                transform: scale(0) translate(-10px, 20px);
+                transform-origin: 0 0 0;
+                transition: 0.5s transform 0.3s;
+            }
+
+            .myHeart:checked + label svg #grp5 #oval2 {
+                transform: scale(0) translate(-60px, 30px);
+                transform-origin: 0 0 0;
+                transition: 1.5s transform 0.3s;
+            }
+
+        .myHeart:checked + label svg #grp6 {
+            opacity: 1;
+            transition: 0.1s all 0.3s;
+        }
+
+            .myHeart:checked + label svg #grp6 #oval1 {
+                transform: scale(0) translate(-30px, 0px);
+                transform-origin: 0 0 0;
+                transition: 0.5s transform 0.3s;
+            }
+
+            .myHeart:checked + label svg #grp6 #oval2 {
+                transform: scale(0) translate(-60px, -5px);
+                transform-origin: 0 0 0;
+                transition: 1.5s transform 0.3s;
+            }
+
+        .myHeart:checked + label svg #grp7 {
+            opacity: 1;
+            transition: 0.1s all 0.3s;
+        }
+
+            .myHeart:checked + label svg #grp7 #oval1 {
+                transform: scale(0) translate(-30px, -15px);
+                transform-origin: 0 0 0;
+                transition: 0.5s transform 0.3s;
+            }
+
+            .myHeart:checked + label svg #grp7 #oval2 {
+                transform: scale(0) translate(-55px, -30px);
+                transform-origin: 0 0 0;
+                transition: 1.5s transform 0.3s;
+            }
+
+        .myHeart:checked + label svg #grp2 {
+            opacity: 1;
+            transition: 0.1s opacity 0.3s;
+        }
+
+        .myHeart:checked + label svg #grp3 {
+            opacity: 1;
+            transition: 0.1s opacity 0.3s;
+        }
+
+        .myHeart:checked + label svg #grp4 {
+            opacity: 1;
+            transition: 0.1s opacity 0.3s;
+        }
+
+        .myHeart:checked + label svg #grp5 {
+            opacity: 1;
+            transition: 0.1s opacity 0.3s;
+        }
+
+        .myHeart:checked + label svg #grp6 {
+            opacity: 1;
+            transition: 0.1s opacity 0.3s;
+        }
+
+        .myHeart:checked + label svg #grp7 {
+            opacity: 1;
+            transition: 0.1s opacity 0.3s;
+        }
+
+    @@keyframes animateCircle {
+        40% {
+            transform: scale(10);
+            opacity: 1;
+            fill: #DD4688;
+        }
+
+        55% {
+            transform: scale(11);
+            opacity: 1;
+            fill: #D46ABF;
+        }
+
+        65% {
+            transform: scale(12);
+            opacity: 1;
+            fill: #CC8EF5;
+        }
+
+        75% {
+            transform: scale(13);
+            opacity: 1;
+            fill: transparent;
+            stroke: #CC8EF5;
+            stroke-width: 0.5;
+        }
+
+        85% {
+            transform: scale(17);
+            opacity: 1;
+            fill: transparent;
+            stroke: #CC8EF5;
+            stroke-width: 0.2;
+        }
+
+        95% {
+            transform: scale(18);
+            opacity: 1;
+            fill: transparent;
+            stroke: #CC8EF5;
+            stroke-width: 0.1;
+        }
+
+        100% {
+            transform: scale(19);
+            opacity: 1;
+            fill: transparent;
+            stroke: #CC8EF5;
+            stroke-width: 0;
+        }
+    }
+
+    @@keyframes animateHeart {
+        0% {
+            transform: scale(0.2);
+        }
+
+        40% {
+            transform: scale(1.2);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    @@keyframes animateHeartOut {
+        0% {
+            transform: scale(1.4);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
+</style>
+
+<!-- 商品卡 -->
+@*https://picsum.photos/300/150*@
+<!-- 商品卡 -->
+@*https://picsum.photos/300/150*@
+
+
+<div class="container mt2rem" id="readyProduct">
     <div class="row">
-        <div class="col-gl-12 dropdown">
-            <button type="button" class="dropdown-item dropdown-toggle" data-toggle="dropdown">
-                <a href="#">已開團</a>
-            </button>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href=@Url.Action("WaitingProduct","Product")>等待開團</a>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4" v-for="(item,index) in products" v-if="item.faviconStatus==true">
+                    <div class="card ">
+                        <a v-bind:href="item.href">
+                            <img class="card-img-top"
+                                 v-bind:src="item.picPath"
+                                 alt="Card image" style="width: 100%" width="320" height="200">
+                            <div class="card-body">
+
+                                @*商品創立時間*@
+                                <h5>{{item.createTime}}</h5>
+                                @*商品名稱*@
+                                <h4 class="card-title display">{{item.name}}</h4>
+                                <!--收藏按鈕-->
+                                <input class="display myHeart" type="checkbox" :id="item.id" :name="item.id" v-on:click="addFavicon($event,index)" />
+                                <label :for="item.id">
+                                    <svg class="ready-prodct-card" id="heart-svg" viewBox="467 392 58 57" xmlns="http://www.w3.org/2000/svg">
+                                        <g id="Group" fill="none" fill-rule="evenodd" transform="translate(467 392)">
+                                            <path d="M29.144 20.773c-.063-.13-4.227-8.67-11.44-2.59C7.63 28.795 28.94 43.256 29.143 43.394c.204-.138 21.513-14.6 11.44-25.213-7.214-6.08-11.377 2.46-11.44 2.59z" id="heart" fill="#AAB8C2" />
+                                            <circle id="main-circ" fill="#E2264D" opacity="0" cx="29.5" cy="29.5" r="1.5" />
+
+                                            <g id="grp7" opacity="0" transform="translate(7 6)">
+                                                <circle id="oval1" fill="#9CD8C3" cx="2" cy="6" r="2" />
+                                                <circle id="oval2" fill="#8CE8C3" cx="5" cy="2" r="2" />
+                                            </g>
+
+                                            <g id="grp6" opacity="0" transform="translate(0 28)">
+                                                <circle id="oval1" fill="#CC8EF5" cx="2" cy="7" r="2" />
+                                                <circle id="oval2" fill="#91D2FA" cx="3" cy="2" r="2" />
+                                            </g>
+
+                                            <g id="grp3" opacity="0" transform="translate(52 28)">
+                                                <circle id="oval2" fill="#9CD8C3" cx="2" cy="7" r="2" />
+                                                <circle id="oval1" fill="#8CE8C3" cx="4" cy="2" r="2" />
+                                            </g>
+
+                                            <g id="grp2" opacity="0" transform="translate(44 6)">
+                                                <circle id="oval2" fill="#CC8EF5" cx="5" cy="6" r="2" />
+                                                <circle id="oval1" fill="#CC8EF5" cx="2" cy="2" r="2" />
+                                            </g>
+
+                                            <g id="grp5" opacity="0" transform="translate(14 50)">
+                                                <circle id="oval1" fill="#91D2FA" cx="6" cy="5" r="2" />
+                                                <circle id="oval2" fill="#91D2FA" cx="2" cy="2" r="2" />
+                                            </g>
+
+                                            <g id="grp4" opacity="0" transform="translate(35 50)">
+                                                <circle id="oval1" fill="#F48EA7" cx="6" cy="5" r="2" />
+                                                <circle id="oval2" fill="#F48EA7" cx="2" cy="2" r="2" />
+                                            </g>
+
+                                            <g id="grp1" opacity="0" transform="translate(24)">
+                                                <circle id="oval1" fill="#9FC7FA" cx="2.5" cy="3" r="2" />
+                                                <circle id="oval2" fill="#9FC7FA" cx="7.5" cy="2" r="2" />
+                                            </g>
+                                        </g>
+                                    </svg>
+                                </label>
+                                <!--收藏按鈕-->
+                                @*商品描述*@
+                                <p class="card-text">{{item.description}}</p>
+                                <div class="progressbargreen" v-bind:style="{width:item.percentage,borderColor:item.color}"></div>
+                                <div class="bridto"></div>
+
+                                <div class="ntless">NT${{item.total}}</div>
+                                <span class="fday">
+                                    <i class="material-icons lessicon">timelapse</i> 剩下 {{item.lastTime}}
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="col-lg-12">
-            <p class="display col-lg-6">商品</p>
-            <p class="display col-lg-1">單價</p>
-            <p class="display col-lg-1">數量</p>
-            <p class="display col-lg-2">總計</p>
-        </div>
-        <div class="col-lg-12">
-            <p><input type="checkbox" name="all" onclick="check_all(this,'c')" />全選/取消</p>
-        </div>
-        <div class="display col-lg-12">
-            <div class="display col-lg-6">
-                <div class="display">
-                    <p><input type="checkbox" name="c" value="" /></p>
-                </div>
-                <div class="display">
-                    <img src="img/Log.jpg" alt="商品">
-                </div>
-                <div class="display">
-                    <p>商品資訊</p>
-                </div>
-            </div>
-            <p class="display col-lg-1">單價</p>
-            <p class="display col-lg-1">數量</p>
-            <p class="display col-lg-2">總計</p>
-        </div>
-        <!-- 商品格式 從這段開始複製 -->
-        <div class="display col-lg-12">
-            <div class="display col-lg-6">
-                <div class="display">
-                    <p><input type="checkbox" name="c" value="" /></p>
-                </div>
-                <div class="display">
-                    <img src="img/Log.jpg" alt="商品">
-                </div>
-                <div class="display">
-                    <p>商品資訊</p>
-                </div>
-            </div>
-            <p class="display col-lg-1">單價</p>
-            <p class="display col-lg-1">數量</p>
-            <p class="display col-lg-2">總計</p>
-        </div>
-        <div class="display col-lg-12">
-            <div class="display col-lg-6">
-                <div class="display">
-                    <p><input type="checkbox" name="c" value="" /></p>
-                </div>
-                <div class="display">
-                    <img src="img/Log.jpg" alt="商品">
-                </div>
-                <div class="display">
-                    <p>商品資訊</p>
-                </div>
-            </div>
-            <p class="display col-lg-1">單價</p>
-            <p class="display col-lg-1">數量</p>
-            <p class="display col-lg-2">總計</p>
-        </div>
-        <!-- 商品格式 從這段結束複製 -->
-        <div class="col-lg-12 gprdleft gprdground"><button>優惠券選擇</button></div>
-        <div class="col-lg-12">
-            <p class="display col-lg-6"><input type="checkbox" name="all" onclick="check_all(this,'c')" />全選/取消</p>
-            <p class="display col-lg-1">金額</p>
-            <p class="display col-lg-1">商品數量</p>
-            <button class="display col-lg-2">付款</button>
         </div>
     </div>
 </div>
+
+<script>
+    var app = new Vue({
+        el: "#readyProduct",
+        data: {
+            //data: testData,
+            products: [],
+            search: ''
+        },
+        methods: {
+            addFavicon: function (event, index) {
+                let self = this;
+                if (event.isTrusted) {
+                    console.log("/Product/AddFavicon?id=" + event.target.name);
+                    axios.get("/Product/AddFavicon?id=" + event.target.name)
+                        .then(res => {
+                            if (res.data == true) {
+                                console.log("收藏完成");
+                                //document.getElementById("checkbox").click();
+                            }
+                            else {
+                                console.log("已移除收藏");
+                                // document.getElementById("checkbox").click();
+                            }
+                            console.log(index);
+                            self.products[index].faviconStatus = false;
+                        })
+                        .catch(res => console.log(res.data));
+                }
+            }
+        },
+        created: function () {
+            let self = this;
+            axios.get("/Product/GetAllFavicon").then((resp) => {
+                for (let i of resp.data) {
+                    i.faviconStatus = true;
+                }
+                self.products = resp.data;
+                this.$nextTick(function () {
+                    for (let i = 0; i < document.getElementsByClassName("myHeart").length; i++) {
+                        document.getElementsByClassName("myHeart")[i].click();
+                    }
+
+                });
+                console.log(self.products);
+            });
+
+
+        },
+        mounted: function () {
+            //console.log("總共有："+document.getElementsByClassName("myHeart").length);
+            //for (let i = 0; i < document.getElementsByClassName("myHeart").length; i++) {
+            //    document.getElementsByClassName("myHeart")[i].click();
+            //}
+            /*test();*/
+        }
+
+    });
+
+</script>

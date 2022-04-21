@@ -1,0 +1,52 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SingalR</title>
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <link href="~/css/ChatRoom.css" rel="stylesheet" />
+</head>
+<body>
+    姓名：<input type="text" id="name"><br>
+    訊息：<input type="text" id="msg"><br>
+    <Button type="Button" id="submitBtn">送出</Button><br>
+    <div id="msgDiv"></div>
+
+</body>
+</html>
+
+<script>
+    var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+
+    // 傳送訊息事件
+    connection.on("ReceiveMessage", function (user, message) {
+        var msg = message;
+        var encodedMsg = user + " says " + msg;
+        var li = document.createElement("li");
+        li.textContent = encodedMsg;
+        document.getElementById("msgDiv").appendChild(li);
+    });
+    // 連接事件
+    connection.start().then((res) => console.log("連線成功")).catch(function (err) {
+        return console.error(err.toString());
+    });
+
+    // Button事件
+    document.getElementById("submitBtn").addEventListener("click", function (event) {
+        var user = document.getElementById("name").value;
+        var message = document.getElementById("msg").value;
+        connection.invoke("SendMessage", user, message).catch(function (err) {
+            return console.error(err.toString());
+        });
+        event.preventDefault();
+    });
+
+</script>

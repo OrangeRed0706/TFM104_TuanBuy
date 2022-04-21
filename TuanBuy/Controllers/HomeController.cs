@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using TuanBuy.Models;
 using TuanBuy.Models.AppUtlity;
+using TuanBuy.Models.Bank.Extensions;
 using TuanBuy.Models.Entities;
 using TuanBuy.Service;
 using TuanBuy.ViewModel;
@@ -71,12 +72,15 @@ namespace TuanBuy.Controllers
             {
                 RedirectUri = Url.Action("Response")
             };
+
             return Challenge(p, GoogleDefaults.AuthenticationScheme);
         }
 
-        //註冊使用者
+
         public async Task<IActionResult> ResponseAsync()
         {
+            Console.WriteLine("進來ㄌ");
+            
             var res = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
             if (res.Principal == null) return BadRequest();
@@ -84,80 +88,95 @@ namespace TuanBuy.Controllers
             var data = res.Principal.Claims.Select(x => new
             {
                 x.Type,
-                x.Issuer,
+                //x.Issuer,
                 x.Value,
-                x.OriginalIssuer
+                //x.OriginalIssuer
             });
 
+            var test = res.Principal.Claims.Select(x => new KeyValuePair<string, string>(x.Type, x.Value)).ToList();
+            var email = test.GetValueByKey("emailaddress");
+            var surname = test.GetValueByKey("surname");
+            var givenname = test.GetValueByKey("givenname");
 
-
-            #region 建立User
-            var user = new User();
-            foreach (var item in data)
+            var checkUser = _dbContext.User.FirstOrDefault(u => u.Email == email);
+            if (checkUser != null)
             {
-                var types = item.Type.Split("/");
-                var type = types[^1];
-
-                if (type == "emailaddress")
+                var claims = new List<Claim>
                 {
-                    var targetUser = _dbContext.User.FirstOrDefault(u => u.Email == item.Value);
-                    user.Email = item.Value;
-                    if (targetUser != null)
-                    {
-                        var claims = new List<Claim>
-                        {
-                            new(ClaimTypes.Name, user.NickName),
-                            new(ClaimTypes.Email, user.Email),
-                            new("Userid", user.Id.ToString()),
-                            new("NickName", user.NickName),
-                            new("Email", user.Email),
-                            new("UserName", user.Name),
-                            new("PicPath",user.PicPath),
-                        };
-                        //將使用者資訊存入
-                        //
-                        var jsonstring = JsonConvert.SerializeObject(new
-                        {
-                            user.Email,
-                            user.NickName,
-                            user.Id,
-                            user.PicPath
-                        });
-                        HttpContext.Session.SetString("userData", jsonstring);
-                        if (user.State == "普通會員") claims.Add(new Claim(ClaimTypes.Role, "User"));
-                        if (user.State == "正式會員") claims.Add(new Claim(ClaimTypes.Role, "FullUser"));
-
-                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                        var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-                        await HttpContext.SignInAsync(claimsPrincipal);
-
-
-                        return View("Index");
-                    }
-                }
-                else
+                    new(ClaimTypes.Name, checkUser.NickName),
+                    new(ClaimTypes.Email, checkUser.Email),
+                    new("Userid", checkUser.Id.ToString()),
+                    new("NickName", checkUser.NickName),
+                    new("Email", checkUser.Email),
+                    new("UserName", checkUser.Name),
+                    new("PicPath",checkUser.PicPath),
+                };
+                //將使用者資訊存入
+                //
+                var jsonstring = JsonConvert.SerializeObject(new
                 {
-                    switch (type)
-                    {
-                        case "name":
-                            user.Name = item.Value;
-                            break;
-                        //case "emailaddress":
-                        //    user.Email = item.Value;
-                        //    break;
-                        case "nameidentifier":
-                            user.Password = GoEncrytion.encrytion(item.Value);
-                            break;
-                    }
-                }
+                    checkUser.Email,
+                    checkUser.NickName,
+                    checkUser.Id,
+                    checkUser.PicPath
+                });
+                HttpContext.Session.SetString("userData", jsonstring);
+                claims.Add(new Claim(ClaimTypes.Role, "HelloMember"));
+                if (checkUser.State == "普通會員" | checkUser.State == "正式會員" | checkUser.State == "系統管理員") claims.Add(new Claim(ClaimTypes.Role, "User"));
+                if (checkUser.State == "正式會員" | checkUser.State == "系統管理員") { claims.Add(new Claim(ClaimTypes.Role, "FullUser")); }
+                if (checkUser.State == "系統管理員") { claims.Add(new Claim(ClaimTypes.Role, "SystemAdmin")); }
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+                await HttpContext.SignInAsync(claimsPrincipal);
             }
-            var userMange = new UserMange(_dbContext);
-            userMange.CreateOAuthUser(user);
-            #endregion
+            else
+            {
+                var user = new User()
+                {
+                    Name = surname+givenname,
+                    Email = email,
+                    Password = GoEncrytion.encrytion(surname + givenname),
+                    State = UserState.普通會員.ToString()
+                };
+                var userMange = new UserMange(_dbContext);
+                userMange.CreateOAuthUser(user);
 
+                var claims = new List<Claim>
+                {
+                    new(ClaimTypes.Name, user.NickName),
+                    new(ClaimTypes.Email, user.Email),
+                    new("Userid", user.Id.ToString()),
+                    new("NickName", user.NickName),
+                    new("Email", user.Email),
+                    new("UserName", user.Name),
+                    new("PicPath",user.PicPath),
+                };
+                //將使用者資訊存入
+                //
+                var jsonstring = JsonConvert.SerializeObject(new
+                {
+                    user.Email,
+                    user.NickName,
+                    user.Id,
+                    user.PicPath
+                });
+                HttpContext.Session.SetString("userData", jsonstring);
+                claims.Add(new Claim(ClaimTypes.Role, "HelloMember"));
+                if (user.State == "普通會員" | user.State == "正式會員" | user.State == "系統管理員") claims.Add(new Claim(ClaimTypes.Role, "User"));
+                if (user.State == "正式會員" | user.State == "系統管理員") { claims.Add(new Claim(ClaimTypes.Role, "FullUser")); }
+                if (user.State == "系統管理員") { claims.Add(new Claim(ClaimTypes.Role, "SystemAdmin")); }
 
-            return View("Index");
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+                await HttpContext.SignInAsync(claimsPrincipal);
+
+            };
+
+            return RedirectToAction("Index");
         }
+
+
     }
 }
 

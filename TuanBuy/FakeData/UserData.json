@@ -29,7 +29,7 @@
     "Password": "123456",
     "Name": "Lynn",
     "NickName": "Lynn",
-    "State": "正式會員"
+    "State": "系統管理員"
   },
   {
     "Id": 5,
@@ -37,7 +37,7 @@
     "Password": "123456",
     "Name": "Benny",
     "NickName": "Benny",
-    "State": "正式會員"
+    "State": "系統管理員"
   },
   {
     "Id": 6,
@@ -45,7 +45,7 @@
     "Password": "123456",
     "Name": "Harry",
     "NickName": "Harry",
-    "State": "正式會員"
+    "State": "系統管理員"
   },
   {
     "Id": 7,
@@ -53,6 +53,6 @@
     "Password": "123456",
     "Name": "GGAA",
     "NickName": "GGAA",
-    "State": "正式會員"
+    "State": "系統管理員"
   }
 ]

@@ -14,7 +14,8 @@ namespace TuanBuy.Models.AppUtlity
         private ConnectionMultiplexer Redis { get; set; }
         public RedisProvider()
         {
-            Redis = ConnectionMultiplexer.Connect("127.0.0.1:6379");
+            //   Redis = ConnectionMultiplexer.Connect("127.0.0.1:6379");
+               Redis = ConnectionMultiplexer.Connect("tuanbuyredis.redis.cache.windows.net:6380,password=BFvMijldKRhmI0C1dcrCltsS1BYLwNLi3AzCaLDKszg=,ssl=True,abortConnect=False");
         }
 
         public IDatabase GetRedisDb(int dbNumber)
@@ -24,6 +25,15 @@ namespace TuanBuy.Models.AppUtlity
             return Db;
 
         }
+        /// <summary>
+        /// 存取通知
+        /// </summary>
+        /// <param name="db"></param>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+
+
 
         #region 將物件轉換成HashEntry[]
 

@@ -1,6 +1,6 @@
 [
   {
-    "Id": 1,
+    "Id": "1",
     "Disable": false,
     "Description": "訂單描述",
     "PaymentType": 1,
@@ -10,7 +10,7 @@
     "Address": "送貨地址"
   },
   {
-    "Id": 2,
+    "Id": "2",
     "Disable": false,
     "Description": "訂單描述",
     "PaymentType": 1,
@@ -20,7 +20,7 @@
     "Address": "送貨地址"
   },
   {
-    "Id": 3,
+    "Id": "3",
     "Disable": false,
     "Description": "訂單描述",
     "PaymentType": 1,
@@ -30,7 +30,7 @@
     "Address": "送貨地址"
   },
   {
-    "Id": 4,
+    "Id": "4",
     "Disable": false,
     "Description": "Benny跟Lynn購買產品",
     "PaymentType": 1,
@@ -40,7 +40,7 @@
     "Address": "送貨地址"
   },
   {
-    "Id": 5,
+    "Id": "5",
     "Disable": false,
     "Description": "Benny跟Harry購買產品",
     "PaymentType": 1,
@@ -50,7 +50,7 @@
     "Address": "送貨地址"
   },
   {
-    "Id": 6,
+    "Id": "6",
     "Disable": false,
     "Description": "Lynn跟Harry購買產品",
     "PaymentType": 1,
@@ -60,7 +60,7 @@
     "Address": "送貨地址"
   },
   {
-    "Id": 7,
+    "Id": "7",
     "Disable": false,
     "Description": "Harry跟Lynn購買產品",
     "PaymentType": 1,
@@ -70,7 +70,7 @@
     "Address": "送貨地址"
   },
   {
-    "Id": 8,
+    "Id": "8",
     "Disable": false,
     "Description": "小王跟Lynn購買產品",
     "PaymentType": 1,
@@ -80,7 +80,7 @@
     "Address": "送貨地址"
   },
   {
-    "Id": 9,
+    "Id": "9",
     "Disable": false,
     "Description": "小明跟Lynn購買產品",
     "PaymentType": 1,

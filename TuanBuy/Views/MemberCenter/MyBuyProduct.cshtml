@@ -30,8 +30,8 @@
               <div class="tab-content" id="myTabContent">
                 <!--待付款商品-->
                 <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab" >
-                    <div class="purchaseback" v-for="(item,index) in orderList" v-if="item.orderState==1">
-                        <div class="purchasemg">
+                    <div class="purchaseback" >
+                        <div class="purchasemg" v-for="(item,index) in orderList" v-if="item.orderState==1">
                             <div class="col-12 form-row">
                                 <div>
                                     <!--賣家名稱-->
@@ -66,7 +66,8 @@
                             </div>
                             <div class="col-12 purchaseend">
                                 <div class="purchaseorder">訂單金額:</div>
-                                <div class="purchaseallmoney">${{productShoppingSum(index)}}</div>
+                                <div class="purchaseallmoney">${{item.orderPrice}}</div>
+                                @*<div class="purchaseallmoney">${{productShoppingSum(index)}}</div>*@
                             </div>
                         </div>
                         @*<div class="col-12 purchaseend"><button class="purchasebtn purchasebuybtnsize">再買一次</button></div>*@
@@ -74,8 +75,8 @@
                 </div>
                 <!--待出貨商品-->
                 <div class="tab-pane fade" id="product1" role="tabpanel" aria-labelledby="product1-tab">
-                    <div class="purchaseback" v-for="(item,index) in orderList" v-if="item.orderState==2">
-                        <div class="purchasemg">
+                    <div class="purchaseback" >
+                        <div class="purchasemg" v-for="(item,index) in orderList" v-if="item.orderState==2">
                             <div class="col-12 form-row">
                                 <div>
                                     <!--賣家名稱-->
@@ -108,17 +109,20 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-12 purchaseend">等待賣家出貨中</div>
+
                             <div class="col-12 purchaseend">
                                 <div class="purchaseorder">訂單金額:</div>
-                                <div class="purchaseallmoney">${{productShoppingSum(index)}}</div>
+                                <div class="purchaseallmoney">${{item.orderPrice}}</div>
+                                @*<div class="purchaseallmoney">${{productShoppingSum(index)}}</div>*@
                             </div>
                         </div>
                     </div>
                 </div>
                 <!--待收貨商品-->
                 <div class="tab-pane fade" id="product2" role="tabpanel" aria-labelledby="product2-tab">
-                    <div class="purchaseback" v-for="(item,index) in orderList"  v-if="item.orderState==3">
-                        <div class="purchasemg">
+                    <div class="purchaseback"  >
+                        <div class="purchasemg" v-for="(item,index) in orderList"  v-if="item.orderState==3">
                             <div class="col-12 form-row">
                                 <div>
                                     <!--賣家名稱-->
@@ -153,7 +157,8 @@
                             </div>
                             <div class="col-12 purchaseend">
                                 <div class="purchaseorder">訂單金額:</div>
-                                <div class="purchaseallmoney">${{productShoppingSum(index)}}</div>
+                                <div class="purchaseallmoney">${{item.orderPrice}}</div>
+                                @*<div class="purchaseallmoney">${{productShoppingSum(index)}}</div>*@
                             </div>
                         </div>
                     </div>
@@ -161,11 +166,11 @@
                 <!--完成-->
                 <div class="tab-pane fade" id="product3" role="tabpanel" aria-labelledby="product3-tab">
                     <!--v-for="item in orderList"-->
-                    <div class="purchaseback" v-for="(item,index) in orderList" v-if="item.orderState==4">
-                        <div class="purchasemg">
+                    <div class="purchaseback"  >
+                        <div class="purchasemg" v-for="(item,index) in orderList" v-if="item.orderState==4">
                             <div class="col-12 form-row">
                                 <div>
-                                    <!--賣家名稱-->
+                                    <!--賣家名稱 v-if="item.orderState==4"-->
                                     <p class="purchaseowner">團主<!--：{{item.sellerName}}--></p>
                                 </div>
                                 <div class="purchasebtnsize"><button class="purchasebtn">聊聊</button></div>
@@ -197,18 +202,18 @@
                             </div>
                             <div class="col-12 purchaseend">
                                 <div class="purchaseorder">訂單金額:</div>
-                                <div class="purchaseallmoney">${{productShoppingSum(index)}}</div>
+                                @*<div class="purchaseallmoney">${{productShoppingSum(index)}}</div>*@
+                                <div class="purchaseallmoney">${{item.orderPrice}}</div>
                             </div>
+                            <div class="col-12 purchaseend"><button class="purchasebtn purchasebuybtnsize">再買一次</button></div>
                         </div>
-                        <div class="col-12 purchaseend"><button class="purchasebtn purchasebuybtnsize">再買一次</button></div>
                     </div>
                     <!--  -->
-
                 </div>
                 <!--已取消訂單-->
                 <div class="tab-pane fade" id="product4" role="tabpanel" aria-labelledby="product4-tab">
-                    <div class="purchaseback" v-for="(item,index) in orderList" v-if="item.orderState==5">
-                        <div class="purchasemg">
+                    <div class="purchaseback" >
+                        <div class="purchasemg"  v-for="(item,index) in orderList" v-if="item.orderState==5">
                             <div class="col-12 form-row">
                                 <div>
                                     <!--賣家名稱-->
@@ -243,10 +248,12 @@
                             </div>
                             <div class="col-12 purchaseend">
                                 <div class="purchaseorder">訂單金額:</div>
-                                <div class="purchaseallmoney">${{productShoppingSum(index)}}</div>
+                                @*<div class="purchaseallmoney">${{productShoppingSum(index)}}</div>*@
+                                <div class="purchaseallmoney">${{item.orderPrice}}</div>
                             </div>
+                            <div class="col-12 purchaseend"><button class="purchasebtn purchasebuybtnsize">再買一次</button></div>
+
                         </div>
-                        <div class="col-12 purchaseend"><button class="purchasebtn purchasebuybtnsize">再買一次</button></div>
                     </div>
                 </div>
             </div>

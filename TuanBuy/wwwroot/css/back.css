@@ -25,7 +25,7 @@ width:250px!important;
 }
 .search1 {
     margin-bottom:10px;
-   margin-top:40px;
+   margin-top:10px;
 }
 .form-group {
 margin-top:10px;
@@ -62,10 +62,70 @@ border-radius:10px!important;
 .search2 {
     float: left;
     margin-bottom: 10px;
- 
 }
 .updown {
-    margin-top: 12px!important;
-    margin-left:20px;
-
+    margin-top: 10px !important;
+    margin-left: 20px;
+    /*background-color: #1C1CFF;*/ /* Green */
+    border: 1px solid green;
+    color: white;
+    padding: 7px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    float: left;
 }
+.content {
+    font-size: 20px;
+    margin: 5px;
+    font-weight:bolder
+}
+.contenttext {
+margin-left:15px;
+}
+.dialogtitle {
+font-size:20px;
+}
+.trophy {
+margin-top:-15px;
+}
+.trophy2 {
+margin-left:5px;
+}
+
+.ranking {
+margin-bottom:16px;
+}
+.trophy3 {
+margin-left:2px;
+}
+.avatar1 {
+    margin-left:4px;
+}
+.avatar2 {
+margin-left:2px;
+}
+.hot {
+margin-top:-5px;
+}
+.qq {
+margin-bottom:14px;
+}
+.productcount {
+font-size:20px;
+}
+.linetext {
+    width: 300px;
+    height: 100px;
+}
+.linebot {
+    background-color: #00C200;
+    color: white;
+}
+.couponstitle {
+    background-color: #EB0000;
+    color: white;
+}
+

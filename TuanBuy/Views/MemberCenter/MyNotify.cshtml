@@ -1,34 +1,29 @@
-﻿<script src="/VueComponent/VueDemo.js"></script>
+﻿
+<script src="/VueComponent/VueDemo.js"></script>
 
 <div class="container mtb2rem" id="app">
     <div class="row">
 
         <test v-bind:user="user"></test>
 
-        <div class="col-lg-10 acccolor">
-            <div>
-                <p class="display acpabord aldrd">標示為已讀</p>
+        <div class="col-lg-10 notify-alldiv">
+            <div class="notify-read">
+                <button class="notify-read-btn" v-on:click="deleteAllNotify">全部刪除</button>
             </div>
-            <div class="notifymgbt">
-                <div class="col-2 form-row display">
-                    <img src="https://img.league-funny.com/imgur/148292128067.jpg"
-                         alt="">
-                </div>
-                <div class="col-6 form-row display">
-                    <p>通知的文字內容</p>
-                </div>
-                <div class="col-4 form-row display notifyright"><button class="notifybtn">查看更多</button></div>
+
+            @*動態複製開頭*@
+            <div class="notifymgbt" v-for="item,index in notify">
+                <span class="notify-title-p">{{item.sender}}</span>
+                <span class="notify-p">{{item.content}}</span>
+                <span class="notify-date">{{item.createDateTime}}</span>
+                <button class="notifybtn" v-on:click="deleteNotify(item.notifyId,index)">刪除</button>
             </div>
-            <div class="notifymgbt">
-                <div class="col-2 form-row display">
-                    <img src="https://img.league-funny.com/imgur/148292128067.jpg"
-                         alt="">
-                </div>
-                <div class="col-6 form-row display">
-                    <p>通知的文字內容</p>
-                </div>
-                <div class="col-4 form-row display notifyright"><button class="notifybtn">查看更多</button></div>
+            @*動態複製結束*@
+            <div class="notifymgbt" v-if="notify.length==0">
+                <span class="notify-title-p">目前沒有任何訊息</span>
+
             </div>
+
         </div>
     </div>
 </div>
@@ -43,11 +38,37 @@
                 address: "",
                 sex: "",
                 uploadPicPath: ""
+            },
+            notify:[]
+        },
+        methods: {
+            deleteNotify:function(id,index) {
+                vm.notify.splice(index, 1);
+                $.ajax({
+                    url: '/MemberCenter/DeleteNotify',// url位置
+                    type: 'post',                   // post/get
+                    data: {id:id},       // 輸入的資料
+                    error: function (xhr) { },      // 錯誤後執行的函數
+                    success: function (response) {console.log(response) }// 成功後要執行的函數
+                });
+
+            },
+            deleteAllNotify:function() {
+                $.ajax({
+                    url: '/MemberCenter/DeleteAllNotify',// url位置
+                    type: 'post',                   // post/get
+                    data: {},       // 輸入的資料
+                    error: function (xhr) { },      // 錯誤後執行的函數
+                    success: function (response) {console.log(response) }// 成功後要執行的函數
+                });
+                vm.notify = [];
             }
         },
         mounted: function () {
             let self = this;
             axios.get("/api/MemberCenter/").then((resp) => { this.user = resp.data });
+            axios.get("/MemberCenter/GetMyNotify").then((resp) => { this.notify = resp.data });
+
         }
     });
 </script>

@@ -1,0 +1,88 @@
+﻿
+<script src="/VueComponent/VueDemo.js"></script>
+
+<div class="container mtb2rem" id="app">
+    <div class="row">
+
+        <test v-bind:user="user"></test>
+
+        <div class="col-lg-10 coupou-alldiv">
+            <h4 class="coupon-h">我的優惠券</h4>
+            <div class="coupon-save-div">
+                <span class="coupon-save-span">新增折價券</span>
+                    <input class="coupon-save-input" type="text" v-model="coupon">
+                    <button class="coupon-save-btn" v-on:click="AddCoupon()">儲存</button>
+            </div>
+            <div class="coupon-flix">
+                <div class="coupon-div">
+                    <div>
+                        <img src="https://beautiful666.com/images/10/2s.jpg" alt="折價券" width="100" height="100">
+                    </div>
+                    <div class="coupon-p-div">
+                        <p class="coupon-p-title">折價卷的標題</p>
+                        <p class="coupon-p">內容</p>
+                        <p class="coupon-date">日期</p>
+                    </div>
+                </div>
+                <div class="coupon-div">
+                    <div>
+                        <img src="https://beautiful666.com/images/10/2s.jpg" alt="折價券" width="100" height="100">
+                    </div>
+                    <div class="coupon-p-div">
+                        <p class="coupon-p-title">折價卷的標題</p>
+                        <p class="coupon-p">內容</p>
+                        <p class="coupon-date">日期</p>
+                    </div>
+                </div>
+                <div class="coupon-div">
+                    <div>
+                        <img src="https://beautiful666.com/images/10/2s.jpg" alt="折價券" width="100" height="100">
+                    </div>
+                    <div class="coupon-p-div">
+                        <p class="coupon-p-title">折價卷的標題</p>
+                        <p class="coupon-p">內容</p>
+                        <p class="coupon-date">日期</p>
+                    </div>
+                </div>
+                <div class="coupon-div">
+                    <div>
+                        <img src="https://beautiful666.com/images/10/2s.jpg" alt="折價券" width="100" height="100">
+                    </div>
+                    <div class="coupon-p-div">
+                        <p class="coupon-p-title">折價卷的標題</p>
+                        <p class="coupon-p">內容</p>
+                        <p class="coupon-date">日期</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            user: {
+                name: "",
+                phone: "",
+                birth: "",
+                address: "",
+                sex: "",
+                uploadPicPath: "",
+            },
+            coupon: '',
+        },
+        methods: {
+            AddCoupon: function () {
+                console.log(vm.coupon);
+                //axios.post("/api/LoginAndRegister", self.user).then((resp) => {
+                    
+                //}).catch((res) => { console.log(res.data) });
+            }
+        },
+        mounted: function () {
+            let self = this;
+            axios.get("/api/MemberCenter/").then((resp) => { this.user = resp.data });
+        }
+    });
+</script>

@@ -34,5 +34,8 @@ namespace TuanBuy.Models.Entities
         public virtual ICollection<Order> Order { get; set; }
         public virtual ICollection<Product> Product { get; set; }
         public virtual ICollection<ChatRoomMember> ChatRoom { get; set; }
+
+        public virtual ICollection<UserVoucher> UserVoucher { get; set; }
+        public virtual ICollection<UserNotify> UserNotify { get; set; }
     }
 }

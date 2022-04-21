@@ -40,10 +40,19 @@ namespace TuanBuy.Models.Entities
 
         public virtual DbSet<LineMember> LineMember { get; set; }
 
+        public virtual DbSet<Voucher> Vouchers { get; set; }
+
+        public virtual DbSet<UserVoucher> UserVouchers { get; set; }
+        public virtual DbSet<UserNotify> UserNotify { get; set; }
+        public virtual DbSet<NotifyCategory> NotifyCategory { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ChatRoomMember>().ToTable("Member_Chats");
             modelBuilder.Entity<ChatRoomMember>().HasKey(s => new { s.MemberId, s.ChatRoomId });
+            //折扣卷多對多
+            modelBuilder.Entity<UserVoucher>().HasKey(s => new { s.MemberId, s.VoucherId });
             //商品和訂單多對多產生訂單明細
             //modelBuilder.Entity<OrderDetail>().HasKey(s => new { s.Order.Id, s.OrderId });
 

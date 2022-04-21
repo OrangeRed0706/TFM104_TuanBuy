@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using TuanBuy.Models.AppUtlity;
 
 
 namespace Topic.Hubs
@@ -13,18 +15,48 @@ namespace Topic.Hubs
     {
         private UserData _userData;
         private UserService _userservice;
+        private readonly RedisProvider _redis;
+
         //public ChatHub(){}
 
-        public ChatHub(UserService userService)
+        public ChatHub(UserService userService, RedisProvider redis)
         {
             _userData = new UserData();
             _userservice = userService;
+            _redis = redis;
         }
 
         //public async Task GetOnlineUserList(string UserAccount)
         //{
         //    await Clients.Client(Context.ConnectionId).SendAsync("GetOnlineUserList", _userservice.GetOnlineUser(UserAccount));
         //}
+
+        #region 橙紅測試
+        public async Task SendMessage(string user, string message)
+        {
+            await Clients.All.SendAsync("ReceiveMessage", user, message);
+        }
+
+        public async Task GetAllNotify()
+        {
+            //var claim = HttpContext.User.Claims;
+            //var userEmail = claim.FirstOrDefault(a => a.Type == ClaimTypes.Email)?.Value;
+            //var targetUser = _userRepository.Get(a => a.Email == userEmail);
+            var db = _redis.GetRedisDb(3);
+            
+            db.ListRange("company").ToList().ForEach(d => Console.WriteLine(d));
+            await Clients.All.SendAsync("ReceiveMessage", "接受到的通知");
+        }
+
+        //public int GetTargetUser()
+        //{
+            
+        //}
+
+        #endregion
+
+
+
 
         //取得當前使用者目前連線id
         public string GetConnectionId()

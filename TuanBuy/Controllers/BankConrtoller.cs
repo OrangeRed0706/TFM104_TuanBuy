@@ -194,7 +194,7 @@ namespace TuanBuy.Controllers
                 {
                     using(_dbContext)
                     {
-                      var order = _dbContext.Order.Single(x => x.Id == int.Parse(convertModel.MerchantOrderNo));
+                      var order = _dbContext.Order.Single(x => x.Id == convertModel.MerchantOrderNo);
                         order.StateId = 3;
                         _dbContext.SaveChanges();
                     }
@@ -203,7 +203,7 @@ namespace TuanBuy.Controllers
                 {
                     using (_dbContext)
                     {
-                        var order = _dbContext.Order.Single(x => x.Id == int.Parse(convertModel.MerchantOrderNo));
+                        var order = _dbContext.Order.Single(x => x.Id == convertModel.MerchantOrderNo);
                         order.StateId = 6;
                         _dbContext.SaveChanges();
                     }

@@ -1,4 +1,5 @@
-﻿<body class="colerwhite">
+﻿<script src="https://cdn.tiny.cloud/1/ae0u9492k71mx60vj8ngvhw6a1mbqyjbfzl4fza87g9relu9/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<body class="colerwhite">
     <!-- 新增商品 -->
     <div class="container" id="form1">
         <div class="row">
@@ -9,52 +10,55 @@
 
                 <label class="addp" for="email">電子信箱</label>
                 <input class="addtext" type="text" name="" id="email" readonly="" v-model="user.email">
+                <form method="post" action="/Product/PostProduct" enctype="multipart/form-data">
+                    <!--商品名稱-->
+                    <label class="addp" for="productname">商品名稱</label>
+                    <input class="addtext" type="text" name="Name" id="productname" v-model="product.name">
 
-                <!--商品名稱-->
-                <label class="addp" for="productname">商品名稱</label>
-                <input class="addtext" type="text" name="" id="productname" v-model="product.name">
+                    <!--結束時間-->
+                    <label class="addp" for="endtime">結束時間</label>
+                    <input class="addtext" type="date" name="EndTime" id="endtime" :min="todaynowDate" v-model="product.endTime">
 
-                <!--結束時間-->
-                <label class="addp" for="endtime">結束時間</label>
-                <input class="addtext" type="date" name="" id="endtime" v-model="product.endTime">
+                    <label class="addp" for="target">目標金額</label>
+                    <input class="addtext" type="text" name="Total" id="target" placeholder="NTD" v-model="product.total">
 
-                <label class="addp" for="target">目標金額</label>
-                <input class="addtext" type="text" name="" id="target" placeholder="NTD" v-model="product.total">
+                    <!--類別-->
+                    <label class="addp" for="category">類別</label>
+                    <select class="addselect addimg" name="category" id="category" v-model="product.category">
+                        <option value="未分類">選擇計畫分類</option>
+                        <option value="票卷">票券</option>
+                        <option value="食品">美食</option>
+                        <option value="衣服">衣服</option>
+                        <option value="3C">3C</option>
+                    </select>
 
-                <!--類別-->
-                <label class="addp" for="category">類別</label>
-                <select class="addselect addimg" name="category" id="category" v-model="product.category">
-                    <option value="未分類">選擇計畫分類</option>
-                    <option value="票卷">票券</option>
-                    <option value="食品">食品</option>
-                    <option value="衣服">衣服</option>
-                    <option value="3C">3C</option>
-                </select>
+                    <!--商品簡介-->
+                    <label class="addp" for="productdetail">商品簡介</label>
+                    <input class="addtext" type="text" name="Description" id="productdetail" v-model="product.description">
 
-                <!--商品簡介-->
-                <label class="addp" for="productdetail">商品簡介</label>
-                <input class="addtext" type="text" name="" id="productdetail" v-model="product.description">
-
-                <!--商品內容-->
-                <label class="addp" for="productcontent">商品內容</label>
-                <input class="addtext" type="text" name="" id="productcontent" v-model="product.content">
-
-                <!--商品單價-->
-                <label class="addp" for="productprice">商品單價</label>
-                <input class="addtext" type="text" name="" id="productprice" v-model="product.price">
+                    <!--商品內容-->
+                    <!--<label class="addp" for="productcontent">商品內容</label>
+    <input class="addtext" type="text" name="" id="productcontent" v-model="product.content">-->
+                    <!--商品單價-->
+                    <label class="addp" for="productprice">商品單價</label>
+                    <input class="addtext" type="text" name="Price" id="productprice" v-model="product.price">
 
 
-                <label class="addp" for="picPath">上傳圖片</label>
-                <input class="addimg" type="file" id="picPath" accept="image/*" multiple v-on:change="previewMultiImage">
-                <template v-if="preview_list.length">
-                    <div v-for="item, index in preview_list" v-bind:key="index">
-                        <img v-bind:src="item" class="img-fluid" width="200" height="200" />
-                        <p class="mb-0">file name: {{ image_list[index].name }}</p>
-                        <p>size: {{ image_list[index].size/1024 }}KB</p>
-                    </div>
-                </template>
+                    <label class="addp" for="picPath">上傳圖片</label>
+                    <input class="addimg" type="file" id="picPath" name="PicPath"  accept="image/*" multiple v-on:change="previewMultiImage">
+                    <template v-if="preview_list.length">
+                        <div v-for="item, index in preview_list" v-bind:key="index">
+                            <img v-bind:src="item" class="img-fluid" width="200" height="200" />
+                            <p class="mb-0">file name: {{ image_list[index].name }}</p>
+                            <p>size: {{ image_list[index].size/1024 }}KB</p>
+                        </div>
+                    </template>
+                    <!--商品內容-->
+                    <label class="addp" for="productcontent">商品內容</label>
+                    <textarea id="mytextarea" name="Content" placeholder="請描述你的商品內容!"></textarea>
 
-                <a class="addbtn" href="#" v-on:click="addProduct">刊登</a>
+                    <button class="addbtn" type="submit">刊登</button>
+                </form>
             </div>
         </div>
     </div>
@@ -68,23 +72,24 @@
         el: "#form1",
         data: {
             product: {
-                name:"商品",
-                price:300,
-                description:"描述",
-                content:"內容",
-                picPath:[ ],
-                category:"商品種類",
-                endTime:null,
-                total:1000
+                name: "商品",
+                price: 300,
+                description: "描述",
+                content: "內容",
+                picPath: [],
+                category: "商品種類",
+                endTime: null,
+                total: 1000
             },
             user: {
                 name: "",
-                email:""
+                email: ""
             },
-            preview:null,
+            preview: null,
             image: null,
             preview_list: [],
-            image_list: []
+            image_list: [],
+            todaynowDate: "",
         },
         methods: {
             up: function (event) {
@@ -102,30 +107,30 @@
                 }
                 alert("上傳成功");
             },
-            previewMultiImage: function(event) {
+            previewMultiImage: function (event) {
                 this.product.picPath = event.target.files;
                 var input = event.target;
                 var count = input.files.length;
                 var index = 0;
                 if (input.files) {
-                    while(count --) {
+                    while (count--) {
                         var reader = new FileReader();
                         reader.onload = (e) => {
                             this.preview_list.push(e.target.result);
                         }
                         this.image_list.push(input.files[index]);
                         reader.readAsDataURL(input.files[index]);
-                        index ++;
+                        index++;
                     }
                 }
             },
-            addProduct:function() {
+            addProduct: function () {
                 var bodyFormData = new FormData();
                 bodyFormData.append("Name", this.product.name);
                 bodyFormData.append("Price", this.product.price);
                 bodyFormData.append("Content", this.product.content);
                 bodyFormData.append("Description", this.product.description);
-                for(let i =0; i <  this.product.picPath.length; i++) {
+                for (let i = 0; i < this.product.picPath.length; i++) {
                     bodyFormData.append("PicPath", this.product.picPath[i]);
                 }
                 bodyFormData.append("Category", this.product.category);
@@ -134,24 +139,40 @@
 
                 console.log(bodyFormData);
                 axios({
-                        method: "post",
-                        url: "/Product/PostProduct",
-                        data: bodyFormData,
-                        headers: { "Content-Type": "multipart/form-data" }
-                    })
+                    method: "post",
+                    url: "/Product/PostProduct",
+                    data: bodyFormData,
+                    headers: { "Content-Type": "multipart/form-data" }
+                })
                     .then((resp) => {
                         Swal.fire(
                             '刊登成功！',
                             '會員中心可供您修改商品',
                             'success'
-                        ).then((result) => {document.location.href = "/home/index";});
+                        ).then((result) => { document.location.href = "/home/index"; });
                     })
                     .catch((resp) => alert(resp.response.data));
             }
         },
-        mounted:function() {
+        mounted: function () {
             let self = this;
-            axios.get("/api/MemberCenter/").then((resp) => { this.user = resp.data });
+            axios.get("/api/MemberCenter/").then((resp) => {
+                this.user = resp.data
+                var Today = new Date();
+                app.todaynowDate = '' + Today.getFullYear() + "-0" + (Today.getMonth() + 1) + "-" + Today.getDate();
+            });
         }
     });
+
+        tinymce.init({
+            selector: '#mytextarea',
+        plugins: [
+        'a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'export',
+        'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks',
+        'powerpaste', 'fullscreen', 'formatpainter', 'insertdatetime', 'media', 'table', 'help', 'wordcount'
+        ],
+        toolbar: 'undo redo | formatpainter casechange blocks | bold italic backcolor | ' +
+        'alignleft aligncenter alignright alignjustify | ' +
+        'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help'
+        });
 </script>

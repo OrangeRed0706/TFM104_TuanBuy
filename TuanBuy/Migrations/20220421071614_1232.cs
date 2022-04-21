@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TuanBuy.Migrations
 {
-    public partial class _015 : Migration
+    public partial class _1232 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -33,6 +33,19 @@ namespace TuanBuy.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_LineMember", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NotifyCategory",
+                columns: table => new
+                {
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Category = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NotifyCategory", x => x.CategoryId);
                 });
 
             migrationBuilder.CreateTable(
@@ -71,6 +84,23 @@ namespace TuanBuy.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Vouchers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    VoucherName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VoucherDescribe = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PicPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DiscountDescribe = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VouchersDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    VouchersAvlAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vouchers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -126,8 +156,7 @@ namespace TuanBuy.Migrations
                 name: "Order",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Disable = table.Column<bool>(type: "bit", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -183,10 +212,66 @@ namespace TuanBuy.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserNotify",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreateDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SenderId = table.Column<int>(type: "int", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Disable = table.Column<bool>(type: "bit", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Category = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserNotify", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserNotify_NotifyCategory_Category",
+                        column: x => x.Category,
+                        principalTable: "NotifyCategory",
+                        principalColumn: "CategoryId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserNotify_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserVouchers",
+                columns: table => new
+                {
+                    MemberId = table.Column<int>(type: "int", nullable: false),
+                    VoucherId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserVouchers", x => new { x.MemberId, x.VoucherId });
+                    table.ForeignKey(
+                        name: "FK_UserVouchers_User_MemberId",
+                        column: x => x.MemberId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserVouchers_Vouchers_VoucherId",
+                        column: x => x.VoucherId,
+                        principalTable: "Vouchers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OrderDetail",
                 columns: table => new
                 {
-                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    OrderId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Count = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Disable = table.Column<bool>(type: "bit", nullable: false),
@@ -291,10 +376,10 @@ namespace TuanBuy.Migrations
                     { 1, null, null, null, false, "123@gmail.com", null, "小王", "賣貓的小王", "123456", null, "637843188933582087init.jpg", 1, "正式會員" },
                     { 2, null, null, null, false, "456@gmail.com", null, "小明", "賣鮭魚的小明", "123456", null, "637843188933582087init.jpg", 1, "正式會員" },
                     { 3, null, null, null, false, "789@gmail.com", null, "小張", "賣記憶體的小張", "123456", null, "637843188933582087init.jpg", 1, "正式會員" },
-                    { 4, null, null, null, false, "Lynn@gmail.com", null, "Lynn", "Lynn", "123456", null, "637843188933582087init.jpg", 1, "正式會員" },
-                    { 5, null, null, null, false, "Benny@gmail.com", null, "Benny", "Benny", "123456", null, "637843188933582087init.jpg", 1, "正式會員" },
-                    { 6, null, null, null, false, "Harry@gmail.com", null, "Harry", "Harry", "123456", null, "637843188933582087init.jpg", 1, "正式會員" },
-                    { 7, null, null, null, false, "GGAA@gmail.com", null, "GGAA", "GGAA", "123456", null, "637843188933582087init.jpg", 1, "正式會員" }
+                    { 4, null, null, null, false, "Lynn@gmail.com", null, "Lynn", "Lynn", "123456", null, "637843188933582087init.jpg", 1, "系統管理員" },
+                    { 5, null, null, null, false, "Benny@gmail.com", null, "Benny", "Benny", "123456", null, "637843188933582087init.jpg", 1, "系統管理員" },
+                    { 6, null, null, null, false, "Harry@gmail.com", null, "Harry", "Harry", "123456", null, "637843188933582087init.jpg", 1, "系統管理員" },
+                    { 7, null, null, null, false, "GGAA@gmail.com", null, "GGAA", "GGAA", "123456", null, "637843188933582087init.jpg", 1, "系統管理員" }
                 });
 
             migrationBuilder.InsertData(
@@ -302,15 +387,15 @@ namespace TuanBuy.Migrations
                 columns: new[] { "Id", "Address", "CreateDate", "Description", "Disable", "PaymentType", "Phone", "StateId", "UserId" },
                 values: new object[,]
                 {
-                    { 1, "送貨地址", new DateTime(2022, 4, 16, 10, 8, 1, 708, DateTimeKind.Local).AddTicks(7744), "訂單描述", false, 1, "091234567", 1, 1 },
-                    { 8, "送貨地址", new DateTime(2022, 4, 16, 10, 8, 1, 710, DateTimeKind.Local).AddTicks(8882), "小王跟Lynn購買產品", false, 1, "0987654", 2, 1 },
-                    { 5, "送貨地址", new DateTime(2022, 4, 16, 10, 8, 1, 710, DateTimeKind.Local).AddTicks(8737), "Benny跟Harry購買產品", false, 1, "0987654", 2, 5 },
-                    { 2, "送貨地址", new DateTime(2022, 4, 16, 10, 8, 1, 710, DateTimeKind.Local).AddTicks(8541), "訂單描述", false, 1, "091234567", 2, 2 },
-                    { 9, "送貨地址", new DateTime(2022, 4, 16, 10, 8, 1, 710, DateTimeKind.Local).AddTicks(8924), "小明跟Lynn購買產品", false, 1, "0987654", 2, 2 },
-                    { 4, "送貨地址", new DateTime(2022, 4, 16, 10, 8, 1, 710, DateTimeKind.Local).AddTicks(8693), "Benny跟Lynn購買產品", false, 1, "091234567", 2, 5 },
-                    { 3, "送貨地址", new DateTime(2022, 4, 16, 10, 8, 1, 710, DateTimeKind.Local).AddTicks(8645), "訂單描述", false, 1, "091234567", 3, 3 },
-                    { 7, "送貨地址", new DateTime(2022, 4, 16, 10, 8, 1, 710, DateTimeKind.Local).AddTicks(8840), "Harry跟Lynn購買產品", false, 1, "0987654", 2, 6 },
-                    { 6, "送貨地址", new DateTime(2022, 4, 16, 10, 8, 1, 710, DateTimeKind.Local).AddTicks(8789), "Lynn跟Harry購買產品", false, 1, "0987654", 2, 4 }
+                    { "1", "送貨地址", new DateTime(2022, 4, 21, 15, 16, 13, 689, DateTimeKind.Local).AddTicks(5201), "訂單描述", false, 1, "091234567", 1, 1 },
+                    { "8", "送貨地址", new DateTime(2022, 4, 21, 15, 16, 13, 691, DateTimeKind.Local).AddTicks(3895), "小王跟Lynn購買產品", false, 1, "0987654", 2, 1 },
+                    { "5", "送貨地址", new DateTime(2022, 4, 21, 15, 16, 13, 691, DateTimeKind.Local).AddTicks(3655), "Benny跟Harry購買產品", false, 1, "0987654", 2, 5 },
+                    { "2", "送貨地址", new DateTime(2022, 4, 21, 15, 16, 13, 691, DateTimeKind.Local).AddTicks(3464), "訂單描述", false, 1, "091234567", 2, 2 },
+                    { "9", "送貨地址", new DateTime(2022, 4, 21, 15, 16, 13, 691, DateTimeKind.Local).AddTicks(3938), "小明跟Lynn購買產品", false, 1, "0987654", 2, 2 },
+                    { "4", "送貨地址", new DateTime(2022, 4, 21, 15, 16, 13, 691, DateTimeKind.Local).AddTicks(3612), "Benny跟Lynn購買產品", false, 1, "091234567", 2, 5 },
+                    { "3", "送貨地址", new DateTime(2022, 4, 21, 15, 16, 13, 691, DateTimeKind.Local).AddTicks(3565), "訂單描述", false, 1, "091234567", 3, 3 },
+                    { "7", "送貨地址", new DateTime(2022, 4, 21, 15, 16, 13, 691, DateTimeKind.Local).AddTicks(3852), "Harry跟Lynn購買產品", false, 1, "0987654", 2, 6 },
+                    { "6", "送貨地址", new DateTime(2022, 4, 21, 15, 16, 13, 691, DateTimeKind.Local).AddTicks(3750), "Lynn跟Harry購買產品", false, 1, "0987654", 2, 4 }
                 });
 
             migrationBuilder.InsertData(
@@ -318,14 +403,14 @@ namespace TuanBuy.Migrations
                 columns: new[] { "Id", "Category", "Content", "CreateTime", "Description", "Disable", "EndTime", "Name", "Price", "Total", "UserId" },
                 values: new object[,]
                 {
-                    { 7, "食品", "堅持手工製作，外酥內Q的迷人口感，多種披薩口味任選，簡單加熱就能享用，香氣濃郁成份單純，點心宵夜絕對便利的美味～", new DateTime(2022, 4, 16, 10, 8, 1, 699, DateTimeKind.Local).AddTicks(7288), "堅持手工製作，外酥內Q的迷人口感，多種披薩口味任選，簡單加熱就能享用，香氣濃郁成份單純，點心宵夜絕對便利的美味～", false, new DateTime(2022, 4, 26, 10, 8, 1, 699, DateTimeKind.Local).AddTicks(7290), "手工製作披薩", 300m, 10000m, 4 },
-                    { 6, "食品", "這款雪糕你吃過沒？格子脆皮餅乾裡面有香甜綿密的雪糕，百吃不厭的香草口味，配上酥脆餅皮口感，絕對大滿足～還有多種口味任選", new DateTime(2022, 4, 16, 10, 8, 1, 699, DateTimeKind.Local).AddTicks(7234), "這款雪糕你吃過沒？格子脆皮餅乾裡面有香甜綿密的雪糕，百吃不厭的香草口味，配上酥脆餅皮口感，絕對大滿足～還有多種口味任選", false, new DateTime(2022, 4, 26, 10, 8, 1, 699, DateTimeKind.Local).AddTicks(7235), "脆餅雪糕", 50m, 10000m, 4 },
-                    { 4, "食品", "吃的到蝦仁的月亮蝦餅", new DateTime(2022, 4, 16, 10, 8, 1, 699, DateTimeKind.Local).AddTicks(7110), "吃的到蝦仁的月亮蝦餅                                                                                                  ", false, new DateTime(2022, 4, 26, 10, 8, 1, 699, DateTimeKind.Local).AddTicks(7111), "月亮蝦餅", 100m, 10000m, 3 },
-                    { 3, "3C", "便宜好用ㄉ記憶體", new DateTime(2022, 4, 16, 10, 8, 1, 699, DateTimeKind.Local).AddTicks(7038), "記憶體是要描述什麼                                                                                                      ", false, new DateTime(2022, 4, 26, 10, 8, 1, 699, DateTimeKind.Local).AddTicks(7040), "記憶體", 300m, 10000m, 3 },
-                    { 2, "食品", "擁有水中珍品美譽的智力鮭魚，富含對人體有益的魚油，產地捕撈後隨即低溫急速冷凍鎖住新鮮與營養，美味直送到家！", new DateTime(2022, 4, 16, 10, 8, 1, 699, DateTimeKind.Local).AddTicks(6731), "擁有水中珍品美譽的智力鮭魚，富含對人體有益的魚油，產地捕撈後隨即低溫急速冷凍鎖住新鮮與營養，美味直送到家！              ", false, new DateTime(2022, 4, 26, 10, 8, 1, 699, DateTimeKind.Local).AddTicks(6879), "鮭魚", 50m, 1000m, 2 },
-                    { 1, "食品", "不知道可不可以吃的貓咪", new DateTime(2022, 4, 16, 10, 8, 1, 690, DateTimeKind.Local).AddTicks(8065), "不知道可不可以吃                                                                                                        ", false, new DateTime(2022, 4, 26, 10, 8, 1, 691, DateTimeKind.Local).AddTicks(5829), "貓貓", 50m, 1000m, 1 },
-                    { 5, "食品", "厚切達3公分！精選Prime極佳級，原塊現切牛肉，大理石紋路般的油花分布，讓人為之瘋狂～口感柔嫩多汁，絕對滿足想大口吃肉的你", new DateTime(2022, 4, 16, 10, 8, 1, 699, DateTimeKind.Local).AddTicks(7176), "厚切達3公分！精選Prime極佳級，原塊現切牛肉，大理石紋路般的油花分布，讓人為之瘋狂～口感柔嫩多汁，絕對滿足想大口吃肉的你", false, new DateTime(2022, 4, 26, 10, 8, 1, 699, DateTimeKind.Local).AddTicks(7177), "Prime-原塊現切牛肉", 200m, 10000m, 4 },
-                    { 8, "食品", "堅持手工製作，外酥內Q的迷人口感，多種披薩口味任選，簡單加熱就能享用，香氣濃郁成份單純，點心宵夜絕對便利的美味～", new DateTime(2022, 4, 16, 10, 8, 1, 699, DateTimeKind.Local).AddTicks(7402), "堅持手工製作，外酥內Q的迷人口感，多種披薩口味任選，簡單加熱就能享用，香氣濃郁成份單純，點心宵夜絕對便利的美味～", false, new DateTime(2022, 4, 26, 10, 8, 1, 699, DateTimeKind.Local).AddTicks(7404), "魔法仗", 300m, 20000m, 6 }
+                    { 7, "美食", "堅持手工製作，外酥內Q的迷人口感，多種披薩口味任選，簡單加熱就能享用，香氣濃郁成份單純，點心宵夜絕對便利的美味～", new DateTime(2022, 4, 21, 15, 16, 13, 686, DateTimeKind.Local).AddTicks(2381), "堅持手工製作，外酥內Q的迷人口感，多種披薩口味任選，簡單加熱就能享用，香氣濃郁成份單純，點心宵夜絕對便利的美味～", false, new DateTime(2022, 5, 1, 15, 16, 13, 686, DateTimeKind.Local).AddTicks(2382), "手工製作披薩", 300m, 10000m, 4 },
+                    { 6, "美食", "這款雪糕你吃過沒？格子脆皮餅乾裡面有香甜綿密的雪糕，百吃不厭的香草口味，配上酥脆餅皮口感，絕對大滿足～還有多種口味任選", new DateTime(2022, 4, 21, 15, 16, 13, 686, DateTimeKind.Local).AddTicks(2335), "這款雪糕你吃過沒？格子脆皮餅乾裡面有香甜綿密的雪糕，百吃不厭的香草口味，配上酥脆餅皮口感，絕對大滿足～還有多種口味任選", false, new DateTime(2022, 5, 1, 15, 16, 13, 686, DateTimeKind.Local).AddTicks(2336), "脆餅雪糕", 50m, 10000m, 4 },
+                    { 4, "美食", "吃的到蝦仁的月亮蝦餅", new DateTime(2022, 4, 21, 15, 16, 13, 686, DateTimeKind.Local).AddTicks(2239), "吃的到蝦仁的月亮蝦餅                                                                                                  ", false, new DateTime(2022, 5, 1, 15, 16, 13, 686, DateTimeKind.Local).AddTicks(2240), "月亮蝦餅", 100m, 10000m, 3 },
+                    { 3, "3C", "便宜好用ㄉ記憶體", new DateTime(2022, 4, 21, 15, 16, 13, 686, DateTimeKind.Local).AddTicks(2177), "記憶體是要描述什麼                                                                                                      ", false, new DateTime(2022, 5, 1, 15, 16, 13, 686, DateTimeKind.Local).AddTicks(2178), "記憶體", 300m, 10000m, 3 },
+                    { 2, "美食", "擁有水中珍品美譽的智力鮭魚，富含對人體有益的魚油，產地捕撈後隨即低溫急速冷凍鎖住新鮮與營養，美味直送到家！", new DateTime(2022, 4, 21, 15, 16, 13, 686, DateTimeKind.Local).AddTicks(2020), "擁有水中珍品美譽的智力鮭魚，富含對人體有益的魚油，產地捕撈後隨即低溫急速冷凍鎖住新鮮與營養，美味直送到家！              ", false, new DateTime(2022, 5, 1, 15, 16, 13, 686, DateTimeKind.Local).AddTicks(2039), "鮭魚", 50m, 1000m, 2 },
+                    { 1, "美食", "不知道可不可以吃的貓咪", new DateTime(2022, 4, 21, 15, 16, 13, 677, DateTimeKind.Local).AddTicks(9582), "不知道可不可以吃                                                                                                        ", false, new DateTime(2022, 5, 1, 15, 16, 13, 679, DateTimeKind.Local).AddTicks(201), "貓貓", 50m, 1000m, 1 },
+                    { 5, "美食", "厚切達3公分！精選Prime極佳級，原塊現切牛肉，大理石紋路般的油花分布，讓人為之瘋狂～口感柔嫩多汁，絕對滿足想大口吃肉的你", new DateTime(2022, 4, 21, 15, 16, 13, 686, DateTimeKind.Local).AddTicks(2287), "厚切達3公分！精選Prime極佳級，原塊現切牛肉，大理石紋路般的油花分布，讓人為之瘋狂～口感柔嫩多汁，絕對滿足想大口吃肉的你", false, new DateTime(2022, 5, 1, 15, 16, 13, 686, DateTimeKind.Local).AddTicks(2288), "Prime-原塊現切牛肉", 200m, 10000m, 4 },
+                    { 8, "乾糧", "堅持手工製作，外酥內Q的迷人口感，多種披薩口味任選，簡單加熱就能享用，香氣濃郁成份單純，點心宵夜絕對便利的美味～", new DateTime(2022, 4, 21, 15, 16, 13, 686, DateTimeKind.Local).AddTicks(2426), "堅持手工製作，外酥內Q的迷人口感，多種披薩口味任選，簡單加熱就能享用，香氣濃郁成份單純，點心宵夜絕對便利的美味～", false, new DateTime(2022, 5, 1, 15, 16, 13, 686, DateTimeKind.Local).AddTicks(2427), "魔法仗", 300m, 20000m, 6 }
                 });
 
             migrationBuilder.InsertData(
@@ -333,15 +418,15 @@ namespace TuanBuy.Migrations
                 columns: new[] { "OrderId", "Count", "Disable", "Price", "ProductId" },
                 values: new object[,]
                 {
-                    { 1, 18, false, 500m, 1 },
-                    { 7, 20, false, 1000m, 5 },
-                    { 2, 10, false, 1000m, 2 },
-                    { 5, 10, false, 1000m, 6 },
-                    { 3, 10, false, 500m, 3 },
-                    { 4, 20, false, 8000m, 5 },
-                    { 8, 20, false, 1000m, 5 },
-                    { 6, 5, false, 1000m, 8 },
-                    { 9, 20, false, 1000m, 6 }
+                    { "1", 18, false, 500m, 1 },
+                    { "7", 20, false, 1000m, 5 },
+                    { "2", 10, false, 1000m, 2 },
+                    { "5", 10, false, 1000m, 6 },
+                    { "3", 10, false, 500m, 3 },
+                    { "4", 20, false, 8000m, 5 },
+                    { "8", 20, false, 1000m, 5 },
+                    { "6", 5, false, 1000m, 8 },
+                    { "9", 20, false, 1000m, 6 }
                 });
 
             migrationBuilder.InsertData(
@@ -404,6 +489,21 @@ namespace TuanBuy.Migrations
                 name: "IX_ProductSellerReplies_ProductMessageId",
                 table: "ProductSellerReplies",
                 column: "ProductMessageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserNotify_Category",
+                table: "UserNotify",
+                column: "Category");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserNotify_UserId",
+                table: "UserNotify",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserVouchers_VoucherId",
+                table: "UserVouchers",
+                column: "VoucherId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -427,6 +527,12 @@ namespace TuanBuy.Migrations
                 name: "ProductSellerReplies");
 
             migrationBuilder.DropTable(
+                name: "UserNotify");
+
+            migrationBuilder.DropTable(
+                name: "UserVouchers");
+
+            migrationBuilder.DropTable(
                 name: "ChatRooms");
 
             migrationBuilder.DropTable(
@@ -434,6 +540,12 @@ namespace TuanBuy.Migrations
 
             migrationBuilder.DropTable(
                 name: "ProductMessages");
+
+            migrationBuilder.DropTable(
+                name: "NotifyCategory");
+
+            migrationBuilder.DropTable(
+                name: "Vouchers");
 
             migrationBuilder.DropTable(
                 name: "OrderState");

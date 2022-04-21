@@ -62,7 +62,29 @@ namespace TuanBuy.ViewModel
         public string Color { get; set; }
         //產品圖片
         public List<string> ProductPicPath { get; set; }
+        //熱門產品陣列
+        public List<HotProductViewModel> HotProducts { get; set; }
     }
+    public class HotProductViewModel
+    {
+        //熱門產品href
+        public string HotProducthref { get; set; }
+        //熱門產品標題
+        public string HotProductTitle { get; set; }
+        //熱門產品賣家
+        public string HotProductSeller { get; set; }
+        //熱門產品賣家Id
+        public string HotProductSellerhref { get; set; }
+        //熱門產品描述
+        public string HotProductDescribe { get; set; }
+        //熱門產品剩餘開團時間
+        public string HotProductLastTime { get; set; }
+
+        //熱門產品累積金額
+        public dynamic HotProductPrice { get; set; }
+
+    }
+
     public class ProductMessageViewModel
     {
         //留言id
@@ -93,6 +115,8 @@ namespace TuanBuy.ViewModel
         public string ProductDescription { get; set; }
         //產品單價
         public decimal ProductPrice { get; set; }
+        //產品數量
+        public int ProductCount { get; set; } = 1;
         //買家Id
         public int BuyerId { get; set; }
         //買家姓名
@@ -110,5 +134,18 @@ namespace TuanBuy.ViewModel
 
         public int ProductPrice { get; set; }
     }
+    public class AddOrderViewModel
+    {
+        public string OrderDescription { get; set; }
 
+        public string BuyerAddress { get; set; }
+
+        public string Phone { get; set; }
+
+        public string PaymentType { get; set; }
+
+        public int BuyerId { get; set; }
+
+        public int VouchersSum { get; set; }
+    }
 }

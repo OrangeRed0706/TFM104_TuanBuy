@@ -1,0 +1,515 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_BackstageLayout.cshtml";
+}
+
+<!--我的css-->
+<link rel="stylesheet" href="~/css/back.css">
+<div class="content-inner w-100" id="app">
+    <!-- Page Header-->
+    <header class="bg-white shadow-sm px-4 py-3 z-index-20">
+        <div class="container-fluid px-0">
+            <h2 class="mb-0 p-1">Forms</h2>
+        </div>
+    </header>
+    <!-- Breadcrumb-->
+    <div class="bg-white">
+        <div class="container-fluid">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 py-3">
+                    <li class="breadcrumb-item"><a class="fw-light" href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active fw-light" aria-current="page">Forms</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Forms Section-->
+    <section class="forms">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Basic Form-->
+                <div class="col-lg-6">
+                    <div class="card" >
+                        <div class="card-header couponstitle">
+                            <div class="card-close">
+                                <div class="dropdown">
+                                    <button class="dropdown-toggle text-sm" type="button" id="closeCard1" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>
+                                    <div class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="closeCard1"><a class="dropdown-item py-1 px-3 remove" href="#"> <i class="fas fa-times"></i>Close</a><a class="dropdown-item py-1 px-3 edit" href="#"> <i class="fas fa-cog"></i>Edit</a></div>
+                                </div>
+                            </div>
+                            <h3 class="h4 mb-0">新增優惠卷</h3>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-sm">新增優惠卷種類供使用者兌換使用</p>
+                            <div class="mb-3">
+                                <label class="form-label">優惠卷兌換名稱</label>
+                                <input class="form-control" id="exampleInputEmail1" type="text" v-model="vouchers.voucherName">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="exampleInputPassword1">優惠卷廣告描述</label>
+                                <input class="form-control" id="exampleInputPassword1" type="tel" v-model="vouchers.voucherDescribe">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="exampleInputPassword1">折價描述</label>
+                                <input class="form-control" id="exampleInputPassword1" type="tel" v-model="vouchers.discountDescribe">
+                                <div class="form-text">如:滿399折50等.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="exampleInputPassword1">折扣金額</label>
+                                <input class="form-control" id="exampleInputPassword1" type="number" min="0" v-model="vouchers.vouchersDiscount">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="exampleInputPassword1">折扣金額條件</label>
+                                <input class="form-control" id="exampleInputPassword1" type="number" min="0" v-model="vouchers.vouchersAvlAmount">
+                                <div class="form-text">可設定多少金額即可達到折扣條件.</div>
+                            </div>
+                            <button class="btn btn-primary" type="button" v-on:click="AddVoucher()">建立</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Horizontal Form-->
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header linebot" >
+                            <div class="card-close">
+                                <div class="dropdown">
+                                    <button class="dropdown-toggle text-sm" type="button" id="closeCard1" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>
+                                    <div class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="closeCard1"><a class="dropdown-item py-1 px-3 remove" href="#"> <i class="fas fa-times"></i>Close</a><a class="dropdown-item py-1 px-3 edit" href="#"> <i class="fas fa-cog"></i>Edit</a></div>
+                                </div>
+                            </div>
+                            <h3 class="h4 mb-0">LINE BOT</h3>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-sm">發送LINE訊息給使用者</p>
+                            <form class="form-horizontal">
+                                <div class="row gy-2 mb-4">
+                                    <label class="col-sm-3 form-label" for="inputHorizontalElOne">Email</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" id="inputHorizontalElOne" type="email" placeholder="Email Address"><small class="form-text">傳送給所有使用者</small>
+                                    </div>
+                                </div>
+                                <div class="row gy-2 mb-4">
+                                    <label class="col-sm-3 form-label" for="inputHorizontalElTwo">訊息輸入</label>
+                                    <div class="col-sm-9">
+                                        <textarea class="form-control linetext" placeholder="輸入內容" ></textarea><small class="form-text">發送提醒通知or促銷廣告給使用者</small>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-9 ms-auto">
+                                        <input class="btn btn-primary" type="submit" value="發送">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Inline Form-->
+                <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-close">
+                                <div class="dropdown">
+                                    <button class="dropdown-toggle text-sm" type="button" id="closeCard1" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>
+                                    <div class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="closeCard1"><a class="dropdown-item py-1 px-3 remove" href="#"> <i class="fas fa-times"></i>Close</a><a class="dropdown-item py-1 px-3 edit" href="#"> <i class="fas fa-cog"></i>Edit</a></div>
+                                </div>
+                            </div>
+                            <h3 class="h4 mb-0">Inline Form</h3>
+                        </div>
+                        <div class="card-body">
+                            <form class="row g-3 align-items-center">
+                                <div class="col-lg">
+                                    <label class="visually-hidden" for="inlineFormInputGroupUsername">Username</label>
+                                    <div class="input-group">
+                                        <div class="input-group-text"></div>
+                                        <input class="form-control" id="inlineFormInputGroupUsername" type="text" placeholder="Username">
+                                    </div>
+                                </div>
+                                <div class="col-lg">
+                                    <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+                                    <select class="form-select" id="inlineFormSelectPref">
+                                        <option selected>Choose...</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg">
+                                    <button class="btn btn-primary" type="submit">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal Form-->
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-close">
+                                <div class="dropdown">
+                                    <button class="dropdown-toggle text-sm" type="button" id="closeCard1" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>
+                                    <div class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="closeCard1"><a class="dropdown-item py-1 px-3 remove" href="#"> <i class="fas fa-times"></i>Close</a><a class="dropdown-item py-1 px-3 edit" href="#"> <i class="fas fa-cog"></i>Edit</a></div>
+                                </div>
+                            </div>
+                            <h3 class="mb-0">Signin Modal</h3>
+                        </div>
+                        <div class="card-body text-center">
+                            <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#myModal">Form in simple modal </button>
+                            <!-- Modal-->
+                            <div class="modal fade text-start" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="myModalLabel">Signin Modal</h5>
+                                            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Lorem ipsum dolor sit amet consectetur.</p>
+                                            <form>
+                                                <div class="mb-3">
+                                                    <label class="form-label" for="modalInputEmail1">Email address</label>
+                                                    <input class="form-control" id="modalInputEmail1" type="email" aria-describedby="emailHelp">
+                                                    <div class="form-text" id="emailHelp">We'll never share your email with anyone else.</div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label" for="modalInputPassword1">Password</label>
+                                                    <input class="form-control" id="modalInputPassword1" type="password">
+                                                </div>
+                                                <button class="btn btn-primary" type="submit">Submit</button>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+                                            <button class="btn btn-primary" type="button">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Form Elements -->
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-close">
+                                <div class="dropdown">
+                                    <button class="dropdown-toggle text-sm" type="button" id="closeCard1" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>
+                                    <div class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="closeCard1"><a class="dropdown-item py-1 px-3 remove" href="#"> <i class="fas fa-times"></i>Close</a><a class="dropdown-item py-1 px-3 edit" href="#"> <i class="fas fa-cog"></i>Edit</a></div>
+                                </div>
+                            </div>
+                            <h3 class="h4 mb-0">All form elements</h3>
+                        </div>
+                        <div class="card-body">
+                            <form class="form-horizontal">
+                                <div class="row">
+                                    <label class="col-sm-3 form-label">Normal</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text">
+                                    </div>
+                                </div>
+                                <div class="border-bottom my-5 border-gray-200"></div>
+                                <div class="row">
+                                    <label class="col-sm-3 form-label">Help text</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text"><small class="form-text">A block of help text that breaks onto a new line and may extend beyond one line.</small>
+                                    </div>
+                                </div>
+                                <div class="border-bottom my-5 border-gray-200"></div>
+                                <div class="row">
+                                    <label class="col-sm-3 form-label">Password</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="password" name="password">
+                                    </div>
+                                </div>
+                                <div class="border-bottom my-5 border-gray-200"></div>
+                                <div class="row">
+                                    <label class="col-sm-3 form-label">Placeholder</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" placeholder="placeholder">
+                                    </div>
+                                </div>
+                                <div class="border-bottom my-5 border-gray-200"></div>
+                                <div class="row">
+                                    <label class="col-sm-3 form-label">Disabled</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" disabled="" placeholder="Disabled input here...">
+                                    </div>
+                                </div>
+                                <div class="border-bottom my-5 border-gray-200"></div>
+                                <div class="row">
+                                    <label class="col-sm-3 form-label">Checkboxes &amp; radios <br><small class="text-primary">Custom elements</small></label>
+                                    <div class="col-sm-9">
+                                        <div class="form-check">
+                                            <input class="form-check-input" id="defaultCheck0" type="checkbox">
+                                            <label class="form-check-label" for="defaultCheck0">Option one</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" id="defaultCheck1" type="checkbox" checked>
+                                            <label class="form-check-label" for="defaultCheck1">Option two checked</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" id="defaultCheck2" type="checkbox" checked disabled>
+                                            <label class="form-check-label" for="defaultCheck2">Option three checked and disabled</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" id="defaultCheck3" type="checkbox" disabled>
+                                            <label class="form-check-label" for="defaultCheck3">Option four disabled</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" id="defaultRadio0" type="radio" name="exampleRadios">
+                                            <label class="form-check-label" for="defaultRadio0">Option one</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" id="defaultRadio1" type="radio" name="exampleRadios" checked>
+                                            <label class="form-check-label" for="defaultRadio1">Option two checked</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" id="defaultRadio2" type="radio" name="exampleRadios" checked disabled>
+                                            <label class="form-check-label" for="defaultRadio2">Option three checked and disabled</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" id="defaultRadio3" type="radio" name="exampleRadios" disabled>
+                                            <label class="form-check-label" for="defaultRadio3">Option four disabled</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="border-bottom my-5 border-gray-200"></div>
+                                <div class="row">
+                                    <label class="col-sm-3 form-label">Select</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-select mb-3" name="account">
+                                            <option>option 1</option>
+                                            <option>option 2</option>
+                                            <option>option 3</option>
+                                            <option>option 4</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-9 offset-sm-3">
+                                        <select class="form-select" multiple="">
+                                            <option>option 1</option>
+                                            <option>option 2</option>
+                                            <option>option 3</option>
+                                            <option>option 4</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="border-bottom my-5 border-gray-200"></div>
+                                <div class="row">
+                                    <label class="col-sm-3 form-label" for="formFile">File input</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" id="formFile" type="file">
+                                    </div>
+                                </div>
+                                <div class="border-bottom my-5 border-gray-200"></div>
+                                <div class="row">
+                                    <label class="col-sm-3 form-label">Input with success</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control is-valid" type="text">
+                                        <div class="valid-feedback">Looks good!</div>
+                                    </div>
+                                </div>
+                                <div class="border-bottom my-5 border-gray-200"></div>
+                                <div class="row">
+                                    <label class="col-sm-3 form-label">Input with error</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control is-invalid" type="text">
+                                        <div class="invalid-feedback">Please provide your name.</div>
+                                    </div>
+                                </div>
+                                <div class="border-bottom my-5 border-gray-200"></div>
+                                <div class="row">
+                                    <label class="col-sm-3 form-label">Control sizing</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control form-control-lg mb-3" type="text" placeholder=".input-lg">
+                                        <input class="form-control mb-3" type="text" placeholder="Default input">
+                                        <input class="form-control form-control-sm mb-3" type="text" placeholder=".input-sm">
+                                    </div>
+                                </div>
+                                <div class="border-bottom my-5 border-gray-200"></div>
+                                <div class="row">
+                                    <label class="col-sm-3 form-label">Column sizing</label>
+                                    <div class="col-sm-9">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <input class="form-control" type="text" placeholder=".col-md-3">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input class="form-control" type="text" placeholder=".col-md-4">
+                                            </div>
+                                            <div class="col-md-5">
+                                                <input class="form-control" type="text" placeholder=".col-md-5">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="border-bottom my-5 border-gray-200"> </div>
+                                <div class="row">
+                                    <label class="col-sm-3 form-label">Material Inputs</label>
+                                    <div class="col-sm-9">
+                                        <div class="input-material-group mb-3">
+                                            <input class="input-material" id="register-username" type="text" name="registerUsername" required value="Jason Doe">
+                                            <label class="label-material" for="register-username">Username</label>
+                                        </div>
+                                        <div class="input-material-group mb-3">
+                                            <input class="input-material" id="register-email" type="email" name="registerEmail" required>
+                                            <label class="label-material" for="register-email">Email Address      </label>
+                                        </div>
+                                        <div class="input-material-group mb-3">
+                                            <input class="input-material" id="register-password" type="password" name="registerPassword" required>
+                                            <label class="label-material" for="register-password">Password     </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="border-bottom my-5 border-gray-200"></div>
+                                <div class="row">
+                                    <label class="col-sm-3 form-label">Input groups</label>
+                                    <div class="col-sm-9">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1"></span>
+                                            <input class="form-control" type="text" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <input class="form-control" type="text" placeholder="Username" aria-label="Username" aria-describedby="basic-addon2"><span class="input-group-text" id="basic-addon2"></span>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-text">
+                                                <input class="form-check-input mt-0" type="checkbox" aria-label="Checkbox for following text input">
+                                            </div>
+                                            <input class="form-control" type="text" aria-label="Text input with checkbox">
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <input class="form-control" type="text" aria-label="Text input with radio button">
+                                            <div class="input-group-text">
+                                                <input class="form-check-input mt-0" type="radio" aria-label="Radio button for following text input">
+                                            </div>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text">$</span><span class="input-group-text">0.00</span>
+                                            <input class="form-control" type="text" aria-label="Dollar amount (with dot and two decimal places)">
+                                        </div>
+                                        <div class="input-group">
+                                            <input class="form-control" type="text" aria-label="Dollar amount (with dot and two decimal places)"><span class="input-group-text">$</span><span class="input-group-text">0.00</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="border-bottom my-5 border-gray-200"></div>
+                                <div class="row">
+                                    <label class="col-sm-3 form-label">Button addons</label>
+                                    <div class="col-sm-9">
+                                        <div class="input-group mb-3">
+                                            <button class="btn btn-primary" id="button-addon1" type="button">Button</button>
+                                            <input class="form-control" type="text" placeholder aria-label="Example text with button addon" aria-describedby="button-addon1">
+                                        </div>
+                                        <div class="input-group">
+                                            <input class="form-control" type="text" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                            <button class="btn btn-primary" id="button-addon2" type="button">Button</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="border-bottom my-5 border-gray-200"></div>
+                                <div class="row">
+                                    <label class="col-sm-3 form-label">With dropdowns</label>
+                                    <div class="col-sm-9">
+                                        <div class="input-group">
+                                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</button>
+                                            <ul class="dropdown-menu shadow-sm">
+                                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                                <li><a class="dropdown-item" href="#">Separated link</a></li>
+                                            </ul>
+                                            <input class="form-control" type="text" aria-label="Text input with dropdown button">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="border-bottom my-5 border-gray-200"></div>
+                                <div class="row">
+                                    <div class="col-sm-9 ms-auto">
+                                        <button class="btn btn-secondary" type="reset">Cancel</button>
+                                        <button class="btn btn-primary" type="submit">Save changes</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Page Footer-->
+    <footer class="position-absolute bottom-0 bg-darkBlue text-white text-center py-3 w-100 text-xs" id="footer">
+        <div class="container-fluid">
+            <div class="row gy-2">
+                <div class="col-sm-6 text-sm-start">
+                    <p class="mb-0">Your company &copy; 2017-2021</p>
+                </div>
+                <div class="col-sm-6 text-sm-end">
+                    <p class="mb-0">Design by <a href="https://bootstrapious.com/p/admin-template" class="text-white text-decoration-none">Bootstrapious</a></p>
+                    <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+
+
+
+
+
+<script>
+    class Vouchers {
+        voucherName = '';
+        voucherDescribe = '';
+        discountDescribe = '';
+        vouchersDiscount = 0;
+        vouchersAvlAmount = 0;
+    }
+    var app = new Vue({
+        el: '#app',
+        data: {
+            user: "",
+            picPath: "",
+            vouchers: new Vouchers(),
+        },
+        mounted: function () {
+
+        },
+        methods: {
+            AddVoucher: function () {
+                //判斷資料是否有填寫完
+                for (let i in app.vouchers) {
+                    if (app.vouchers[i] === '' || app.vouchers[i] == 0) {
+                        alert("資料請填寫完整");
+                        break;
+                    }
+                    else {
+                        //資料若都有填寫送出優惠卷表單
+                        $.ajax({
+                            type: "POST",
+                            url: "/BackstageMange/AddVouchers",
+                            data: {
+                                VouchersTitle: app.vouchers.voucherName,
+                                VouchersDescribe: app.vouchers.voucherDescribe,
+                                DiscountDescribe: app.vouchers.discountDescribe,
+                                VouchersDiscount: app.vouchers.vouchersDiscount,
+                                VouchersAvlAmount: app.vouchers.vouchersAvlAmount,
+                            },
+                            success: function (response) {
+                                alert('優惠卷新增成功');
+                                connection.invoke("SendMessage", "TuanBuy：", `優惠卷新增！請輸入：${app.vouchers.voucherName}兌換`).catch(function (err) {
+                                    return console.error(err.toString());
+                                });
+
+                            },
+                            error: function (response) {
+                                alert('發生例外錯誤');
+                            }
+                        });
+                        break;
+                    }
+                }
+            },
+        }
+    });
+</script>
+

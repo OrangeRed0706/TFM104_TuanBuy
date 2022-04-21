@@ -1,15 +1,91 @@
-﻿<script src="/VueComponent/VueDemo.js"></script>
+﻿
+<script src="/VueComponent/VueDemo.js"></script>
 
 
 <div class="container mtb2rem" id="app">
     <div class="row">
 
         <test v-bind:user="user"></test>
+        <div class="col-lg-10 purchasecolor">
+            <ul id="myTab" role="tablist" class="nav nav-tabs">
+                <li class="nav-item">
+                    <a id="all-tallab" data-toggle="tab" href="#all" role="tab" aria-controls="all" aria-selected="false" class="nav-link active">訂單</a>
+                </li>
+                <li class="nav-item">
+                    <a id="product1-tab" data-toggle="tab" href="#product1" role="tab" aria-controls="product1" aria-selected="false" class="nav-link">已處理</a>
+                </li>
+            </ul>
+            <div id="myTabContent" class="tab-content">
+                <div id="all" role="tabpanel" aria-labelledby="all-tab" class="tab-pane fade show active">
+                    <!---->
+                    <div class="purchaseback">
+                        <div class="order-list-header">
+                            <span class="order-list-item-product">商品</span>
+                            <span class="order-list-item-count">數量</span>
+                            <span class="order-list-item-total">付款金額</span>
+                            <span class="order-list-item-status">訂單日期</span>
+                            <span class="order-list-item-address">運送地址</span>
+                            <span class="order-list-item-message">備註</span>
+                        </div>
+                        @*訂單從這動態綁定*@
+                        <div v-for="item,index in orders" v-if="item.orderState ==2">
+                            <div class="order-item-header">
+                                <span>買家：{{item.buyerName}}<i class="fa fa-comments-o order-message-btn" aria-hidden="true"></i></span>
+                                <span>訂單編號：{{item.orderId}}<button class="order-btn" v-bind:id="item.orderId" v-on:click="goShipping(item.orderId,index)">出貨</button></span>
 
-        
+                            </div>
+                            <div class="order-detail">
+                                <span class="order-detail-product">
+                                    {{item.productDescription}}
+                                </span>
+                                <span class="order-detail-count">{{item.productCount}}</span>
+                                <span class="order-detail-total">{{item.total}}</span>
+                                <span class="order-detail-status">{{item.orderDateTime}}</span>
+                                <span class="order-detail-address">{{item.address}}</span>
+                                <span class="order-detail-message">{{item.orderDescription}}</span>
+                            </div>
+                        </div>
+                        @*訂單動態綁定結束*@
+                    </div>
+
+                </div>
+                <div id="product1" role="tabpanel" aria-labelledby="product1-tab" class="tab-pane fade">
+                    <!---->
+                    <div class="purchaseback">
+                        <div class="order-list-header">
+                            <span class="order-list-item-product">商品</span>
+                            <span class="order-list-item-count">數量</span>
+                            <span class="order-list-item-total">付款金額</span>
+                            <span class="order-list-item-status">訂單日期</span>
+                            <span class="order-list-item-address">運送地址</span>
+                            <span class="order-list-item-message">備註</span>
+                        </div>
+                        <div v-for="item in orders" v-if="item.orderState >2">
+                            @*已處理從這動態綁定*@
+                            <div class="order-item-header">
+                                <span>買家：{{item.buyerName}}<i class="fa fa-comments-o order-message-btn" aria-hidden="true"></i></span>
+                                <span class="order-span-padding">訂單編號：{{item.orderId}}</span>
+                            </div>
+                            <div class="order-detail">
+                                <span class="order-detail-product">
+                                    {{item.productDescription}}
+                                </span>
+                                <span class="order-detail-count">{{item.productCount}}</span>
+                                <span class="order-detail-total">{{item.total}}</span>
+                                <span class="order-detail-status">{{item.orderDateTime}}</span>
+                                <span class="order-detail-address">{{item.address}}</span>
+                                <span class="order-detail-message">{{item.orderDescription}}</span>
+                            </div>
+
+                            @*已處理動態綁定結束*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>
-
 
 
 <script>
@@ -19,14 +95,47 @@
             user: {
                 name: "",
                 PicPath: ""
+            },
+            orders:[],
+            test: {
+                id:0
             }
         },
         methods: {
+            goShipping:function (e,index) {
+                let self = this;
+                self.test.id = e;
+                //axios.post("/MemberCenter/GoShipping", {Id:e}).then((resp) => { this.user = resp.data });
+
+                $.ajax({
+                    type: "POST",
+                    url: "/MemberCenter/GoShipping",
+                    data: {
+                        Id: e
+                    },
+                    success: function (response) {
+                        console.log(response);
+                        console.log(index);
+                        if (response == "訂單狀態已被改變") {
+                            self.orders[index].orderState = 3;
+
+
+
+                        }
+                    },
+                    error: function (response) {
+                        alert(response);
+                    }
+                });
+
+            }
+
         },
         mounted: function () {
             let self = this;
             //抓取Url資訊
             axios.get("/api/MemberCenter/").then((resp) => { this.user = resp.data });
+            axios.get("/MemberCenter/GetSellerOrder").then((resp) => { this.orders = resp.data });
 
         },
         computed: {

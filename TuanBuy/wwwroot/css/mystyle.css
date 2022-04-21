@@ -491,6 +491,7 @@ footer {
     /* align-items: center;
 justify-content: center; */
     display: flex;
+    margin:.5rem;
 }
 
 .checkpoint {
@@ -554,6 +555,10 @@ justify-content: center; */
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     white-space: normal;
+    min-width: 41%;
+    min-height: 80px;
+    width: 785px;
+    max-width: 45%;
 }
 
 
@@ -588,22 +593,25 @@ justify-content: center; */
     align-items: center;
     border-radius: 2px;
     border: 1px solid rgba(0, 0, 0, 0.14);
-    box-shadow: rgb(0 0 0 / 2%) 0px 2px 0px 0px inset;
+    box-shadow: rgb(0 mt2rem0 0 / 2%) 0px 2px 0px 0px inset;
     color: rgb(34, 34, 34);
     height: 40px;
     padding: 10px;
     flex: 1 1 0%;
-    margin-left: 0.3rem;
+    margin: 0 1rem;
 }
 
 .checktextbtn {
-    margin-left: 0.5rem;
-    width: 4rem;
-    height: 2.5rem;
-    color: black;
-    background-color: white;
+    width: 5rem;
+    height: 2.7rem;
+    color: #fff;
+    background-color: rgba(0,0,0,.1);
     border: 2px solid #F5F5F5;
     border-radius: .25rem;
+}
+
+.checktextbtn:hover {
+    background-color: #ee4d2d;
 }
 
 .checkchosediv {
@@ -620,16 +628,30 @@ justify-content: center; */
     white-space: nowrap;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     white-space: normal;
-    width: 80%;
+    width: 25%;
+    margin-left: 0 1%;
+}
+
+.check-chose-p2 {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+    width: 18%;
+    color: #ee4d2d;
+    margin-left: 0 1%;
 }
 
 .checkcheckbox {
     width: 16px;
     height: 16px;
-    margin: auto .5rem;
+    /*    margin: auto .5rem;*/
 }
 
 
@@ -952,15 +974,20 @@ border: 0;
 }
 
 .purchaseback {
-    margin: 1% 0;
-    padding: 1% 0;
     background-color: white;
+    border-top: 1.5px solid #f6f6f6;
+    min-height:30rem;
 }
 
 .purchasecolor {
     border-radius: .25rem;
     height: 100%;
     width: 100%;
+}
+
+.purchasemg {
+    margin: 1rem 0;
+    border-bottom: 2px solid #f6f6f6
 }
 
 
@@ -2165,6 +2192,11 @@ p,
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    max-width:290px;
+}
+
+.card-title-max {
+    max-width: 290px;
 }
 
 .card-text {
@@ -2200,3 +2232,434 @@ p,
     .forgetpassbtn:hover {
         color: #007bff;
     }
+
+    .cardmgtp{
+        margin-top:15px;
+    }
+
+.order-list-header {
+    display: flex;
+    padding: 12px 16px;
+    background: #f6f6f6;
+    border-radius: 4px;
+    color: #757575;
+    font-size: 14px;
+    border: 1px solid #e8e8e8;
+    margin:1rem;
+}
+
+.order-list-item-product {
+    margin-right: 16px;
+    min-width: 230px;
+    max-width: 230px;
+    -webkit-box-flex: 1;
+    flex: 1;
+}
+
+.order-list-item-count {
+    margin-right: 16px;
+    min-width: 40px;
+    max-width: 40px;
+}
+
+.order-list-item-total {
+    margin-right: 16px;
+    min-width: 80px;
+    max-width: 80px;
+}
+
+.order-list-item-status {
+    margin-right: 16px;
+    min-width: 80px;
+    max-width: 80px;
+}
+
+.order-list-item-address {
+    margin-right: 16px;
+    color: #333;
+    word-break: break-all;
+    min-width: 150px;
+    max-width: 150px;
+}
+
+.order-list-item-message {
+    min-width: 200px;
+    max-width: 200px;
+}
+
+.order-item-header {
+    padding: 0 16px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    /*    width: 100%;*/
+    height: 40px;
+    border-bottom: 1px solid #e8e8e8;
+    background-color: hsla(0,0%,96%,.5);
+    margin: 0 1rem;
+    border: 1px solid #e8e8e8;
+    border-radius: 4px;
+}
+
+.order-detail {
+    display: flex;
+    padding: 12px 16px;
+    background: #FFF;
+    border-radius: 4px;
+    color: #666;
+    font-size: 14px;
+    border: 1px solid #e8e8e8;
+    margin: 0 1rem 1rem 1rem;
+    min-height:90px
+}
+
+.order-div{
+    border:2px solid #666;
+    display:block;
+}
+
+.order-detail-product {
+    margin-right: 16px;
+    min-width: 230px;
+    max-width: 230px;
+    -webkit-box-flex: 1;
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+}
+
+.order-detail-count {
+    margin-right: 16px;
+    min-width: 40px;
+    max-width: 40px;
+}
+
+.order-detail-total {
+    margin-right: 16px;
+    min-width: 80px;
+    max-width: 80px;
+}
+
+.order-detail-status {
+    margin-right: 16px;
+    min-width: 80px;
+    max-width: 80px;
+}
+
+.order-detail-address {
+    margin-right: 16px;
+    color: #333;
+    word-break: break-all;
+    min-width: 150px;
+    max-width: 150px;
+}
+
+.order-detail-message {
+    min-width: 200px;
+    max-width: 200px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+}
+
+.order-btn{
+    color:white;
+    background-color:crimson;
+    border:0;
+    font-weight:700;
+    margin-left:1rem;
+    border-radius:2px;
+    font-size:18px;
+}
+
+.order-message-btn {
+    color: darkorange;
+    margin-left: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.order-span-padding{
+    padding:4rem;
+}
+
+
+.notify-read {
+    display: flex;
+    justify-content: right;
+    border-bottom: 2px solid #f5f5f5;
+    min-height: 3rem;
+}
+
+.notify-read-btn {
+    border: 0;
+    background-color: transparent;
+    margin: auto .5rem;
+}
+
+.notify-read-btn:hover {
+    color: coral;
+}
+
+.notify-alldiv {
+    background-color: white;
+    border-radius: .25rem;
+    min-height: 30rem;
+    padding:0;
+}
+
+.card-img-top{
+    height:200px;
+    width:300px;
+}
+
+.mt2rem {
+    margin-top: 2rem;
+}
+
+.notifybtn {
+    border: 1px solid rgba(0, 0, 0, .09);
+    color: rgba(0, 0, 0, .8);
+    background-color: #fff;
+    max-height: 30px;
+    margin: auto;
+}
+
+.notifyright {
+    text-align: right;
+}
+
+.notifymgbt {
+    padding: .5rem;
+    display: flex;
+    min-width: 15%;
+    cursor: pointer;
+}
+
+.notifymgbt:hover {
+    background-color: #f6f6f6;
+}
+
+.notify-title-p {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin: auto;
+    font-size: 16px;
+    min-width: 10%;
+    margin: auto;
+    font-weight:700;
+}
+
+.notify-p {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+    min-width: 50%;
+    max-width: 50%;
+    margin: auto;
+    letter-spacing:.5px;
+}
+
+
+.notify-date {
+    min-width: 10%;
+    margin: auto;
+}
+
+.ready-prodct-card {
+    max-width: 50px;
+    position: absolute;
+    right: 10px;
+    top: 208px;
+}
+
+.demoproduct-item {
+    width: 650px;
+    margin: 10px;
+}
+
+/*優惠券*/
+.coupon-h {
+    margin:0 1%;
+}
+
+.coupon-save-div {
+    display: flex;
+    align-items: center;
+    background: rgb(248, 248, 248);
+    margin: 1%;
+    justify-content: center;
+}
+
+.coupon-save-span {
+    font-size:20px;
+}
+
+.coupon-save-input {
+    align-items: center;
+    border-radius: 2px;
+    border: 1px solid rgba(0, 0, 0, 0.14);
+    box-shadow: rgb(0 mt2rem0 0 / 2%) 0px 2px 0px 0px inset;
+    color: rgb(34, 34, 34);
+    height: 40px;
+    padding: 10px;
+    margin: 1rem;
+    width: 50%;
+}
+
+.coupon-save-btn {
+    width: 5rem;
+    height: 2.8rem;
+    color: #fff;
+    background: rgba(0,0,0,.1);
+    border: 2px solid #F5F5F5;
+    border-radius: .25rem;
+}
+
+.coupon-save-btn:hover {
+    background-color: #ee4d2d;
+}
+
+.coupou-alldiv {
+    background-color: white;
+    border-radius: .25rem;
+    min-height: 30rem;
+    padding: 2%;
+}
+
+.coupon-div {
+    display: flex;
+    border: 2px solid #F5F5F5;
+    border-radius: .25rem;
+    box-shadow: 0 1px 0 0 transparent;
+    align-items: center;
+    width: 48%;
+    box-shadow: 0.125rem 0.125rem 0.3125rem rgb(0 0 0 / 7%);
+    margin: 1%;
+    cursor: pointer;
+}
+
+.coupon-div:hover{
+    background-color:#f6f6f6;
+}
+
+
+.coupon-p-div {
+    width: 70%;
+}
+
+.coupon-p-title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+    font-size: 18px;
+    margin-left: 2%;
+    line-height: 2rem;
+}
+
+.coupon-p {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+    font-size: 16px;
+    margin-left: 2%;
+    line-height: 1.5rem;
+}
+
+.coupon-date {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+    color: #ee4d2d;
+    font-size: 16px;
+    margin-left: 2%;
+    line-height: 1.5rem;
+}
+
+.coupon-flix {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.checkout-flix {
+    display: flex;
+    flex-wrap: wrap;
+    margin:1% 0;
+}
+
+.checkout-div {
+    display: flex;
+    border: 2px solid #F5F5F5;
+    border-radius: .25rem;
+    box-shadow: 0 1px 0 0 transparent;
+    align-items: center;
+    width: 100%;
+    box-shadow: 0.125rem 0.125rem 0.3125rem rgb(0 0 0 / 7%);
+    cursor: pointer;
+}
+
+.checkout-p-div {
+    width: 70%;
+}
+
+.checkout-p-right-mg {
+    margin-right:1%;
+}
+
+.demoproduct-addchat-btn {
+    background-color: #ee4d2d;
+    color: #fff;
+    border: 1px solid black;
+    font-size: 20px;
+    padding: 1%;
+    font-weight: 400;
+    border-radius:.25rem;
+    margin:1%;
+}
+
+.demoproduct-personname-btn {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    font-size: 20px;
+    padding: 1%;
+    font-weight: 400;
+    border-radius: .25rem;
+    margin: 1%;
+}
