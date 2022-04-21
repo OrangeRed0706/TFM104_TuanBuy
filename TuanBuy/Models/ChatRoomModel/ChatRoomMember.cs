@@ -33,6 +33,6 @@ namespace TuanBuy.Models
         }
 
         public override bool Equals(object obj) => Equals(obj as ChatRoomMember);
-        public override int GetHashCode() => (ChatRoomId,MemberId).GetHashCode();
+        public override int GetHashCode() => (ChatRoomId).GetHashCode();
     }
 }

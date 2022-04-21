@@ -203,24 +203,44 @@ namespace TuanBuy.Models
             {
                 using (_dbContext)
                 {
-                    var member = _dbContext.Member_Chats.Where(x => x.MemberId == MemberId).Select(x=>new { x.ChatRoomId ,x.MemberId});
-                    var result = (from sellers in _dbContext.Member_Chats
-                                 join chat in _dbContext.ChatRooms on sellers.ChatRoomId equals chat.ChatRoomId           
-                                 where (member.Select(x=> x.ChatRoomId).Contains(sellers.ChatRoomId) 
-                                 && member.Select(x=>x.MemberId).Contains(sellers.MemberId))
-                                 select new { sellers,chat}).ToList().GroupBy(x=>x.sellers.ChatRoomId);
-                    if(result.Count()==0)
+                    var member = _dbContext.Member_Chats.Where(x => x.MemberId == MemberId).Select(x=> new ChatRoomMember { ChatRoomId = x.ChatRoomId,
+                    Id = x.Id, ChatRoom = x.ChatRoom,MemberId=x.MemberId}).ToList();
+                    var seller = _dbContext.Member_Chats.Where(x=>x.MemberId==SellerId).Select(x => new ChatRoomMember
                     {
-                        ChatRoom chatRoom = new ChatRoom() { };
-                        List<ChatRoomMember> chatRoomMembers = new List<ChatRoomMember>()
+                        ChatRoomId = x.ChatRoomId,
+                        Id = x.Id,
+                        ChatRoom = x.ChatRoom,
+                        MemberId = x.MemberId
+                    }).ToList();
+                    IEnumerable<ChatRoomMember> result = member.Intersect<ChatRoomMember>(seller).Select(x=>x);
+                    //var result = (from sellers in _dbContext.Member_Chats
+                    //              join chat in _dbContext.ChatRooms on sellers.ChatRoomId equals chat.ChatRoomId
+                    //              where(member.Select(x=>x.ChatRoomId).Contains(sellers.ChatRoomId))
+                    //              select new { sellers}).ToList().GroupBy(x => x.sellers.ChatRoomId);
+
+
+                    //var result = (from sellers in _dbContext.Member_Chats
+                    //             join chat in _dbContext.ChatRooms on sellers.ChatRoomId equals chat.ChatRoomId           
+                    //             where (member.Select(x=> x.ChatRoomId).Contains(sellers.ChatRoomId) 
+                    //             && member.Select(x=>x.MemberId).Contains(sellers.MemberId))
+                    //             select new { sellers,chat}).ToList().GroupBy(x=>x.sellers.ChatRoomId);
+                        //如果沒有相同聊天室才加
+                        if(result.Count()==0)
                         {
-                        new ChatRoomMember() {MemberId=SellerId ,ChatRoomId=chatRoom.ChatRoomId},
-                         new ChatRoomMember() {MemberId=MemberId ,ChatRoomId=chatRoom.ChatRoomId}
-                        };
-                        chatRoom.ChatRoomMembers = chatRoomMembers;
-                        _dbContext.ChatRooms.Add(chatRoom);
-                        _dbContext.SaveChanges();
-                    }
+                              ChatRoom chatRoom = new ChatRoom() { };
+                              List<ChatRoomMember> chatRoomMembers = new List<ChatRoomMember>()
+                              {
+                                     new ChatRoomMember() {MemberId=SellerId ,ChatRoomId=chatRoom.ChatRoomId},
+                                     new ChatRoomMember() {MemberId=MemberId ,ChatRoomId=chatRoom.ChatRoomId}
+                              };
+                             chatRoom.ChatRoomMembers = chatRoomMembers;
+                             _dbContext.ChatRooms.Add(chatRoom);
+                             _dbContext.SaveChanges();
+                         }
+
+
+
+                    
                     //else
                     //{
                     //    foreach (var i in result)
