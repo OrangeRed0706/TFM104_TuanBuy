@@ -9,7 +9,7 @@
     <!-- Page Header-->
     <header class="bg-white shadow-sm px-4 py-3 z-index-20">
         <div class="container-fluid px-0">
-            <h2 class="mb-0 p-1">訂單管理</h2>
+            <h2 class="mb-0 p-1">優惠卷管理</h2>
         </div>
     </header>
     <!-- Breadcrumb-->
@@ -18,7 +18,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0 py-3">
                     <li class="breadcrumb-item"><a class="fw-light" href="index.html">Home</a></li>
-                    <li class="breadcrumb-item active fw-light" aria-current="page">訂單管理</li>
+                    <li class="breadcrumb-item active fw-light" aria-current="page">優惠卷管理</li>
                 </ol>
             </nav>
         </div>
@@ -34,30 +34,28 @@
             <table class="table table-striped col-gl-4 dropdown table-hover aaa bbb">
                 <thead class="thead-dark">
                     <tr>
-                        <th scope="col">訂單編號</th>
-                        <th scope="col">客戶ID</th>
-                        <th scope="col">商品名稱</th>
-                        <th scope="col">付款方式</th>
-                        <th scope="col">訂單日期</th>
+                        <th scope="col">優惠卷名稱</th>
+                        <th scope="col">優惠卷敘述</th>
+                        <th scope="col">折扣金額</th>
+                        <th scope="col">優惠目標金額</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <!--分頁設定-->
-                    <tr v-for="item in ordermanages.slice(pageStart, pageStart + countOfPage)" v-if="search=='' || item.orderId==search || item.userName==search || item.productName==search ">
-                        <th scope="row">{{item.orderId}}</th>
-                        <td>{{item.userName}}</td>
-                        <td>{{item.productName}}</td>
-                        <td>{{item.paymentType}}</td>
-                        <td>{{item.createDate}}</td>
+                    <tr v-for="item in counpons" v-if="search=='' || item.voucherName==search ">
+                        <th scope="row">{{item. voucherName}}</th>
+                        <td>{{item.voucherDescribe}}</td>
+                        <td>{{item.vouchersDiscount}}</td>
+                        <td>{{item. vouchersAvlAmount}}</td>
                         <td>
-                            <button type="button" class="btn btn-secondary" v-bind:value="item.orderId"
+                            <button type="button" class="btn btn-secondary" v-bind:value="item.voucherName"
                                     v-on:click="update($event)" data-toggle="modal" data-target="#exampleModal"
                                     data-whatever="">
                                 修改
                             </button>
-                            <button type="button" class="btn btn-danger" v-bind:value="item.orderId"
-                                    v-on:click="getOrder($event)" data-toggle="modal" data-target="#deleteModal">
+                            <button type="button" class="btn btn-danger" v-bind:value="item.voucherName"
+                                    v-on:click="getCounpon($event)" data-toggle="modal" data-target="#deleteModal">
                                 刪除
                             </button>
                         </td>
@@ -65,62 +63,57 @@
                 </tbody>
             </table>
             <!--分頁-->
-            <div class="container">
-                <ul class="pagination">
-                    <li class="page-item" v-bind:class="{'disabled': (currPage === 1)}"
-                        @@click.prevent="setPage(currPage-1)"><a class="page-link" href="#">Previous</a></li>
-                    <li v-for="n in totalPage"
-                        v-bind:class="{'active': (currPage === (n))}"
-                        @@click.prevent="setPage(n)"><a class="page-link" href="#">{{n}}</a></li>
-                    <li class="page-item" v-bind:class="{'disabled': (currPage === totalPage)}"
-                        @@click.prevent="setPage(currPage+1)"><a class="page-link" href="#">Next</a></li>
-                </ul>
-            </div>
+            @*<div class="container">
+                    <ul class="pagination">
+                        <li class="page-item" v-bind:class="{'disabled': (currPage === 1)}"
+                            @@click.prevent="setPage(currPage-1)"><a class="page-link" href="#">Previous</a></li>
+                        <li v-for="n in totalPage"
+                            v-bind:class="{'active': (currPage === (n))}"
+                            @@click.prevent="setPage(n)"><a class="page-link" href="#">{{n}}</a></li>
+                        <li class="page-item" v-bind:class="{'disabled': (currPage === totalPage)}"
+                            @@click.prevent="setPage(currPage+1)"><a class="page-link" href="#">Next</a></li>
+                    </ul>
+                </div>*@
 
             <!--修改使用者的對話盒-->
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
-                    <div class="modal-content" style="width:850px;margin-left:-160px;margin-top:80px">
+                    <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title dialogtitle" id="exampleModalLabel">修改訂單資料</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Closes" style="background-color: transparent; border:0px;">
+                            <h5 class="modal-title dialogtitle" id="exampleModalLabel">修改優惠卷資料</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="background-color: transparent; border:0px;">
                                 <span style="font-size: 1.5rem; font-weight: 700; opacity: .5;" aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
                             <!--綁定form表單資料-->
-                            <table class="table table-striped col-gl-12 dropdown">
-                                <thead>
-                                    <tr>
-                                        <th class="orderitem" scope="col">訂單編號</th>
-                                        <th class="orderitem" scope="col">商品名稱</th>
-                                        <th class="orderitem" scope="col">數量</th>
-                                        <th class="orderitem1" scope="col">金額</th>
-                                        <th class="orderitem1" scope="col">地址</th>
-                                        <th class="orderitem1" scope="col">電話</th>
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-if="ordermanage.Disable!==false">
-                                        <th scope="row">{{ordermanage.orderId}}</th>
-                                        <th>{{ordermanage.productName}}</th>
-                                        <th>{{ordermanage.count}}</th>
-                                        <th>{{ordermanage.price}}</th>
-                                        <th><input style="width:300px" v-model="ordermanage.address" /></th>
-                                        <th><input style="width:110px" v-model="ordermanage.phone" /></th>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <form>
+                                <div class="form-group">
+                                    <label for="user-name"
+                                           cproductpricelass="col-form-label">優惠卷名稱:</label>
+                                    <input type="text" class="form-control" id="user-name" v-model="counpon.voucherName">
+                                </div>
+                                <div class="form-group">
+                                    <label for="user-birth" class="col-form-label">優惠卷敘述:</label>
+                                    <input type="text" class="form-control" id="user-birth" v-model="counpon.voucherDescribe">
+                                </div>
+                                <div class="form-group">
+                                    <label for="user-phone" class="col-form-label">折扣敘述:</label>
+                                    <input type="text" class="form-control" id="user-phone" v-model="counpon.vouchersDiscount">
+                                </div>
+                                <div class="form-group">
+                                    <label for="user-money" class="col-form-label">優惠目標金額:</label>
+                                    <input type="text" class="form-control" id="user-money" v-model="counpon.vouchersAvlAmount">
+                                </div>
+                            </form>
                         </div>
                         <div class="modal-footer">
-                            <h3>總價:{{ordermanage.count*ordermanage.price}}NTD</h3>
                             <button type="button" class="btn btn-secondary"
                                     data-dismiss="modal">
                                 取消
                             </button>
                             <!--觸發事件修改-->
-                            <button type="button" class="btn btn-ddd" v-on:click="readyUpdate(event)" style="background-color: #007bff; color: #fff">確認修改</button>
+                            <button type="button" class="btn btn-ddd" v-on:click="readyUpdate" style="background-color: #007bff; color: #fff">確認修改</button>
                         </div>
                     </div>
                 </div>
@@ -145,7 +138,7 @@
                                 取消
                             </button>
                             <!--按下按鈕觸發刪除的API-->
-                            <button type="button" class="btn btn-danger" v-on:click="deleteUser">刪除</button>
+                            <button type="button" class="btn btn-danger" v-on:click="deleteCounpon">刪除</button>
                         </div>
                     </div>
                 </div>
@@ -171,91 +164,63 @@
 </div>
 
 
-
-
-
-
 <script>
     var app = new Vue({
         el: "#app",
         data: {
-            ordermanages: [],
-            ordermanage: {
-                orderId: '',
-                userName: '',
-                createDate: '',       //接後端資料傳到物件丟到[]
-                productName: '',
-                count: '',
-                address: '',
-                phone: '',
-                paymentType: '',
-                price: ''
+            counpons: [],
+            counpon: {
+                voucherName: '',
+                voucherDescribe: '',
+                vouchersDiscount: '',
+                vouchersAvlAmount:''
             },
             search: '',
             target: null,
-            currPage: 1,                //起始頁設定
-            countOfPage: 6              //每頁要幾筆
-        },
-        //設定分頁
-        computed: {
-            pageStart: function () {
-                return (this.currPage - 1) * this.countOfPage;                 //當前頁面的起始筆數
-            },
-            totalPage: function () {
-                return Math.ceil(this.ordermanages.length / this.countOfPage);  //陣列長度除以每頁設定的筆數
-            },
-
         },
         methods: {
             update: function (e) {
                 let self = this;
-                let orderId = e.target.value;
-                let target = self.ordermanages.find(i => { return orderId == i.orderId });
-                self.ordermanage = target;
+                let voucherName = e.target.value;
+                let target = self.counpons.find(i => { return voucherName == i.voucherName });
+                self.counpon = target;
             },
-            getOrder: function (e) {
+            getCounpon: function (e) {
                 let self = this;
                 self.target = e.target.value;
             },
             readyUpdate: function () {
                 let self = this;
                 //發送PUT請求到API修改資料
-                axios.put("/BackstageMange/UpdateOrder/", self.ordermanage)
+                axios.put("/BackstageMange/UpdateCounpons/", self.counpon)
                     .then((resp) => alert("更新成功"))
                     .catch((res) => console.log(res.response.data));
                 window.location.reload();
-
             },
-            deleteUser: function () {
+            deleteCounpon: function () {
                 let self = this;
-                axios.delete("/BackstageMange/DeleteOrder/" + self.target)
+                axios.delete("/BackstageMange/DeleteCounpons/" + self.target)
                     .then((res) => {
 
                         console.log(res);
                     })
                     .catch((res) => console.log(res.response.data));
-                console.log("/BackstageMange/DeleteOrder/" + self.target);
+                console.log("/BackstageMange/DeleteCounpons/" + self.target);
                 window.location.reload();
             },
-            setPage: function (idx) {
-                if (idx <= 0 || idx > this.totalPage) {       //限制頁數
-                    return;
-                }
-                this.currPage = idx;
-            }
         },
         mounted: function () {
             let self = this;
-            axios.get("/BackstageMange/TestJoin")
+            axios.get("/BackstageMange/Counpons")
                 .then((resp) => {
-                    self.ordermanages = resp.data;
-                    console.log(self.ordermanages);
+                    self.counpons = resp.data;
+                    console.log(self.counpons);
                 })
                 .catch((res) => {
                     console.log("錯誤訊息");
                     console.log(res.response.data);
                 });
         }
-    })
+    });
 
 </script>

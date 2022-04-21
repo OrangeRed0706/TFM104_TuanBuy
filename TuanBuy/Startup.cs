@@ -62,7 +62,8 @@ namespace TuanBuy
             services.AddStackExchangeRedisCache(options =>
             {
                 // Redis Server ªº IP ¸ò Port
-                options.Configuration = "127.0.0.1:6379";
+                //options.Configuration = "127.0.0.1:6379";
+                options.Configuration = "tuanbuyredis.redis.cache.windows.net:6380,password=BFvMijldKRhmI0C1dcrCltsS1BYLwNLi3AzCaLDKszg=,ssl=True,abortConnect=False";
                 options.InstanceName = "TuanWeb_";
             });
             services.AddSingleton<RedisProvider>();

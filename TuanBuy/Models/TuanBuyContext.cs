@@ -43,6 +43,9 @@ namespace TuanBuy.Models.Entities
         public virtual DbSet<Voucher> Vouchers { get; set; }
 
         public virtual DbSet<UserVoucher> UserVouchers { get; set; }
+        public virtual DbSet<UserNotify> UserNotify { get; set; }
+        public virtual DbSet<NotifyCategory> NotifyCategory { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

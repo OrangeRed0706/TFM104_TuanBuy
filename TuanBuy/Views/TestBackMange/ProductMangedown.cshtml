@@ -59,7 +59,7 @@
                 </thead>
                 <tbody>
                     <!--分頁設定--> <!--item.disable==false -->
-                    <tr v-for="item in products" v-if="item.disable==Disable && search=='' || item.productName==search || item.productId==search">
+                    <tr v-for="item in products" v-if="item.disable==Disable && search=='' || item.productName==search || item.productId==search || item.userName==search">
                         <th scope="row">{{item.productId}}</th>
                         <td>
                             <img :src="item.picPath" style="width:80px;height:80px;" />

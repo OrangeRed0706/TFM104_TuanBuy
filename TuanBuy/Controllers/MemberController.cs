@@ -42,7 +42,7 @@ namespace TuanBuy.Controllers
         }
 
         #region 取得存在放Session的目前使用者
-        public User GetOnlineMember()
+        public object GetOnlineMember()
         {
             string userjsonData = HttpContext.Session.GetString("userData");
             if (!String.IsNullOrEmpty(userjsonData))
@@ -51,7 +51,7 @@ namespace TuanBuy.Controllers
                 var data = Newtonsoft.Json.JsonConvert.DeserializeObject<User>(userjsonData);
                 return data;
             }
-            return null;
+            return BadRequest();
         }
         #endregion
 

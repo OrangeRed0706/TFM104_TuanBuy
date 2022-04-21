@@ -6,7 +6,7 @@ namespace TuanBuy.Models.Extension
     {
         public static bool SaveMessage(this IDatabase db, string key, string value)
         {
-            db.ListRightPush(key, value);
+            db.ListLeftPush(key, value);
             return true;
         }
     }
