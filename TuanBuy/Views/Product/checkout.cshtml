@@ -60,7 +60,7 @@
                 </p>
                 <div>電話</div>
                 <p class="checktext">
-                    <input v-model="buyerData.buyerPhone" />
+                    <input type="tel" v-model="buyerData.buyerPhone" />
                 </p>
                 <div>宅配地址</div>
                 <p class="checktext">
@@ -221,7 +221,11 @@
             },
 
             AddOrder: function () {
-                if (app.checkPayFun != null && app.checkProduct.length > 0) {
+                    if (app.buyerData.buyerPhone == null || app.buyerData.buyerAddress == null) {
+                        Swal.fire('請填寫訂單寄送地址及連絡電話')
+                        return false;
+                    }
+                    else if (app.checkPayFun != null && app.checkProduct.length > 0) {
                     $.ajax({
                         type: "POST",
                         url: "/Product/AddOrder",
@@ -248,7 +252,7 @@
                     });
                 }
                 else {
-                    alert('尚未選擇商品或是選擇付款方式')
+                    Swal.fire('尚未選擇商品或是選擇付款方式')
                 }
             },
 
@@ -295,7 +299,6 @@
 
             //取得使用者折價卷
             GetVoucher: function () {
-                console.log('取得使用者折價卷');
                 $.ajax({
                     type: "POST",
                     url: "/Product/GetUserVoucher",

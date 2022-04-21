@@ -361,7 +361,7 @@ namespace TuanBuy.Controllers
                 _dbContext.Order.Add(order);
                 _dbContext.SaveChanges();
                 //將先前session清除
-                HttpContext.Session.Remove("ShoppingCart");
+                //HttpContext.Session.Remove("ShoppingCart");
                 return new
                 {
                     ordernumber = order.Id.ToString(),
