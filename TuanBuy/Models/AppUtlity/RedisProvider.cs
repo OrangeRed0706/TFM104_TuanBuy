@@ -14,7 +14,8 @@ namespace TuanBuy.Models.AppUtlity
         private ConnectionMultiplexer Redis { get; set; }
         public RedisProvider()
         {
-            Redis = ConnectionMultiplexer.Connect("127.0.0.1:6379");
+            //   Redis = ConnectionMultiplexer.Connect("127.0.0.1:6379");
+               Redis = ConnectionMultiplexer.Connect("tuanbuyredis.redis.cache.windows.net:6380,password=BFvMijldKRhmI0C1dcrCltsS1BYLwNLi3AzCaLDKszg=,ssl=True,abortConnect=False");
         }
 
         public IDatabase GetRedisDb(int dbNumber)
