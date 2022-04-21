@@ -1,9 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using MailKit.Net.Pop3;
 
-namespace TuanBuy.Models.Entities
+namespace Data.Entities
 {
     public class UserNotify
     {
@@ -22,4 +21,5 @@ namespace TuanBuy.Models.Entities
         public virtual NotifyCategory NotifyCategory { get; set; }
 
     }
+
 }

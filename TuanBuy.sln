@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32002.261
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TuanBuy", "TuanBuy\TuanBuy.csproj", "{84D22057-93C8-4A82-83F8-A1FE39973424}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{FA027E9B-D8C6-4FBD-9DA2-CBB266890C59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business\Business.csproj", "{3E676238-4706-4494-B7CD-E27DFF2418F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{84D22057-93C8-4A82-83F8-A1FE39973424}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84D22057-93C8-4A82-83F8-A1FE39973424}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84D22057-93C8-4A82-83F8-A1FE39973424}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA027E9B-D8C6-4FBD-9DA2-CBB266890C59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA027E9B-D8C6-4FBD-9DA2-CBB266890C59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA027E9B-D8C6-4FBD-9DA2-CBB266890C59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA027E9B-D8C6-4FBD-9DA2-CBB266890C59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E676238-4706-4494-B7CD-E27DFF2418F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E676238-4706-4494-B7CD-E27DFF2418F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E676238-4706-4494-B7CD-E27DFF2418F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E676238-4706-4494-B7CD-E27DFF2418F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

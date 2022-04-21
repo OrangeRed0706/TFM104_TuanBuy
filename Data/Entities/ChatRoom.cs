@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
-using TuanBuy.Models.Entities;
 
-namespace TuanBuy.Models
+namespace Data.Entities
 {
     public class ChatRoom
     {
@@ -22,4 +19,5 @@ namespace TuanBuy.Models
         public virtual ICollection<ChatRoomMember> ChatRoomMembers { get; set; }
 
     }
+
 }

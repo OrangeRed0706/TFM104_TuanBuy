@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using TuanBuy.ViewModel;
 
-#nullable disable
-
-namespace TuanBuy.Models.Entities
+namespace Data.Entities
 {
     [Table("User")]
 
@@ -37,5 +34,12 @@ namespace TuanBuy.Models.Entities
 
         public virtual ICollection<UserVoucher> UserVoucher { get; set; }
         public virtual ICollection<UserNotify> UserNotify { get; set; }
+    }
+    public enum UserState
+    {
+        未驗證,
+        普通會員,
+        正式會員,
+        系統管理員
     }
 }

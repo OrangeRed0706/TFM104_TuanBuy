@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TuanBuy.Models.Entities
+namespace Data.Entities
 {
     public class ProductPic
     {

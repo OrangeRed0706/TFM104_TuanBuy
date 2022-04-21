@@ -2,12 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
 
-#nullable disable
-
-namespace TuanBuy.Models.Entities
+namespace Data.Entities
 {
     [Table("Product")]
 
@@ -34,7 +30,7 @@ namespace TuanBuy.Models.Entities
         [Required]
         public decimal Price { get; set; }
         //商品達標金額
-        
+
         public decimal Total { get; set; }
         //商品類別
         [Required]

@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-#nullable disable
-
-namespace TuanBuy.Models.Entities
+namespace Data.Entities
 {
     [Table("Order")]
-    public  class Order
+    public class Order
     {
         [Required]
         [Key]
@@ -49,7 +46,7 @@ namespace TuanBuy.Models.Entities
             {
                 i *= ((int)b + 1);
             }
-            return string.Format("TuanBuy_"+"{0:x}", i - DateTime.Now.Ticks);
+            return string.Format("TuanBuy_" + "{0:x}", i - DateTime.Now.Ticks);
         }
     }
 }

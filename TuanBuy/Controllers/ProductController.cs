@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Claims;
+using Data;
+using Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -18,7 +20,7 @@ using TuanBuy.Models.AppUtlity;
 using TuanBuy.Models.Entities;
 using TuanBuy.Models.Interface;
 using TuanBuy.ViewModel;
-using Order = TuanBuy.Models.Entities.Order;
+using Order = Data.Entities.Order;
 
 namespace TuanBuy.Controllers
 {

@@ -2,17 +2,19 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TuanBuy.Models.Entities
+namespace Data.Entities
 {
-    public class ProductMessage
+    public class ProductSellerReply
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
         public int UserId { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
         public string MessageContent { get; set; }
-        public int ProductId { get; set; }
-        public virtual Product Product { get; set; }
+
+        [ForeignKey("ProductMessage")]
+        public int ProductMessageId { get; set; }
+        public virtual ProductMessage ProductMessage { get; set; }
     }
 }

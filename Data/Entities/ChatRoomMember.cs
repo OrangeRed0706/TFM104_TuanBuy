@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
-using TuanBuy.Models.Entities;
 
-namespace TuanBuy.Models
+namespace Data.Entities
 {
     [Table("Member_Chats")]
     public class ChatRoomMember : IEquatable<ChatRoomMember>
@@ -33,6 +28,6 @@ namespace TuanBuy.Models
         }
 
         public override bool Equals(object obj) => Equals(obj as ChatRoomMember);
-        public override int GetHashCode() => (ChatRoomId,MemberId).GetHashCode();
+        public override int GetHashCode() => (ChatRoomId, MemberId).GetHashCode();
     }
 }

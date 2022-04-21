@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
 using System.IO;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using System.Reflection;
 using System.Text;
+using Data.Entities;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-#nullable disable
 
-namespace TuanBuy.Models.Entities
+namespace Data
 {
     public partial class TuanBuyContext : DbContext
     {
@@ -110,4 +106,5 @@ namespace TuanBuy.Models.Entities
             base.OnModelCreating(modelBuilder);
         }
     }
+
 }

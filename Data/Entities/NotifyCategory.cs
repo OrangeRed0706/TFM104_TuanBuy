@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TuanBuy.Models.Entities
+namespace Data.Entities
 {
     public class NotifyCategory
     {

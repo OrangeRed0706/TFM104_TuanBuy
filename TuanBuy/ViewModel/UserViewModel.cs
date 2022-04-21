@@ -28,13 +28,7 @@ namespace TuanBuy.ViewModel
         public DateTime? Birth { get; set; }
 
     }
-    public enum UserState
-    {
-        未驗證,
-        普通會員,
-        正式會員,
-        系統管理員
-    }
+
 
     public class UserData
     {

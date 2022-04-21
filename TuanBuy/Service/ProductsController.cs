@@ -5,6 +5,8 @@ using System.Data.Common;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Security.Claims;
+using Data;
+using Data.Entities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CodeFixes;

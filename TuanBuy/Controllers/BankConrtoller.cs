@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Data;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using TuanBuy.Models.Bank;
