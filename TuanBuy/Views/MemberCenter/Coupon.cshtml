@@ -10,8 +10,8 @@
             <h4 class="coupon-h">我的優惠券</h4>
             <div class="coupon-save-div">
                 <span class="coupon-save-span">新增折價券</span>
-                    <input class="coupon-save-input" type="text">
-                    <button class="coupon-save-btn">儲存</button>
+                    <input class="coupon-save-input" type="text" v-model="coupon">
+                    <button class="coupon-save-btn" v-on:click="AddCoupon()">儲存</button>
             </div>
             <div class="coupon-flix">
                 <div class="coupon-div">
@@ -68,7 +68,16 @@
                 birth: "",
                 address: "",
                 sex: "",
-                uploadPicPath: ""
+                uploadPicPath: "",
+            },
+            coupon: '',
+        },
+        methods: {
+            AddCoupon: function () {
+                console.log(vm.coupon);
+                //axios.post("/api/LoginAndRegister", self.user).then((resp) => {
+                    
+                //}).catch((res) => { console.log(res.data) });
             }
         },
         mounted: function () {
