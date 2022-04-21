@@ -173,8 +173,7 @@ namespace TuanBuy.Controllers
 
             };
 
-
-            return View("Index");
+            return RedirectToAction("Index");
         }
 
 
