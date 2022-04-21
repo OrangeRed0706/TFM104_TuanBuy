@@ -138,9 +138,9 @@ namespace TuanBuy.Controllers
             var processOrder = _dbcontext.Order.Where(x => x.StateId == 2).Count();
             var finishOrder = _dbcontext.Order.Where(x => x.StateId == 4).Count();
             var totalSales = _dbcontext.OrderDetail.Select(x => x.Price).Sum();
-            //var hotProduct = _dbcontext.OrderDetail.GroupJoin(
-                
-            //    )
+            //var hotProduct = _dbcontext.OrderDetail.GroupJoin(x=>x.)
+
+
             //var hotProduct = _dbcontext.OrderDetail.OrderBy(x => x.Count).Take(3);
             //var productName= hotProduct.Select(x => new { name = x.Product.Name });
             HomeBackMangeViewModel homeBackMangeViewModel = new HomeBackMangeViewModel() 

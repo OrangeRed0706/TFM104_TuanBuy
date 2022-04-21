@@ -116,5 +116,16 @@ margin-bottom:14px;
 .productcount {
 font-size:20px;
 }
-
+.linetext {
+    width: 300px;
+    height: 100px;
+}
+.linebot {
+    background-color: #00C200;
+    color: white;
+}
+.couponstitle {
+    background-color: #EB0000;
+    color: white;
+}
 
