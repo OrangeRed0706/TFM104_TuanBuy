@@ -180,6 +180,7 @@ namespace TuanBuy.Controllers
                 var users = _dbcontext.User.ToList();
                 var notifyMessage = $"請輸入「{userVouchersViewModel.VouchersTitle}」兌換優惠卷喔";
 
+
                 var entityEntries = users.Select(x =>
                     _dbcontext.UserNotify.Add(
                         new UserNotify

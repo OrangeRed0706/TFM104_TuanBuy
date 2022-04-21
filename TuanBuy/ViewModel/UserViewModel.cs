@@ -4,6 +4,7 @@ namespace TuanBuy.ViewModel
 {
     public class UserViewModel
     {
+        public int Id { get; set; }
         public string Email { get; set; }
         public string Name { get; set; }
         public string Phone { get; set; }
@@ -48,7 +49,7 @@ namespace TuanBuy.ViewModel
     {
         public Guid VouchersId { get; set; }
         //優惠卷圖片
-        public string VouchersPicPath { get; set; }
+        public string VouchersPicPath { get; set; } = "/ProductPicture/優惠劵圖.jpg";
         //優惠卷標題
         public string VouchersTitle { get; set; }
         //優惠卷描述
@@ -59,5 +60,7 @@ namespace TuanBuy.ViewModel
         public decimal VouchersDiscount { get; set; }
         //折價卷可使用金額
         public decimal VouchersAvlAmount { get; set; }
+        //折價劵訊息狀態
+        public string VoucherStateMessage { get; set; }
     }
 }

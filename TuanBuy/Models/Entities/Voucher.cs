@@ -18,7 +18,7 @@ namespace TuanBuy.Models.Entities
         //折價卷敘述
         public string VoucherDescribe { get; set; }
         //折價卷圖片
-        public string PicPath { get; set; }
+        public string PicPath { get; set; } = "/ProductPicture/優惠劵圖.jpg";
         //折價卷優惠敘述
         public string DiscountDescribe { get; set; }
         //折價卷折數

@@ -257,5 +257,7 @@ namespace TuanBuy.Controllers
             var targetUser = _dbContext.User.FirstOrDefault(x => x.Email == userEmail);
             return targetUser;
         }
+
+
     }
 }
