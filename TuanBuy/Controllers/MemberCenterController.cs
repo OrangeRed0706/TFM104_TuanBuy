@@ -148,6 +148,7 @@ namespace TuanBuy.Controllers
             return RedirectToAction("Login", "Home");
         }
 
+        [AllowAnonymous]
         #region 會員個人販賣商品頁面
         [HttpGet]
         public IActionResult MyStoreSell(int id)
@@ -157,6 +158,7 @@ namespace TuanBuy.Controllers
         #endregion
 
         #region 取得賣家商場資料
+        [AllowAnonymous]
         [HttpGet]
         public SellerUser GetSellerData(int id)
         {

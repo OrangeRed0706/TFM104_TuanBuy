@@ -29,8 +29,8 @@ namespace TuanBuy.Controllers
             HashKey = "0nnTkr1gNjKdSbbhBBedcyaBnaVm4eI5",
             HashIV = "C3eAKK9XZ4hxa4NP",
             ReturnURL = "",
-            NotifyURL = "https://a4b7-1-164-244-135.ngrok.io/Bank/SpgatewayReturn",
-            CustomerURL = "https://a4b7-1-164-244-135.ngrok.io/MemberCenter/MyBuyProduct",
+            NotifyURL = "https://tuanbuy.azurewebsites.net/Bank/SpgatewayReturn",
+            CustomerURL = "https://tuanbuy.azurewebsites.net/MemberCenter/MyBuyProduct",
             AuthUrl = "https://ccore.spgateway.com/MPG/mpg_gateway",
             CloseUrl = "https://core.newebpay.com/API/CreditCard/Close"
         };
