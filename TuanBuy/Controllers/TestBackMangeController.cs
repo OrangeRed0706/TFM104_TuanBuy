@@ -28,11 +28,15 @@ namespace TuanBuy.Controllers
         {
             return View();
         }
-        //優惠眷
+        //優惠券
         public IActionResult BackService()
         {
             return View();
         }
-        
+        //優惠券管理
+        public IActionResult Counpons()
+        {
+            return View();
+        }
     }
 }

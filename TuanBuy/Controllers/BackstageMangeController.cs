@@ -222,5 +222,45 @@ namespace TuanBuy.Controllers
         }
 
         #endregion
+        #region//優惠眷管理
+        //撈出優惠卷資料
+        public List<Voucher> Counpons()
+        {
+            var counpons = from c in _dbcontext.Vouchers
+                           select new Voucher
+                           {
+                               DiscountDescribe = c.DiscountDescribe,
+                               VoucherName = c.VoucherName,
+                               VoucherDescribe = c.VoucherDescribe,
+                               VouchersAvlAmount = c.VouchersAvlAmount,
+                               VouchersDiscount = c.VouchersDiscount
+                           };
+            var result = counpons.ToList();
+            return result;
+
+        }
+        //更新優惠卷資料
+        [HttpPut]
+        public IActionResult UpdateCounpons([FromBody] Voucher Voucher)
+        {
+            var targetCounpons = _dbcontext.Vouchers.FirstOrDefault(x => x.VoucherName == x.VoucherName);
+            if (targetCounpons == null) return BadRequest();
+            targetCounpons.VoucherName = Voucher.VoucherName;
+            targetCounpons.VoucherDescribe = Voucher.VoucherDescribe;
+            targetCounpons.VouchersAvlAmount = Voucher.VouchersAvlAmount;
+            targetCounpons.VouchersDiscount = Voucher.VouchersDiscount;
+            _dbcontext.SaveChanges();
+            return Ok();
+        }
+        //刪除優惠眷
+        [HttpDelete]
+        public IActionResult DeleteCounpons(string id)
+        {
+            var user = _dbcontext.Vouchers.FirstOrDefault(x => x.VoucherName == id);
+            _dbcontext.Vouchers.Remove(user);
+            _dbcontext.SaveChanges();
+            return Ok();
+        }
+        #endregion
     }
 }
