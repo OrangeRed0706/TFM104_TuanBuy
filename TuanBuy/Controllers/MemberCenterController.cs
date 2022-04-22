@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using Data;
+using Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -252,7 +254,7 @@ namespace TuanBuy.Controllers
 
             return Ok("訂單狀態已被改變");
         }
-        private User? GetTargetUser()
+        private User GetTargetUser()
         {
             var claim = HttpContext.User.Claims;
             var userEmail = claim.FirstOrDefault(a => a.Type == ClaimTypes.Email)?.Value;

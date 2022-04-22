@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using System.Threading.Channels;
+using Data.Entities;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using TuanBuy.Models;

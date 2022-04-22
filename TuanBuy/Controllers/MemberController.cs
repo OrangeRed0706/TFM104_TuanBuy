@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Data;
+using Data.Entities;
 using Topic.Hubs;
 using TuanBuy.Models;
 using TuanBuy.Models.AppUtlity;
