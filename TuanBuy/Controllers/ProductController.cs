@@ -28,16 +28,14 @@ namespace TuanBuy.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly IRepository<Product> _productsRepository;
         private readonly IWebHostEnvironment _environment;
         private readonly IRepository<User> _userRepository;
         private readonly TuanBuyContext _dbContext;
         private static IDistributedCache _distributedCache;
         private readonly RedisProvider _redisDb;
         private readonly IProductService _productService;
-        public ProductController(GenericRepository<Product> productsRepository, IWebHostEnvironment environment, GenericRepository<User> userRepository, TuanBuyContext dbContext, IDistributedCache distributedCache, RedisProvider redisDb,IProductService productService)
+        public ProductController(IWebHostEnvironment environment, GenericRepository<User> userRepository, TuanBuyContext dbContext, IDistributedCache distributedCache, RedisProvider redisDb,IProductService productService)
         {
-            _productsRepository = productsRepository;
             _environment = environment;
             _userRepository = userRepository;
             _dbContext = dbContext;
