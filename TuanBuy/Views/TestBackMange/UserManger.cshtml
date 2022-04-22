@@ -1,4 +1,4 @@
-﻿
+﻿    
 @{
     Layout = "_BackstageLayout";
 }
@@ -42,7 +42,7 @@
                         </tr>   
                     </thead>
                     <tbody>
-                        <tr v-for="item in users.slice( pageStart,  pageStart + countOfPage)"v-if="search=='' || item.email==search || item.name==search">
+                        <tr v-for="item in users.slice( pageStart,  pageStart + countOfPage)"v-if="search=='' || item.email.includes(search) || item.name.includes(search)">
                             <th scope="row">{{item.email}}</th>
                             <td>{{item.name}}</td>
                             <td>{{item.state}}</td>

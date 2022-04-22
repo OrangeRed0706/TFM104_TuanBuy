@@ -305,8 +305,8 @@
                     </a>
                     <div class="concern">
                         <span class="master">團主</span>
-                        <a class="personname demoproduct-personname-btn" v-bind:href="productData.sellerhref">{{productData.seller}}</a>
-                        <a class="demoproduct-addchat-btn" v-on:click="AddChat" style="cursor:pointer" v-if="sellerId!==useUserId && useUserId!==undefined">聊聊</a>
+                        <button class="personname demoproduct-personname-btn" v-on:click="sellerhref()" @*v-bind:href="productData.sellerhref"*@>{{productData.seller}}</button>
+                        <button class="demoproduct-addchat-btn" v-on:click="AddChat" style="cursor:pointer" v-if="sellerId!==useUserId && useUserId!==undefined">聊聊</button>
                     </div>
                     <!--商品內容-->
                     <p>{{productData.productDescription}}</p>
@@ -691,6 +691,10 @@
                             .catch(res => console.log(res.data));
                     }
                     //https://localhost:5001/Product/CheckFavicon?id=7
+                },
+                //賣家團主頁面事件
+                sellerhref: function () {
+                    window.location.href = app.productData.sellerhref;
                 }
             },
             mounted: function () {
