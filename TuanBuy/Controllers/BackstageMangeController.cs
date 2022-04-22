@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Data;
+using Data.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StackExchange.Redis;
@@ -179,6 +181,7 @@ namespace TuanBuy.Controllers
                 #region 新增優惠卷給所有使用者
                 var users = _dbcontext.User.ToList();
                 var notifyMessage = $"請輸入「{userVouchersViewModel.VouchersTitle}」兌換優惠卷喔";
+
 
                 var entityEntries = users.Select(x =>
                     _dbcontext.UserNotify.Add(

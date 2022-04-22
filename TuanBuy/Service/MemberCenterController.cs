@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using Data.Entities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Hosting;
@@ -50,6 +51,7 @@ namespace TuanBuy.Service
             if (targetUser == null) return new UserViewModel();
             var userData = new UserViewModel
             {
+                Id = targetUser.Id,
                 Email = targetUser.Email,
                 Name = targetUser.Name,
                 Phone = targetUser.Phone,
