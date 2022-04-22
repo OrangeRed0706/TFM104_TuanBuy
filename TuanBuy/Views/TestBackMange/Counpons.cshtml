@@ -43,7 +43,7 @@
                 </thead>
                 <tbody>
                     <!--分頁設定-->
-                    <tr v-for="item in counpons" v-if="search=='' || item.voucherName==search ">
+                    <tr v-for="item in counpons" v-if="search=='' || item.voucherName.includes(search)">
                         <th scope="row">{{item. voucherName}}</th>
                         <td>{{item.voucherDescribe}}</td>
                         <td>{{item.vouchersDiscount}}</td>
