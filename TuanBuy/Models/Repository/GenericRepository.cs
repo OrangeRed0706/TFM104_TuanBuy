@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using Data;
 using Microsoft.EntityFrameworkCore;
 using TuanBuy.Models.Entities;
 using TuanBuy.Models.Interface;

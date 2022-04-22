@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Data;
+using Data.Entities;
 using TuanBuy.Models.AppUtlity;
 using TuanBuy.ViewModel;
 
@@ -365,12 +367,16 @@ namespace TuanBuy.Models.Entities
         #endregion
 
         #region 會員輸入優惠碼增加優惠卷方法
-        public List<UserVouchersViewModel> AddVoucher(int UserId, string VoucherName)
+        public object AddVoucher(int UserId, string VoucherName)
         {
             using (_dbContext)
             {
                 var result = _dbContext.Vouchers.FirstOrDefault(x => x.VoucherName == VoucherName);
-                if(result!=null)
+                if(result==null)
+                {
+                    return "目前尚未有該優惠劵!";
+                }
+                if(result!=null && QueryUserVoucher(UserId, result.Id))
                 {
                     UserVoucher user = new UserVoucher();                   
                     user.VoucherId = result.Id;
@@ -387,6 +393,10 @@ namespace TuanBuy.Models.Entities
                     {
                         Console.WriteLine(ex);
                     }                   
+                }
+                else
+                {
+                    return "已經使用過優惠劵囉!";
                 }
             }
             return null;
@@ -406,7 +416,6 @@ namespace TuanBuy.Models.Entities
                                  VouchersDescribe = vouccher.VoucherDescribe,
                                  VouchersDiscount = vouccher.VouchersDiscount,
                                  VouchersId = vouccher.Id,
-                                 VouchersPicPath = vouccher.PicPath,
                                  DiscountDescribe = vouccher.DiscountDescribe,
                                  VouchersAvlAmount = vouccher.VouchersAvlAmount,
                              };
@@ -416,6 +425,18 @@ namespace TuanBuy.Models.Entities
         }
         #endregion
 
-
+        #region 判斷會員是否已使用優惠劵
+        public bool QueryUserVoucher(int UserId,Guid VoucherId)
+        {
+                if (_dbContext.UserVouchers.FirstOrDefault(x => x.MemberId == UserId && x.VoucherId == VoucherId) != null)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+        }
+        #endregion
     }
 }

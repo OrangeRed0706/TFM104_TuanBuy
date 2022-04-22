@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Data;
+using Data.Entities;
 using Topic.Hubs;
 using TuanBuy.Models;
 using TuanBuy.Models.AppUtlity;
@@ -141,9 +143,7 @@ namespace TuanBuy.Controllers
         #endregion
 
         #region 將賣家加入聊天室
-        [Authorize(Roles = "FullUser")]
-        [Authorize(Roles = "SystemAdmin")]
-
+        [Authorize(Roles = "User")]
         public IActionResult AddChatRoom(int SellerId,int MemberId)
         {
             if(SellerId!=0 && MemberId !=0)

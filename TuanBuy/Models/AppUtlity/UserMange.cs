@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Data;
+using Data.Entities;
 using TuanBuy.Models.Entities;
 using TuanBuy.ViewModel;
 
