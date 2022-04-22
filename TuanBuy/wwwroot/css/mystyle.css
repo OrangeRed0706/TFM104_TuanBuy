@@ -2781,7 +2781,8 @@ p,
 /*RWD*/
 @media (min-width:0px) and (max-width:509px) {
     .headsize3 {
-        margin:0;
+        margin: 0;
+        width: 30%;
     }
 }
 
@@ -2950,4 +2951,10 @@ p,
     white-space: nowrap;
     position: relative;
     max-width: 38rem;
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+    .headsize3 {
+        width: 40%;
+    }
 }
