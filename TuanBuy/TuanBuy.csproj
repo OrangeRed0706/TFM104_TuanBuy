@@ -25,6 +25,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.7.28" />
+    <PackageReference Include="Hangfire.Console" Version="1.4.2" />
+    <PackageReference Include="Hangfire.Core" Version="1.7.28" />
+    <PackageReference Include="Hangfire.MemoryStorage" Version="1.7.0" />
+    <PackageReference Include="Hangfire.SqlServer" Version="1.7.28" />
     <PackageReference Include="MailKit" Version="3.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="5.0.15" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="5.0.15" />

@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using System.Threading.Tasks;
@@ -14,6 +15,8 @@ using Business.IServices;
 using Business.Services;
 using Data;
 using Data.Entities;
+using Hangfire;
+using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -87,7 +90,20 @@ namespace TuanBuy
             //注入Business服務
             services.AddScoped<IProductService, ProductService>();
 
-
+            //加入HangFire
+            services.AddHangfire(configuration => configuration
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UseSqlServerStorage(Configuration.GetConnectionString("TuanBuy"), new SqlServerStorageOptions
+                {
+                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                    QueuePollInterval = TimeSpan.Zero,
+                    UseRecommendedIsolationLevel = true,
+                    DisableGlobalLocks = true
+                }));
+            services.AddHangfireServer();
 
             //services.AddSingleton<SqlDbServices>();
             services.AddSingleton<Topic.Hubs.UserService>();
@@ -113,7 +129,7 @@ namespace TuanBuy
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IBackgroundJobClient backgroundJobs)
         {
             //開發模式才能進去
             if (env.IsDevelopment())
@@ -132,6 +148,10 @@ namespace TuanBuy
             //使用靜態檔案
             app.UseStaticFiles();
 
+            //使用HangFire
+            app.UseHangfireDashboard();
+            backgroundJobs.Enqueue(() => Console.WriteLine("Hello world from Hangfire!"));
+
             //app.UseAuthorization();
             //使用Session Middleware
             app.UseSession();
@@ -147,6 +167,7 @@ namespace TuanBuy
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapHangfireDashboard();
             });
         }
     }
