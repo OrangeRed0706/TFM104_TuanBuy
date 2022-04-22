@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using Business.IServices;
 using Business.Services;
@@ -104,6 +105,7 @@ namespace TuanBuy
                     DisableGlobalLocks = true
                 }));
             services.AddHangfireServer();
+            services.AddScoped<ITaskScheduling, TaskScheduling>();
 
             //services.AddSingleton<SqlDbServices>();
             services.AddSingleton<Topic.Hubs.UserService>();
@@ -129,7 +131,7 @@ namespace TuanBuy
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IBackgroundJobClient backgroundJobs)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IBackgroundJobClient backgroundJobs,IRecurringJobManager recurringJobManager,IServiceProvider serviceProvider)
         {
             //開發模式才能進去
             if (env.IsDevelopment())
@@ -147,10 +149,13 @@ namespace TuanBuy
             app.UseHttpsRedirection();
             //使用靜態檔案
             app.UseStaticFiles();
-
             //使用HangFire
             app.UseHangfireDashboard();
             backgroundJobs.Enqueue(() => Console.WriteLine("Hello world from Hangfire!"));
+            recurringJobManager.AddOrUpdate(
+                "Run every minute",
+                ()=>serviceProvider.GetService<ITaskScheduling>().DailyBirthday(), "* * * * *");
+
 
             //app.UseAuthorization();
             //使用Session Middleware
