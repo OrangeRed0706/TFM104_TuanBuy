@@ -1332,10 +1332,6 @@ direction: ltr;
     text-align: right;
 }
 
-.notifymgbt {
-    margin-bottom: 2rem;
-}
-
 
 /* 個人檔案text */
 
@@ -2540,6 +2536,11 @@ p,
     margin: auto;
 }
 
+.notifybtn:hover{
+    background-color:antiquewhite;
+    color: chocolate;
+}
+
 .notifyright {
     text-align: right;
 }
@@ -2549,6 +2550,8 @@ p,
     display: flex;
     min-width: 15%;
     cursor: pointer;
+    border-bottom: 2px solid #f5f5f5;
+    height: 5rem;
 }
 
 .notifymgbt:hover {
@@ -2739,20 +2742,21 @@ p,
 }
 
 .demoproduct-personname-btn {
-    background-color: #fff;
-    color: black;
-    border: 1px solid rgba(0,0,0,.09);
+    background-color: azure;
+    color: #666;
+    border: 1px solid black;
     box-shadow: 0 1px 1px 0 rgb(0 0 0 / 3%);
     font-size: 18px;
     font-weight: 400;
     border-radius: .25rem;
     margin: 1%;
     min-width: 4rem;
-    height:2.5rem;
+    height: 2.5rem;
 }
 
     .demoproduct-personname-btn:hover, .demoproduct-personname-btn:active {
-        background: rgba(0,0,0,.02);
+        background-color: aliceblue;
+        border-color: #666;
     }
 
 .demoproduct-addchat-btn {
@@ -2931,11 +2935,12 @@ p,
     }
 }
 
-.mystoresell-sellerdiv{
-    display:flex;
-    background-color:#fff;
-    margin:0 15px;
-    width:40%;
+.mystoresell-sellerdiv {
+    display: flex;
+    background-color: #fff;
+    margin: 0 15px;
+    width: 100%;
+    justify-content: space-evenly;
 }
 
 .sellp {
@@ -2944,17 +2949,20 @@ p,
     line-height: 2rem;
     max-height: 4rem;
     font-weight: 500;
-    margin-bottom: .3125rem;
-    margin-top: 0;
     overflow: hidden;
     word-wrap: break-word;
     white-space: nowrap;
     position: relative;
     max-width: 38rem;
+    margin: .5rem 0;
 }
 
 @media (min-width: 576px) and (max-width: 768px) {
     .headsize3 {
         width: 40%;
     }
+}
+
+.stepper button:hover {
+    background-color:burlywood;
 }
