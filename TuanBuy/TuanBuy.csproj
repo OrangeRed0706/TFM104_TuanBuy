@@ -49,14 +49,13 @@
   <ItemGroup>
     <Folder Include="Models\Extension\" />
     <Folder Include="wwwroot\css\義傑原版\" />
-    <Folder Include="Models\Bank\Extensions\" />
-    <Folder Include="Models\Bank\Utlity\" />
     <Folder Include="Models\Line\" />
     <Folder Include="wwwroot\MemberPicture\" />
     <Folder Include="wwwroot\MessagePicture\" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Business\Business.csproj" />
     <ProjectReference Include="..\Data\Data.csproj" />
   </ItemGroup>
 

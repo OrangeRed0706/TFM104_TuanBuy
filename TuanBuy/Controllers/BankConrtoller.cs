@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Business.Services.Bank;
+using Business.Services.Utility;
 using Data;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using TuanBuy.Models.Bank;
-using TuanBuy.Models.Bank.Utlity;
+
 using TuanBuy.Models.Entities;
 
 namespace TuanBuy.Controllers

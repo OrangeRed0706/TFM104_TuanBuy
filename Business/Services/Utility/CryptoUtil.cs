@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Security.Cryptography;
 using System.Text;
-using TuanBuy.Models.Bank.Extensions;
+using Business.Services.Extensions;
 
-namespace TuanBuy.Models.Bank.Utlity
+namespace Business.Services.Utility
 {
     public class CryptoUtil
     {

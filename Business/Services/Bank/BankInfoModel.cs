@@ -1,4 +1,4 @@
-﻿namespace TuanBuy.Models.Bank
+﻿namespace Business.Services.Bank
 {
     /// <summary>
     /// 銀行端基本資訊

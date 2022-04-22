@@ -1,4 +1,4 @@
-﻿namespace TuanBuy.Models.Bank
+﻿namespace Business.Services.Bank
 {
     /// <summary>
     /// [智付通]介接資料模型

@@ -1,4 +1,4 @@
-﻿namespace TuanBuy.Models.Bank
+﻿namespace Business.Services.Bank
 {
     public class TradeInfo
     {

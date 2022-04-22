@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace TuanBuy.Models.Bank
+﻿namespace Business.Services.Bank
 {
     public class SpgatewayOutputDataModel
     {
@@ -355,4 +350,5 @@ namespace TuanBuy.Models.Bank
 
         #endregion
     }
+
 }

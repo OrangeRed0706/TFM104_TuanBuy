@@ -10,6 +10,8 @@ using System.Linq;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using System.Threading.Tasks;
+using Business.IServices;
+using Business.Services;
 using Data;
 using Data.Entities;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -82,9 +84,13 @@ namespace TuanBuy
             //倉儲模式注入
             services.AddTransient<GenericRepository<Product>>();
             services.AddTransient<GenericRepository<User>>();
+            //注入Business服務
+            services.AddScoped<IProductService, ProductService>();
+
+
 
             //services.AddSingleton<SqlDbServices>();
-            services.AddSingleton<UserService>();
+            services.AddSingleton<Topic.Hubs.UserService>();
 
             //調用websingnalr服務
             services.AddSignalR();

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TuanBuy.Models.Bank.Extensions
+namespace Business.Services.Extensions
 {
     /// <summary>
     /// 字串擴充功能

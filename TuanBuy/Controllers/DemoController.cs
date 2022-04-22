@@ -25,7 +25,6 @@ using Org.BouncyCastle.Asn1.Ocsp;
 using StackExchange.Redis;
 using Topic.Hubs;
 using TuanBuy.Models.AppUtlity;
-using TuanBuy.Models.Bank.Extensions;
 using TuanBuy.Models.Entities;
 using TuanBuy.Models.Extension;
 using TuanBuy.ViewModel;

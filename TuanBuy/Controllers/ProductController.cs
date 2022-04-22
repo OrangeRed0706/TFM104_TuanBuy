@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Claims;
+using Business.IServices;
+using Business.Services;
 using Data;
 using Data.Entities;
 using Microsoft.AspNetCore.Authorization;
@@ -32,8 +34,8 @@ namespace TuanBuy.Controllers
         private readonly TuanBuyContext _dbContext;
         private static IDistributedCache _distributedCache;
         private readonly RedisProvider _redisDb;
-
-        public ProductController(GenericRepository<Product> productsRepository, IWebHostEnvironment environment, GenericRepository<User> userRepository, TuanBuyContext dbContext, IDistributedCache distributedCache, RedisProvider redisDb)
+        private readonly IProductService _productService;
+        public ProductController(GenericRepository<Product> productsRepository, IWebHostEnvironment environment, GenericRepository<User> userRepository, TuanBuyContext dbContext, IDistributedCache distributedCache, RedisProvider redisDb,IProductService productService)
         {
             _productsRepository = productsRepository;
             _environment = environment;
@@ -41,7 +43,7 @@ namespace TuanBuy.Controllers
             _dbContext = dbContext;
             _distributedCache = distributedCache;
             _redisDb = redisDb;
-
+            _productService = productService;
         }
         //新增商品首頁
         [Authorize(Roles = "FullUser")]
@@ -416,8 +418,6 @@ namespace TuanBuy.Controllers
             {
                 return BadRequest();
             }
-
-
             var targetUser = GetTargetUser();
 
             #region 建立商品
@@ -433,8 +433,9 @@ namespace TuanBuy.Controllers
                 User = targetUser,
                 Total = product.Total
             };
-            _productsRepository.Create(targetProduct);
-            _productsRepository.SaveChanges();
+            _productService.Add(targetProduct);
+            _productService.SaveChanges();
+
             #endregion
 
             //檔案路徑

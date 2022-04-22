@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace TuanBuy.Models.Bank.Utlity
+namespace Business.Services.Utility
 {
     public static class LambdaUtil
     {
