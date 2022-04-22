@@ -83,7 +83,7 @@ namespace TuanBuy.Controllers
                 ExpireDate = null,
                 // 支付完成 返回商店網址
                 //ReturnURL = _bankInfoModel.ReturnURL,
-                ReturnURL = "https://core.newebpay.com/MemberCenter/MyBuyProduct",
+                ReturnURL = "https://tuanbuy.azurewebsites.net/MemberCenter/MyBuyProduct",
                 // 支付通知網址
                 NotifyURL = _bankInfoModel.NotifyURL,
                 // 商店取號網址
@@ -197,7 +197,7 @@ namespace TuanBuy.Controllers
                     using(_dbContext)
                     {
                       var order = _dbContext.Order.Single(x => x.Id == convertModel.MerchantOrderNo);
-                        order.StateId = 3;
+                        order.StateId = 2;
                         _dbContext.SaveChanges();
                         HttpContext.Session.Remove("ShoppingCart");
                     }
