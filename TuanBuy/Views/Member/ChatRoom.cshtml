@@ -693,6 +693,7 @@
 
     /* 接收其他使用者傳來訊息*/
     connection.on('PrivateMsgRecevied', (message, currentUser, currentUserImg) => {
+        console.log(currentUser);
         var messagesobject = new Message();
         const date = new Date(Date.now());
         messagesobject.createDate = new Intl.DateTimeFormat('zh-TW', options).format(date)
@@ -700,12 +701,13 @@
         messagesobject.friendMessage = message;
         messagesobject.PicPath = '/MemberPicture/'+currentUserImg;
         messagesobject.myMessages = null;
-        app.messages.push(messagesobject);
+        if (app.chatMessageTitle == currentUser) {
+            app.messages.push(messagesobject);
+        }
     })
 
     /* 接收其他使用者傳來的圖片訊息*/
     connection.on('PrivateImgMsgRecevied', (messagecontext, userName, userPicPath, imgMsgPicPath) => {
-        console.log('接收到其他使用者傳來的圖片囉!');
         var messagesobject = new Message();
         const date = new Date(Date.now());
         messagesobject.createDate = new Intl.DateTimeFormat('zh-TW', options).format(date)
@@ -714,7 +716,9 @@
         messagesobject.PicPath = userPicPath;
         messagesobject.friendMessageImage = imgMsgPicPath;
         messagesobject.myMessages = null;
-        app.messages.push(messagesobject);
+        if (app.chatMessageTitle == userName) {
+            app.messages.push(messagesobject);
+        }
     })
 
 
