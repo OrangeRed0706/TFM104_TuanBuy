@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>*@
-<div class="content-inner w-100 ss">
+<div class="content-inner w-100 ss" >
     <!-- Page Header-->
     <header class="bg-white shadow-sm px-4 py-3 z-index-20">
         <div class="container-fluid px-0">
@@ -59,7 +59,7 @@
                 </thead>
                 <tbody>
                     <!--分頁設定--> <!--item.disable==false -->
-                    <tr v-for="item in products" v-if="item.disable==Disable && search=='' || item.productName==search || item.productId==search || item.userName==search">
+                    <tr v-for="item in products" v-if="item.disable==Disable && search=='' || item.productName.includes(search) || item.productId==search || item.userName.includes(search)">
                         <th scope="row">{{item.productId}}</th>
                         <td>
                             <img :src="item.picPath" style="width:80px;height:80px;" />

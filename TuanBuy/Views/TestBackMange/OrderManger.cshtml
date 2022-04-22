@@ -4,7 +4,7 @@
 }
 
 <!--我的css-->
-<link rel="stylesheet" href="~/css/back.css">
+<link rel="stylesheet" href="~/css/back.css" >
 <div class="content-inner w-100 ss" id="app">
     <!-- Page Header-->
     <header class="bg-white shadow-sm px-4 py-3 z-index-20">
@@ -44,7 +44,7 @@
                 </thead>
                 <tbody>
                     <!--分頁設定-->
-                    <tr v-for="item in ordermanages.slice(pageStart, pageStart + countOfPage)" v-if="search=='' || item.orderId==search || item.userName==search || item.productName==search ">
+                    <tr v-for="item in ordermanages.slice(pageStart, pageStart + countOfPage)" v-if="search=='' || item.orderId.includes(search) || item.userName.includes(search) || item.productName.includes(search)">
                         <th scope="row">{{item.orderId}}</th>
                         <td>{{item.userName}}</td>
                         <td>{{item.productName}}</td>

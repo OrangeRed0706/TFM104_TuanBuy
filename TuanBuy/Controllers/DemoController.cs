@@ -10,6 +10,8 @@ using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Claims;
 using System.Text;
+using Data;
+using Data.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -23,7 +25,6 @@ using Org.BouncyCastle.Asn1.Ocsp;
 using StackExchange.Redis;
 using Topic.Hubs;
 using TuanBuy.Models.AppUtlity;
-using TuanBuy.Models.Bank.Extensions;
 using TuanBuy.Models.Entities;
 using TuanBuy.Models.Extension;
 using TuanBuy.ViewModel;
@@ -55,7 +56,7 @@ namespace TuanBuy.Controllers
         {
 
             var _IDatabase = _mydb.GetRedisDb(3);
-            var listKey = "Notify_"+1;
+            var listKey = "Notify_" + 1;
             _IDatabase.KeyDelete(listKey, CommandFlags.FireAndForget);//delete all item
             _IDatabase.SaveMessage(listKey, "通知內容");
             //存取每一個字元
@@ -269,8 +270,8 @@ namespace TuanBuy.Controllers
         #endregion
 
         #region 文字編輯器
-        public IActionResult HtmlEditText()      
-        {    
+        public IActionResult HtmlEditText()
+        {
             return View();
         }
         [HttpPost]

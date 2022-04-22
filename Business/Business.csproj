@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Data\Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\Extensions\" />
+    <Folder Include="Services\Bank\" />
+    <Folder Include="Services\Utility\" />
+  </ItemGroup>
+
+</Project>

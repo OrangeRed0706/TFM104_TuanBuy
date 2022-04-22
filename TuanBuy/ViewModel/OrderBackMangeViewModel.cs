@@ -73,5 +73,6 @@ namespace TuanBuy.ViewModel
         public int HotproductCount { get; set; }
         //熱銷產品名稱
         public string ProductName { get; set; }
+        //
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Data;
+using Data.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StackExchange.Redis;
@@ -138,7 +140,19 @@ namespace TuanBuy.Controllers
             var processOrder = _dbcontext.Order.Where(x => x.StateId == 2).Count();
             var finishOrder = _dbcontext.Order.Where(x => x.StateId == 4).Count();
             var totalSales = _dbcontext.OrderDetail.Select(x => x.Price).Sum();
-            //var hotProduct = _dbcontext.OrderDetail.GroupJoin(x=>x.)
+            var hotProduct = _dbcontext.Product.ToList().GroupJoin(_dbcontext.OrderDetail,
+                   prd => prd.Id,
+                   order => order.ProductId,
+                   (product, order) => new { product, order }
+               ).Select(x => new 
+               {
+                 ProductName =  x.product.Name,
+                 ProductCount=x.order.Count(),
+               }
+               ).OrderByDescending(x => x.ProductCount).Take(3);
+            
+
+
 
 
             //var hotProduct = _dbcontext.OrderDetail.OrderBy(x => x.Count).Take(3);
@@ -179,6 +193,7 @@ namespace TuanBuy.Controllers
                 #region 新增優惠卷給所有使用者
                 var users = _dbcontext.User.ToList();
                 var notifyMessage = $"請輸入「{userVouchersViewModel.VouchersTitle}」兌換優惠卷喔";
+
 
                 var entityEntries = users.Select(x =>
                     _dbcontext.UserNotify.Add(

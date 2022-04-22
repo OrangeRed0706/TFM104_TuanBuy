@@ -5,7 +5,7 @@
 
 <!--我的css-->
 <link rel="stylesheet" href="~/css/back.css">
-<div class="content-inner w-100 ss" id="app">
+<div class="content-inner w-100 ss" id="app" >
     <!-- Page Header-->
     <header class="bg-white shadow-sm px-4 py-3 z-index-20">
         <div class="container-fluid px-0">
@@ -43,7 +43,7 @@
                 </thead>
                 <tbody>
                     <!--分頁設定-->
-                    <tr v-for="item in counpons" v-if="search=='' || item.voucherName==search ">
+                    <tr v-for="item in counpons" v-if="search=='' || item.voucherName.includes(search)">
                         <th scope="row">{{item. voucherName}}</th>
                         <td>{{item.voucherDescribe}}</td>
                         <td>{{item.vouchersDiscount}}</td>

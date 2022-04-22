@@ -13,45 +13,15 @@
                     <input class="coupon-save-input" type="text" v-model="coupon">
                     <button class="coupon-save-btn" v-on:click="AddCoupon()">儲存</button>
             </div>
-            <div class="coupon-flix">
-                <div class="coupon-div">
+            <div class="coupon-flix"  >
+                <div class="coupon-div" v-for="item in myCoupon">
                     <div>
-                        <img src="https://beautiful666.com/images/10/2s.jpg" alt="折價券" width="100" height="100">
+                        <img :src="item.vouchersPicPath" alt="折價券" width="100" height="100">
                     </div>
                     <div class="coupon-p-div">
-                        <p class="coupon-p-title">折價卷的標題</p>
-                        <p class="coupon-p">內容</p>
-                        <p class="coupon-date">日期</p>
-                    </div>
-                </div>
-                <div class="coupon-div">
-                    <div>
-                        <img src="https://beautiful666.com/images/10/2s.jpg" alt="折價券" width="100" height="100">
-                    </div>
-                    <div class="coupon-p-div">
-                        <p class="coupon-p-title">折價卷的標題</p>
-                        <p class="coupon-p">內容</p>
-                        <p class="coupon-date">日期</p>
-                    </div>
-                </div>
-                <div class="coupon-div">
-                    <div>
-                        <img src="https://beautiful666.com/images/10/2s.jpg" alt="折價券" width="100" height="100">
-                    </div>
-                    <div class="coupon-p-div">
-                        <p class="coupon-p-title">折價卷的標題</p>
-                        <p class="coupon-p">內容</p>
-                        <p class="coupon-date">日期</p>
-                    </div>
-                </div>
-                <div class="coupon-div">
-                    <div>
-                        <img src="https://beautiful666.com/images/10/2s.jpg" alt="折價券" width="100" height="100">
-                    </div>
-                    <div class="coupon-p-div">
-                        <p class="coupon-p-title">折價卷的標題</p>
-                        <p class="coupon-p">內容</p>
-                        <p class="coupon-date">日期</p>
+                        <p class="coupon-p-title">{{item.vouchersTitle}}</p>
+                        <p class="coupon-p">{{item.vouchersDescribe}}</p>
+                        <p class="coupon-date">{{item.discountDescribe}}</p>
                     </div>
                 </div>
             </div>
@@ -63,6 +33,7 @@
         el: '#app',
         data: {
             user: {
+                id:0,
                 name: "",
                 phone: "",
                 birth: "",
@@ -71,18 +42,67 @@
                 uploadPicPath: "",
             },
             coupon: '',
+            myCoupon:[],
         },
         methods: {
             AddCoupon: function () {
-                console.log(vm.coupon);
-                //axios.post("/api/LoginAndRegister", self.user).then((resp) => {
-                    
-                //}).catch((res) => { console.log(res.data) });
+                $.ajax({
+                    type: "POST",
+                    url: "/Product/AddVoucher",
+                    data: {
+                        UserId: vm.user.id,
+                        VoucherName: vm.coupon,
+                    },
+                    success: function (response) {
+                        console.log(response)
+                        vm.coupon = ''
+                        if (response == '已經使用過優惠劵囉!') {
+                            Swal.fire(response)
+                        }
+                        else if (response == '目前尚未有該優惠劵!') {
+                            Swal.fire(
+                                '確認!',
+                                '目前尚未有該優惠劵',
+                                'question'
+                            ).then((result) => {
+                                
+                            });
+                        }
+                        else {
+                            vm.myCoupon = response;
+                            connection.invoke("SendMessage", "TuanBuy：", `優惠卷新增！成功：${app.vouchers.voucherName}兌換`).catch(function (err) {
+                                return console.error(err.toString());
+                            });
+                        }
+                    },
+                    error: function (response) {
+                        /*alert('沒有該則優惠劵哦!');*/
+                    }
+                });
             }
         },
         mounted: function () {
             let self = this;
-            axios.get("/api/MemberCenter/").then((resp) => { this.user = resp.data });
+            axios.get("/api/MemberCenter/").then((resp) => {
+                this.user = resp.data;
+                const UserId = this.user.id;
+                console.log(UserId);
+                $.ajax({
+                    type: "POST",
+                    url: "/Product/GetUserVoucher",
+                    data: {
+                        UserId: UserId,
+                    },
+                    success: function (response) {
+                        vm.myCoupon = response;
+                        console.log(vm.myCoupon);
+                    },
+                    error: function (response) {
+                        alert(response);
+                    }
+                });
+            });
+
         }
     });
 </script>
