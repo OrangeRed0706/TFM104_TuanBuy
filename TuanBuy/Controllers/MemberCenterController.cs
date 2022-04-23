@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
+using Business.IServices;
 using Data;
 using Data.Entities;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Math.EC.Rfc7748;
@@ -24,12 +27,13 @@ namespace TuanBuy.Controllers
         private readonly IRepository<User> _userRepository;
         private readonly TuanBuyContext _dbContext;
         private readonly RedisProvider _redisdb;
-
-        public MemberCenterController(GenericRepository<User> userRepository, TuanBuyContext dbContext, RedisProvider redisdb)
+        private readonly IUserService _userService;
+        public MemberCenterController(GenericRepository<User> userRepository, TuanBuyContext dbContext, RedisProvider redisdb,IUserService service)
         {
             _userRepository = userRepository;
             _dbContext = dbContext;
             _redisdb = redisdb;
+            _userService = service;
         }
 
         //會員中心首頁
@@ -254,6 +258,26 @@ namespace TuanBuy.Controllers
 
             return Ok("訂單狀態已被改變");
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult ForgetPassword([FromBody] ForgetUser user)
+        {
+            var newPassword = _userService.ForgetPassword(user.Email);
+            _userService.SaveChanges();
+
+
+
+            var mailbody = $@"<h3>您好這是您的新密碼：</h3>";
+
+            Mail.SendMail(user.Email, "TuanBuy會員忘記密碼", mailbody + newPassword);
+
+            return Ok("成功");
+        }
+
+
+
+
         private User GetTargetUser()
         {
             var claim = HttpContext.User.Claims;

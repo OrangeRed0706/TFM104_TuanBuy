@@ -26,7 +26,8 @@ namespace TuanBuy.Models.AppUtlity
 
             var subject = Subject;
             var body = Body;
-            var textFormat = TextFormat.Text;
+            var textFormat = TextFormat.Html;
+                
 
 
             var message = new MimeMessage();
