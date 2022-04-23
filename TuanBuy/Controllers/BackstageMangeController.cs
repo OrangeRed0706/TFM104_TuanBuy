@@ -144,25 +144,49 @@ namespace TuanBuy.Controllers
                    prd => prd.Id,
                    order => order.ProductId,
                    (product, order) => new { product, order }
-               ).Select(x => new HomeBackMangeViewModel
+               ).Select(x => new HotProduct
                {
-                 ProductName =  x.product.Name,
-                 ProductCount=x.order.Count(),
-                 
-               }
-               ).OrderByDescending(x => x.ProductCount).Take(3);
+                   HotProductName = x.product.Name,
+                   HotProductCount = x.order.Sum(y=>y.Count)
+               }).OrderByDescending(x => x.HotProductCount).Take(3);
+            var SellerRanking = _dbcontext.Product.ToList().GroupJoin(_dbcontext.User,
+                   product => product.UserId,
+                   user => user.Id,
+                   (product, user) => new { product, user}).ToList().GroupJoin(_dbcontext.OrderDetail,
+                     prd => prd.product.Id,
+                     ord => ord.ProductId,
+                     (prd, ord) => new { prd, ord }).ToList().Select(x => new SellerRanking
+                     {
+                         SellerId = x.prd.product.UserId,
+                         PicPath = x.prd.user.FirstOrDefault(y=>y.Id==x.prd.product.UserId).PicPath,
+                         SellerName = x.prd.user.FirstOrDefault(y => y.Id == x.prd.product.UserId).Name,
+                         Price = x.ord.Sum(x => x.Count * x.Product.Price)
+                     });
 
-            //var hotOperators = _dbcontext.User.ToList().GroupJoin(_dbcontext.OrderDetail,
-            //      user => user.Id,
-            //      order => order.Price,
-            //      (product, order) => new { product, order }
-            //  ).Select(x => new HomeBackMangeViewModel
-            //  {
-            //     Name=x.order
-            //  }
-            //  ).OrderByDescending(x => x.ProductCount).Take(3);
+            //var SellerRanking = _dbcontext.Product.ToList().GroupJoin(_dbcontext.OrderDetail,
+            //        prd => prd.Id,
+            //        order => order.ProductId,
+            //        (product, order) => new { product, order }
+            //    ).Select(x => new
+            //    {
+            //        x
+            //          /* Price = x.order.Sum(y => y.Count * x.product.Price)*/,
+            //    }).ToList().GroupJoin(_dbcontext.User,
+            //        price => price.x.product.UserId,
+            //        user => user.Id,
+            //        (price, user) => new { price, user }
+            //    ).ToList().Select(x => new SellerRanking
+            //    {
+            //        Price = x.price.x.order.Sum(y => y.Count * x.price.x.product.Price),
+            //    }) ;
 
 
+            //Select(x=>new HotSeller
+            //{
+            //    SellerName = x.user.Name,
+            //    SellerPicPath = x.user.PicPath,
+            //    TotalPrice = x.product.Select(x=>x)
+            //});
 
 
 
@@ -204,6 +228,7 @@ namespace TuanBuy.Controllers
                 #region 新增優惠卷給所有使用者
                 var users = _dbcontext.User.ToList();
                 var notifyMessage = $"請輸入「{userVouchersViewModel.VouchersTitle}」兌換優惠卷喔";
+
 
                 var entityEntries = users.Select(x =>
                     _dbcontext.UserNotify.Add(
