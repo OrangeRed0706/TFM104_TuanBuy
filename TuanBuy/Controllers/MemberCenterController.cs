@@ -261,6 +261,7 @@ namespace TuanBuy.Controllers
 
         [HttpPost]
         [AllowAnonymous]
+        //忘記密碼
         public IActionResult ForgetPassword([FromBody] ForgetUser user)
         {
             var newPassword = _userService.ForgetPassword(user.Email);
