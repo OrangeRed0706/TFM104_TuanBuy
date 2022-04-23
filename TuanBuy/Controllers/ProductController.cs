@@ -55,11 +55,41 @@ namespace TuanBuy.Controllers
             return View();
         }
 
-        ////商品介紹頁
-        //public IActionResult DemoProduct()
-        //{
-        //    return View();
-        //}
+        #region 商品更新頁面
+        //商品更新頁
+        [HttpGet]
+        public IActionResult UpdateProduct(int id)
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ProductViewModel GetUpdateProductData(int id)
+        {
+            ProductManage product = new ProductManage(_dbContext);
+            var result = product.GetProductViewModel(id);
+            return result;
+        }
+        [HttpPost]
+        public IActionResult UpdateProductData(ProductViewModel product)
+        {
+            using(_dbContext)
+            {
+                var result = _dbContext.Product.SingleOrDefault(x => x.Id == product.Id);
+                result.Category = product.Category;
+                result.Content = product.Content;
+                result.Description = product.Description;
+                result.EndTime = product.EndTime;
+                result.Name = product.Name;
+                result.Price = product.Price;
+                result.Total = (decimal)product.Total;                  
+                _dbContext.SaveChanges();
+            }
+            return RedirectToAction("Index","Home");
+        }
+        #endregion
+
+
         #region 商品介紹頁
         [HttpGet]
         public IActionResult DemoProduct(int id)

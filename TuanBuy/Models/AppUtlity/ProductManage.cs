@@ -16,6 +16,24 @@ namespace TuanBuy.Models.Entities
         {
             _dbContext = dbContext;
         }
+
+        public ProductViewModel GetProductViewModel(int id)
+        {
+            using (_dbContext)
+            {
+                var result = _dbContext.Product.Where(x => x.Id == id).Select(x=>new ProductViewModel { 
+                    Name = x.Name,
+                    TargetPrice = x.Total,
+                    EndTime = x.EndTime,
+                    Price = x.Price,
+                    Category = x.Category,
+                    Description = x.Description,
+                    Content = x.Content,
+                }).FirstOrDefault();
+                return result;
+            }
+        }
+
         #region 取得商品頁資料
         public DemoProductViewModel GetDemoProductData(int ProductId)
         {
