@@ -52,19 +52,25 @@ namespace TuanBuy.Service
                 Name = user.Name,
                 Password = user.Password
             };
-            string completeUrl = Request.GetDisplayUrl().ToString();
-            
-            //組出環境網址
-            var url = new StringBuilder();
-            url.Append(Request.Scheme); //https
-            url.Append("://");
-            url.Append(Request.Host.Value);//"localhost:5001"
-            url.Append("/MemberCenter/StartMemberState/?s=");
             var vrCode = GoEncrytion.encrytion(user.Email);
-            url.Append(vrCode);
 
-            var body = url.ToString();
-            Mail.SendMail(user.Email, "TuanBuy註冊會員，啟動網址", body);
+            string completeUrl = Request.GetDisplayUrl().ToString();
+            var allUrl= new StringBuilder()
+                .Append(HttpContext.Request.Scheme)
+                .Append("://")
+                .Append(HttpContext.Request.Host)
+                .Append(HttpContext.Request.PathBase)
+                //.Append(HttpContext.Request.Path)
+                //.Append(HttpContext.Request.QueryString)
+                .Append("/MemberCenter/StartMemberState/?s=")
+                .Append(vrCode)
+                .ToString();            //組出環境網址
+
+            
+            var mailbody = $@"<h1>嗨你好點點選網址啟用帳號</h1>
+                       <img src ='https://tuanbuy.azurewebsites.net/ProductPicture/63786267327118281212.jpg'> <br>";
+
+            Mail.SendMail(user.Email, "TuanBuy註冊會員，啟動網址", mailbody + allUrl);
             _userRepository.Create(userEntity);
         }
 
