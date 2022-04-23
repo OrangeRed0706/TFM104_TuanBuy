@@ -86,7 +86,11 @@ namespace TuanBuy.Service
                 pic.CopyTo(fs);
             }
 
-            var fullMember = user.Name != "" || user.Phone != "" || user.Address != "" || user.Birth != null;
+            bool fullMember;
+            if (targetUser.State != "系統管理員")
+            {
+                fullMember = user.Name != "" || user.Phone != "" || user.Address != "" || user.Birth != null;
+            }
             if (_httpContextAccessor.HttpContext != null)
             {
                 targetUser.Name = user.Name;
