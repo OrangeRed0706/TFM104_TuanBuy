@@ -18,25 +18,12 @@
         <div class="row">
             <div class="mystoresell-sellerdiv">
                 <img v-bind:src="user.picPath"
-                     alt="頭像" height="80" width="80" class="Largeheadsticker">
-                <p class="sellp">{{user.name}}</p>
-                <button class="demoproduct-addchat-btn">聊聊</button>
+                     alt="頭像" height="100" width="100" class="Largeheadsticker mystore-seller-img">
+                <p class="sellp  mystore-btn-mg">{{user.name}}</p>
+                <button class="demoproduct-addchat-btn mystore-btn-mg">聊聊</button>
             </div>
-            @*<div class="sellborder col-lg-12">
-                <div>
-                    <div class="display col-3 form-row">
-                        <img v-bind:src="user.picPath"
-                             alt="頭像" height="80" width="80" class="Largeheadsticker">
-                    </div>
-                    <div class="display col-9 form-row ">
-                        <p class="sellp">{{user.name}}</p>
-                    </div>
-                </div>
-                <div class="center">
-                    <div class="display col-6 form-row"><button class="sellbtn">關注</button></div>
-                    <div class="display col-6 form-row"><button class="sellbtn2">聊聊</button></div>
-                </div>
-            </div>*@
+            <img class="mystore-img" src="~/img/kikicat-kikiapp.gif"/>
+            <img class="mystore-img2" src="~/img/Title.png"/>
         </div>
     </div>
 
