@@ -59,7 +59,8 @@ namespace TuanBuy.Service
                 Birth = targetUser.Birth,
                 Sex = targetUser.Sex,
                 BankAccount = targetUser.BankAccount,
-                PicPath = "/MemberPicture/" + targetUser.PicPath
+                PicPath = "/MemberPicture/" + targetUser.PicPath,
+                NickName = targetUser.NickName
             };
             return userData;
         }
@@ -89,6 +90,7 @@ namespace TuanBuy.Service
             if (_httpContextAccessor.HttpContext != null)
             {
                 targetUser.Name = user.Name;
+                targetUser.NickName = user.NickName;
                 targetUser.Phone = user.Phone;
                 targetUser.Birth = user.Birth;
                 targetUser.Address = user.Address;
@@ -113,15 +115,7 @@ namespace TuanBuy.Service
                     //重新設置新session
                     HttpContext.Session.SetString("userData", jsonstring);
                 }
-                ////將使用者資訊session重新更新;
-                //var jsonstring = JsonConvert.SerializeObject(new
-                //{
-                //    user.Email,
-                //    user.NickName,
-                //    user.Id,
-                //    user.PicPath
-                //});
-                //HttpContext.Session.SetString("userData", jsonstring);
+
                 if (fullMember)
                 {
                     HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

@@ -56,7 +56,7 @@ namespace TuanBuy.Controllers
         {
 
             var _IDatabase = _mydb.GetRedisDb(3);
-            var listKey = "Notify_"+1;
+            var listKey = "Notify_" + 1;
             _IDatabase.KeyDelete(listKey, CommandFlags.FireAndForget);//delete all item
             _IDatabase.SaveMessage(listKey, "通知內容");
             //存取每一個字元
@@ -270,8 +270,8 @@ namespace TuanBuy.Controllers
         #endregion
 
         #region 文字編輯器
-        public IActionResult HtmlEditText()      
-        {    
+        public IActionResult HtmlEditText()
+        {
             return View();
         }
         [HttpPost]
