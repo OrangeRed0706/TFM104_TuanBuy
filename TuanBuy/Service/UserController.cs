@@ -67,10 +67,10 @@ namespace TuanBuy.Service
                 .ToString();            //組出環境網址
 
             
-            var mailbody = $@"<h1>嗨你好點點選網址啟用帳號</h1>
-                       <img src ='https://tuanbuy.azurewebsites.net/ProductPicture/63786267327118281212.jpg'> <br>";
+            var mailbody = $@" <a href='{allUrl}'<h1>會員您好，請點選此啟用帳號</h1>
+                       <img src ='https://tuanbuy.azurewebsites.net/img/Tuanlogo.png'> <br></a>";
 
-            Mail.SendMail(user.Email, "TuanBuy註冊會員，啟動網址", mailbody + allUrl);
+            Mail.SendMail(user.Email, "TuanBuy註冊會員，啟動網址", mailbody);
             _userRepository.Create(userEntity);
         }
 
