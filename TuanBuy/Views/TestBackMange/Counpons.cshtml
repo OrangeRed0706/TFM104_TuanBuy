@@ -5,7 +5,7 @@
 
 <!--我的css-->
 <link rel="stylesheet" href="~/css/back.css">
-<div class="content-inner w-100 ss" id="app" >
+<div class="content-inner w-100 layoutbackgrount" id="app" >
     <!-- Page Header-->
     <header class="bg-white shadow-sm px-4 py-3 z-index-20">
         <div class="container-fluid px-0">
@@ -24,14 +24,14 @@
         </div>
     </div>
     <div class="container " id="app">
-        <div class="row ss">
+        <div class="row layoutbackgrount">
             <div class="search1">
                 <div class="form-group has-search">
                     <span class="fa fa-search form-control-feedback"></span>
                     <input type="text" class="form-control" placeholder="Search" v-model="search">
                 </div>
             </div>
-            <table class="table table-striped col-gl-4 dropdown table-hover aaa bbb">
+            <table class="table table-striped col-gl-4 dropdown table-hover tablerow rowcolor">
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">優惠卷名稱</th>
@@ -43,7 +43,7 @@
                 </thead>
                 <tbody>
                     <!--分頁設定-->
-                    <tr v-for="item in counpons" v-if="search=='' || item.voucherName.includes(search)">
+                    <tr v-for="item in counpons.slice(pageStart, pageStart + countOfPage)" v-if="search=='' || item.voucherName.includes(search)">
                         <th scope="row">{{item. voucherName}}</th>
                         <td>{{item.voucherDescribe}}</td>
                         <td>{{item.vouchersDiscount}}</td>
@@ -63,17 +63,17 @@
                 </tbody>
             </table>
             <!--分頁-->
-            @*<div class="container">
-                    <ul class="pagination">
-                        <li class="page-item" v-bind:class="{'disabled': (currPage === 1)}"
-                            @@click.prevent="setPage(currPage-1)"><a class="page-link" href="#">Previous</a></li>
-                        <li v-for="n in totalPage"
-                            v-bind:class="{'active': (currPage === (n))}"
-                            @@click.prevent="setPage(n)"><a class="page-link" href="#">{{n}}</a></li>
-                        <li class="page-item" v-bind:class="{'disabled': (currPage === totalPage)}"
-                            @@click.prevent="setPage(currPage+1)"><a class="page-link" href="#">Next</a></li>
-                    </ul>
-                </div>*@
+            <div class="container">
+                <ul class="pagination">
+                    <li class="page-item" v-bind:class="{'disabled': (currPage === 1)}"
+                        @@click.prevent="setPage(currPage-1)"><a class="page-link" href="#">Previous</a></li>
+                    <li v-for="n in totalPage"
+                        v-bind:class="{'active': (currPage === (n))}"
+                        @@click.prevent="setPage(n)"><a class="page-link" href="#">{{n}}</a></li>
+                    <li class="page-item" v-bind:class="{'disabled': (currPage === totalPage)}"
+                        @@click.prevent="setPage(currPage+1)"><a class="page-link" href="#">Next</a></li>
+                </ul>
+            </div>
 
             <!--修改使用者的對話盒-->
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -177,6 +177,15 @@
             },
             search: '',
             target: null,
+        },
+        computed: {
+            pageStart: function () {
+                return (this.currPage - 1) * this.countOfPage;                 //當前頁面的起始筆數
+            },
+            totalPage: function () {
+                return Math.ceil(this.ordermanages.length / this.countOfPage);  //陣列長度除以每頁設定的筆數
+            },
+
         },
         methods: {
             update: function (e) {

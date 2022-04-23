@@ -258,7 +258,6 @@
         el: '#logoutt',
         methods: {
             logout: function () {
-                alert("處發");
                 axios.delete("/api/LoginAndRegister").then(() => {
                     window.location.href = "/Home/Index";
                 });

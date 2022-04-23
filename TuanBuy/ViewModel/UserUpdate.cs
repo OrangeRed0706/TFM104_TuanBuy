@@ -8,6 +8,7 @@ namespace TuanBuy.ViewModel
     {
         public string Password { get; set; }
         public string Name { get; set; }
+        public string NickName { get; set; }
         public string Phone { get; set; }
         public string BankAccount { get; set; }
         public DateTime? Birth { get; set; }
@@ -15,5 +16,9 @@ namespace TuanBuy.ViewModel
         public string Address { get; set; }
         public IFormFile PicPath { get; set; }
 
+    }
+    public class ForgetUser
+    {
+        public string Email { get; set; }
     }
 }
