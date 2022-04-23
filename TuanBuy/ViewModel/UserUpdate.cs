@@ -17,4 +17,8 @@ namespace TuanBuy.ViewModel
         public IFormFile PicPath { get; set; }
 
     }
+    public class ForgetUser
+    {
+        public string Email { get; set; }
+    }
 }

@@ -90,7 +90,7 @@ namespace TuanBuy
             services.AddTransient<GenericRepository<User>>();
             //注入Business服務
             services.AddScoped<IProductService, ProductService>();
-
+            services.AddScoped<IUserService, UsersService>();
             //加入HangFire
             services.AddHangfire(configuration => configuration
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)

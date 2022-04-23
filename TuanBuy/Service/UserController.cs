@@ -2,9 +2,11 @@
 using System.Linq;
 using System.Text;
 using System.Threading.Channels;
+using Business.IServices;
 using Data.Entities;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Razor.Language;
 using TuanBuy.Models;
 using TuanBuy.Models.AppUtlity;
 using TuanBuy.Models.Entities;
@@ -20,10 +22,11 @@ namespace TuanBuy.Service
     public class UserController : ControllerBase
     {
         private readonly IRepository<User> _userRepository;
-
-        public UserController(GenericRepository<User> userRepository)
+        private readonly IUserService _userService;
+        public UserController(GenericRepository<User> userRepository,IUserService userService)
         {
             _userRepository = userRepository;
+            _userService = userService;
         }
 
         // GET: api/<UserController>
@@ -70,8 +73,9 @@ namespace TuanBuy.Service
             var mailbody = $@" <a href='{allUrl}'<h1>會員您好，請點選此啟用帳號</h1>
                        <img src ='https://tuanbuy.azurewebsites.net/img/Tuanlogo.png'> <br></a>";
 
-            Mail.SendMail(user.Email, "TuanBuy註冊會員，啟動網址", mailbody);
-            _userRepository.Create(userEntity);
+            Mail.SendMail(user.Email, "TuanBuy註冊會員，啟動網址", mailbody + allUrl);
+            _userService.Add(userEntity);
+            _userService.SaveChanges();
         }
 
         // PUT api/<UserController>/5
