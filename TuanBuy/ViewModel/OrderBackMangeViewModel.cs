@@ -73,6 +73,9 @@ namespace TuanBuy.ViewModel
         public int HotproductCount { get; set; }
         //熱銷產品名稱
         public string ProductName { get; set; }
-        //
+        //user團主姓名
+        public string Name { get; set; }
+        //團主銷售額
+        public decimal Totalturnover{ get; set;}
     }
 }

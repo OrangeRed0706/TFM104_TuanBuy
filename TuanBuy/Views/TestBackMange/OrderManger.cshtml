@@ -5,7 +5,7 @@
 
 <!--我的css-->
 <link rel="stylesheet" href="~/css/back.css" >
-<div class="content-inner w-100 ss" id="app">
+<div class="content-inner w-100 layoutbackgrount" id="app">
     <!-- Page Header-->
     <header class="bg-white shadow-sm px-4 py-3 z-index-20">
         <div class="container-fluid px-0">
@@ -24,14 +24,14 @@
         </div>
     </div>
     <div class="container " id="app">
-        <div class="row ss">
+        <div class="row layoutbackgrount">
             <div class="search1">
                 <div class="form-group has-search">
                     <span class="fa fa-search form-control-feedback"></span>
                     <input type="text" class="form-control" placeholder="Search" v-model="search">
                 </div>
             </div>
-            <table class="table table-striped col-gl-4 dropdown table-hover aaa bbb">
+            <table class="table table-striped col-gl-4 dropdown table-hover tablerow rowcolor">
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">訂單編號</th>
@@ -90,7 +90,7 @@
                         <div class="modal-body">
                             <!--綁定form表單資料-->
                             <table class="table table-striped col-gl-12 dropdown">
-                                <thead>
+                                <thead style="background-color: #303030; color: white; ">
                                     <tr>
                                         <th class="orderitem" scope="col">訂單編號</th>
                                         <th class="orderitem" scope="col">商品名稱</th>

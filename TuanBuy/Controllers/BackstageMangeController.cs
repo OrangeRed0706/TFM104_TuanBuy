@@ -144,13 +144,24 @@ namespace TuanBuy.Controllers
                    prd => prd.Id,
                    order => order.ProductId,
                    (product, order) => new { product, order }
-               ).Select(x => new 
+               ).Select(x => new HomeBackMangeViewModel
                {
                  ProductName =  x.product.Name,
                  ProductCount=x.order.Count(),
+                 
                }
                ).OrderByDescending(x => x.ProductCount).Take(3);
-            
+
+            //var hotOperators = _dbcontext.User.ToList().GroupJoin(_dbcontext.OrderDetail,
+            //      user => user.Id,
+            //      order => order.Price,
+            //      (product, order) => new { product, order }
+            //  ).Select(x => new HomeBackMangeViewModel
+            //  {
+            //     Name=x.order
+            //  }
+            //  ).OrderByDescending(x => x.ProductCount).Take(3);
+
 
 
 
@@ -193,7 +204,6 @@ namespace TuanBuy.Controllers
                 #region 新增優惠卷給所有使用者
                 var users = _dbcontext.User.ToList();
                 var notifyMessage = $"請輸入「{userVouchersViewModel.VouchersTitle}」兌換優惠卷喔";
-
 
                 var entityEntries = users.Select(x =>
                     _dbcontext.UserNotify.Add(

@@ -154,7 +154,7 @@ namespace TuanBuy
             backgroundJobs.Enqueue(() => Console.WriteLine("Hello world from Hangfire!"));
             recurringJobManager.AddOrUpdate(
                 "Run every minute",
-                ()=>serviceProvider.GetService<ITaskScheduling>().DailyBirthday(), "* * * * *");
+                ()=>serviceProvider.GetService<ITaskScheduling>().DailyBirthday(), Hangfire.Cron.Daily());
 
 
             //app.UseAuthorization();
