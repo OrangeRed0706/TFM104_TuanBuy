@@ -2,9 +2,11 @@
 using System.Linq;
 using System.Text;
 using System.Threading.Channels;
+using Business.IServices;
 using Data.Entities;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Razor.Language;
 using TuanBuy.Models;
 using TuanBuy.Models.AppUtlity;
 using TuanBuy.Models.Entities;
@@ -20,10 +22,11 @@ namespace TuanBuy.Service
     public class UserController : ControllerBase
     {
         private readonly IRepository<User> _userRepository;
-
-        public UserController(GenericRepository<User> userRepository)
+        private readonly IUserService _userService;
+        public UserController(GenericRepository<User> userRepository,IUserService userService)
         {
             _userRepository = userRepository;
+            _userService = userService;
         }
 
         // GET: api/<UserController>
@@ -52,20 +55,27 @@ namespace TuanBuy.Service
                 Name = user.Name,
                 Password = user.Password
             };
-            string completeUrl = Request.GetDisplayUrl().ToString();
-            
-            //組出環境網址
-            var url = new StringBuilder();
-            url.Append(Request.Scheme); //https
-            url.Append("://");
-            url.Append(Request.Host.Value);//"localhost:5001"
-            url.Append("/MemberCenter/StartMemberState/?s=");
             var vrCode = GoEncrytion.encrytion(user.Email);
-            url.Append(vrCode);
 
-            var body = url.ToString();
-            Mail.SendMail(user.Email, "TuanBuy註冊會員，啟動網址", body);
-            _userRepository.Create(userEntity);
+            string completeUrl = Request.GetDisplayUrl().ToString();
+            var allUrl= new StringBuilder()
+                .Append(HttpContext.Request.Scheme)
+                .Append("://")
+                .Append(HttpContext.Request.Host)
+                .Append(HttpContext.Request.PathBase)
+                //.Append(HttpContext.Request.Path)
+                //.Append(HttpContext.Request.QueryString)
+                .Append("/MemberCenter/StartMemberState/?s=")
+                .Append(vrCode)
+                .ToString();            //組出環境網址
+
+            
+            var mailbody = $@" <a href='{allUrl}'<h1>會員您好，請點選此啟用帳號</h1>
+                       <img src ='https://tuanbuy.azurewebsites.net/img/Tuanlogo.png'> <br></a>";
+
+            Mail.SendMail(user.Email, "TuanBuy註冊會員，啟動網址", mailbody + allUrl);
+            _userService.Add(userEntity);
+            _userService.SaveChanges();
         }
 
         // PUT api/<UserController>/5

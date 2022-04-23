@@ -2,7 +2,7 @@
     Layout = null;
 }
 <script>
-    var user = function() {
+    var user = function () {
         this.email = "";
         this.name = "";
         this.password = "";
@@ -21,7 +21,10 @@
 
 
 <div class="disflix">
-    <div class="rew50"><a href=@Url.Action("Index","Home")><img src="~/img/Tuanlogo.png" alt=""> </a></div>
+    <div class="rew50">
+        <a href=@Url.Action("Index","Home")><img class="buybuybuy" src="~/img/kikicat-kikiapp.gif" alt=""></a>
+        <a href=@Url.Action("Index","Home")><img class="titlelogoimg" src="~/img/Title.png" alt=""></a>
+    </div>
 
     <div class="regi" id="register">
         <h2>註冊帳號</h2>
@@ -40,7 +43,10 @@
         <div class="registerdiv">
             <input type="submit" name="commit" value="註冊" class="registerbtn" data-disable-with="註冊" v-on:click="addUser">
         </div>
-        <div class="iagree">繼續進行代表你同意<a href="">服務條款</a></div>
+        <div class="iagree">
+            繼續進行代表你同意
+            <a href="">服務條款</a>
+        </div>
         <div class="reborder"></div>
         <a class="reloginpass" href="/Home/Login">登入</a>
         <a class="reloginpass" href=@Url.Action("ForgetPassword","Home")>忘記密碼</a>
@@ -58,26 +64,25 @@
             user: new user()
         },
         methods: {
-            handleClick: function() {
+            handleClick: function () {
                 alert("收到訊息");
             },
-            checkMail: function() {
+            checkMail: function () {
                 let self = this;
                 let url = "/api/LoginAndRegister/" + self.user.email;
                 axios.get(url).then((resp) => {
-                        if (resp.data === 0) {
-                            console.log("電子郵件被用過了");
-                            check = false;
-                        }else if (resp.data === 1) {
-                            check = true;
-                        }
+                    if (resp.data === 0) {
+                        console.log("電子郵件被用過了");
+                        check = false;
+                    } else if (resp.data === 1) {
+                        check = true;
                     }
+                }
                 );
             },
-            addUser: function() {
+            addUser: function () {
                 let self = this;
-                if(self.user.email.trim() === "")
-                {
+                if (self.user.email.trim() === "") {
                     alert("資料請填寫完整");
                 }
                 if (self.user.password !== self.user.password2) {

@@ -90,7 +90,7 @@ namespace TuanBuy
             services.AddTransient<GenericRepository<User>>();
             //注入Business服務
             services.AddScoped<IProductService, ProductService>();
-
+            services.AddScoped<IUserService, UsersService>();
             //加入HangFire
             services.AddHangfire(configuration => configuration
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
@@ -154,7 +154,7 @@ namespace TuanBuy
             backgroundJobs.Enqueue(() => Console.WriteLine("Hello world from Hangfire!"));
             recurringJobManager.AddOrUpdate(
                 "Run every minute",
-                ()=>serviceProvider.GetService<ITaskScheduling>().DailyBirthday(), "* * * * *");
+                ()=>serviceProvider.GetService<ITaskScheduling>().DailyBirthday(), Hangfire.Cron.Daily());
 
 
             //app.UseAuthorization();

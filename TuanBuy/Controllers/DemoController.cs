@@ -10,8 +10,10 @@ using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Claims;
 using System.Text;
+using Business.IServices;
 using Data;
 using Data.Entities;
+using Hangfire;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -38,13 +40,40 @@ namespace TuanBuy.Controllers
         private readonly IWebHostEnvironment _environment;
         private static IDistributedCache _distributedCache;
         private readonly RedisProvider _mydb;
+        private readonly IRecurringJobManager _recurringJobManager;
+        private readonly ITaskScheduling _taskScheduling;
 
-        public DemoController(TuanBuyContext context, IWebHostEnvironment environment, IDistributedCache distributedCache, RedisProvider Mydb)
+        public DemoController(TuanBuyContext context, IWebHostEnvironment environment, IDistributedCache distributedCache, RedisProvider Mydb, IRecurringJobManager recurringJobManager, ITaskScheduling taskScheduling)
         {
             _dbContext = context;
             _environment = environment;
             _distributedCache = distributedCache;
             _mydb = Mydb;
+            _recurringJobManager = recurringJobManager;
+            _taskScheduling = taskScheduling;
+        }
+
+        public void TestTask(int day)
+        {
+            var AAA = "";
+            switch (day)
+            {
+                case 1:
+                    AAA = "0 0 * * *";
+                    break;
+                case 2:
+                    AAA = "* * * * *";
+                    break;
+                case 3:
+                    AAA = "0 * * * *";
+                    break;
+                default:
+                    break;
+
+            }
+            _recurringJobManager.AddOrUpdate(
+                "Run every minute",()=>
+                _taskScheduling.DailyBirthday(), AAA);
         }
 
         public IActionResult SingalR()

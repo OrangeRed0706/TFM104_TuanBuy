@@ -1,14 +1,16 @@
-﻿using Business.IServices;
+﻿using System.Linq;
+using Business.IServices;
+using Business.Services.Utility;
 using Data;
 using Data.Entities;
 
 namespace Business.Services
 {
-    public class UserService:IUserService
+    public class UsersService : IUserService
     {
         private readonly TuanBuyContext _dbContext;
 
-        public UserService(TuanBuyContext dbContext)
+        public UsersService(TuanBuyContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -25,6 +27,17 @@ namespace Business.Services
         public void Delete(User instance)
         {
             throw new System.NotImplementedException();
+        }
+
+        public string ForgetPassword(string email)
+        {
+            var curUser = _dbContext.User.FirstOrDefault(x => x.Email == email);
+            if (curUser != null)
+            {
+                return curUser.Password = EncrytionString.encrytion(curUser.Email);
+            }
+            else throw new System.NotImplementedException();
+
         }
 
         public void SaveChanges()

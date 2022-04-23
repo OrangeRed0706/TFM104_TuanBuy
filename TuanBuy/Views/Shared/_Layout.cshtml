@@ -67,114 +67,105 @@
 </head>
 
 <body>
-    <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
-
-    <!-- Offcanvas Menu Begin -->
-    <div class="offcanvas-menu-overlay"></div>
-    <div class="offcanvas-menu-wrapper">
-        <div class="offcanvas__close">+</div>
-        <div class="offcanvas__logo">
-            <a href="./index.html"><img src="~/img/logo.png" alt=""></a>
-        </div>
-        <div id="mobile-menu-wrap"></div>
-        <div class="offcanvas__auth">
-            <a href=@Url.Action("Register","Home")>註冊</a>
-            <a href=@Url.Action("Login","Home")>登入</a>
-        </div>
-    </div>
-    <!-- Offcanvas Menu End -->
     <!-- Header Section Begin -->
     <header class="header" id="layout">
         <div class="container">
-            <div class="row head-padding">
-                <div class="texthead1">
-                    <a href=@Url.Action("Index","Home")><img src="/img/Log.png" alt=""></a>
-                </div>
-                <div class="texthead2">
-                    <p class="display headsize1">|</p>
-                    <a class="display headsize" href="#" v-on:click="checkUser">開團</a>
+            <div class="row layout-padding head-display">
+                <a class="layout-img-logo" href=@Url.Action("Index","Home")><img src="~/img/Tuanbuylogo.png" alt=""></a>
+                <p class="headsize-p1">|</p>
+                <div class="head-p-width">
+                    <a class="headsize" href="#" v-on:click="checkUser">開團</a>
                 </div>
                 @{
                     System.Diagnostics.Debug.Assert(User.Identity != null, "User.Identity != null");
                     if (User.Identity.IsAuthenticated)
                     {
-                        <div class="texthead3">
-                            <a class="display" href="#" id="bell">
-                                <div class="bell-icon" tabindex="0" id="notifyBell">
-                                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-                                         y="0px" width="60px" height="40px" viewBox="0 0 50 30" enable-background="new 0 0 50 30"
-                                         xml:space="preserve">
-                                    <g class="bell-icon__group">
-                                    <path class="bell-icon__ball" id="ball" fill-rule="evenodd" stroke-width="1.5" clip-rule="evenodd"
-                                          fill="none" stroke="#currentColor" stroke-miterlimit="10"
-                                          d="M28.7,25 c0,1.9-1.7,3.5-3.7,3.5s-3.7-1.6-3.7-3.5s1.7-3.5,3.7-3.5S28.7,23,28.7,25z" />
-                                    <path class="bell-icon__shell" id="shell" fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF"
-                                          stroke="#currentColor" stroke-width="2" stroke-miterlimit="10"
-                                          d="M35.9,21.8c-1.2-0.7-4.1-3-3.4-8.7c0.1-1,0.1-2.1,0-3.1h0c-0.3-4.1-3.9-7.2-8.1-6.9c-3.7,0.3-6.6,3.2-6.9,6.9h0 c-0.1,1-0.1,2.1,0,3.1c0.6,5.7-2.2,8-3.4,8.7c-0.4,0.2-0.6,0.6-0.6,1v1.8c0,0.2,0.2,0.4,0.4,0.4h22.2c0.2,0,0.4-0.2,0.4-0.4v-1.8 C36.5,22.4,36.3,22,35.9,21.8L35.9,21.8z" />
-                                        </g>
+
+                        <a class="bell-div" href="#" id="bell">
+                            <div class="bell-icon" tabindex="0" id="notifyBell">
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+                                     y="0px" width="60px" height="40px" viewBox="0 0 50 30" enable-background="new 0 0 50 30"
+                                     xml:space="preserve">
+                                <g class="bell-icon__group"><!--鈴鐺擺動-->
+                <!--鈴鐺搖晃-->
+                                <path class="bell-icon__ball" id="ball" fill-rule="evenodd" stroke-width="1.5" clip-rule="evenodd"
+                                      fill="none" stroke="#currentColor" stroke-miterlimit="10"
+                                      d="M28.7,25 c0,1.9-1.7,3.5-3.7,3.5s-3.7-1.6-3.7-3.5s1.7-3.5,3.7-3.5S28.7,23,28.7,25z" />
+                                <path class="bell-icon__shell" id="shell" fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF"
+                                      stroke="#currentColor" stroke-width="2" stroke-miterlimit="10"
+                                      d="M35.9,21.8c-1.2-0.7-4.1-3-3.4-8.7c0.1-1,0.1-2.1,0-3.1h0c-0.3-4.1-3.9-7.2-8.1-6.9c-3.7,0.3-6.6,3.2-6.9,6.9h0 c-0.1,1-0.1,2.1,0,3.1c0.6,5.7-2.2,8-3.4,8.7c-0.4,0.2-0.6,0.6-0.6,1v1.8c0,0.2,0.2,0.4,0.4,0.4h22.2c0.2,0,0.4-0.2,0.4-0.4v-1.8 C36.5,22.4,36.3,22,35.9,21.8L35.9,21.8z" />
+                                                    </g>
                                     </svg>
-                                    <div class="notification-amount">
-                                        <span>5</span>
-                                    </div>
-                                </div>
-                            </a>
-                            <!-- The example -->
-                            <div id="demo-notification" class="notifidiv">
-                                <div id="notification">
-                                    <div class="toolbar">
-                                        <div class="delete">
-                                            <i class="fa fa-trash"></i>
-                                        </div>
-                                        <div class="app-icon load-more">
-                                            <i class="fa fa-bell"></i>
-                                        </div>
-                                    </div>
-                                    <div class="notification-container list">
-                                        <div class="item note note-gray fadeIn animated">
-                                            <div class="item-image note-icon">
-                                                <i class="fa fa-coffee"></i>
-                                            </div>
-                                            <div class="item-body note-text">
-                                                {{message}}
-                                            </div>
-                                            <a href="#" class="note-close">
-                                                <i class="fa fa-close"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    @*<div class="read-more load-more">
-                                            <i class="fa fa-bell"></i>
-                                            Read More
-                                        </div>*@
+                                <div class="notification-amount">
+                                    <span>5</span>
                                 </div>
                             </div>
-                            <!-- End example -->
-                            <div class="dropdown display  dropnamefix">
-                                <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
-                                    <img v-bind:src="picPath.picPath" alt="Avatar" width="50" height="50" class="Largeheadsticker">
-                                    <p class="headnamesize display">{{user}}</p>
-                                </button>
-                                <div class="dropdown-menu dropmenufix" aria-labelledby="dropdownMenuButton">
-                                    <div><a href=@Url.Action("Index", "MemberCenter")><i class="fa fa-user-o dorpiconcentermg"></i>會員中心</a></div>
-                                    @if (User.IsInRole("SystemAdmin"))
-                                    {
-                                        <div><a href=@Url.Action("Index", "TestBackMange")><i class="fa fa-user-o dorpiconcentermg"></i>後臺管理</a></div>
-                                    }
-                                    <div><a href=@Url.Action("ChatRoom", "Member")><i class="fa fa-comment-o dorpiconmessagemg" aria-hidden="true"></i>聊天室</a></div>
-                                    <div><a href=@Url.Action("ReadyProduct", "Product")><i class="fa fa-bookmark-o dorpiconaddmg" aria-hidden="true"></i>收藏</a></div>
-                                    <div><a href="#" v-on:click="logout"><i class="fa fa-sign-out dorpiconlogoutmg" aria-hidden="true"></i>登出</a></div>
+                        </a>
+                        <!-- The example -->
+                        <div id="demo-notification" class="notifidiv">
+                            <div id="notification">
+                                <div class="toolbar">
+                                    <div class="delete">
+                                        <i class="fa fa-trash"></i>
+                                    </div>
+                                    <div class="app-icon load-more">
+                                        <i class="fa fa-bell"></i>
+                                    </div>
+                                </div>
+                                <div class="notification-container list">
+                                    <div class="item note note-gray fadeIn animated">
+                                        <div class="item-image note-icon">
+                                            <i class="fa fa-coffee"></i>
+                                        </div>
+                                        <div class="item-body note-text">
+                                            {{message}}
+                                        </div>
+                                        <a href="#" class="note-close">
+                                            <i class="fa fa-close"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                @*<div class="read-more load-more">
+                                        <i class="fa fa-bell"></i>
+                                        Read More
+                                    </div>*@
+                            </div>
+                        </div>
+                        <!-- End example -->
+                        <div class="dropdown display  dropnamefix">
+                            <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+                                <img v-bind:src="picPath.picPath" alt="Avatar" width="50" height="50" class="Largeheadsticker">
+                                <p class="headnamesize display">{{user}}</p>
+                            </button>
+                            <div class="dropdown-menu dropmenufix" aria-labelledby="dropdownMenuButton">
+                                <div>
+                                    <a href=@Url.Action("Index", "MemberCenter")><i class="fa fa-user-o dorpiconcentermg"></i>會員中心</a>
+                                </div>
+                                @if (User.IsInRole("SystemAdmin"))
+                                {
+                                    <div>
+                                        <a href=@Url.Action("Index", "TestBackMange")><i class="fa fa-user-o dorpiconcentermg"></i>後臺管理</a>
+                                    </div>
+                                }
+                                <div>
+                                    <a href=@Url.Action("ChatRoom", "Member")><i class="fa fa-comment-o dorpiconmessagemg" aria-hidden="true"></i>聊天室</a>
+                                </div>
+                                <div>
+                                    <a href=@Url.Action("ReadyProduct", "Product")><i class="fa fa-bookmark-o dorpiconaddmg" aria-hidden="true"></i>收藏</a>
+                                </div>
+                                <div>
+                                    <a href="#" v-on:click="logout"><i class="fa fa-sign-out dorpiconlogoutmg" aria-hidden="true"></i>登出</a>
                                 </div>
                             </div>
                         </div>
                     }
                     else
                     {
-                        <div class="texthead4">
-                            <a class="display headsize3" href=@Url.Action("Register","Home")>註冊</a>
-                            <a class="display headsize" href=@Url.Action("Login","Home")>登入</a>
+                        <div class="head-p-width2">
+                            <a class="headsize" href=@Url.Action("Register","Home")>註冊</a>
+                        </div>
+                        <div class="head-p-width3">
+                            <a class="headsize" href=@Url.Action("Login","Home")>登入</a>
                         </div>
                     }
                 }
@@ -188,10 +179,17 @@
     <!-- Footer Section Begin -->
     <footer class="ftborder">
         <div class="container">
-            <div class="row ft-mg-display">
-                    <a class="ft-logo" href="#"><img src="/img/Log.png" alt="logo"></a>
-                    <a class="ft-size1" href="#">關於</a>
-                    <a class="ft-size2" href="#">聯絡我們</a>
+            <div class="row layout-padding ft-display">
+                <a class="layout-img-logo" href="#"><img src="/img/Tuanbuylogo.png" alt="logo"></a>
+                <div class="ft-width">
+                    <a class="headsize" href="#">關於</a>
+                </div>
+                <div class="ft-width2">
+                    <a class="headsize" href="#">聯絡我們</a>
+                </div>
+                <div class="ft-width3">
+                    <img class="qrcode-size" src="~/img/Qrcord.png" alt="QRcode">
+                </div>
                 <div class="footer__social">
                     <a href="#"><i class="fa fa-facebook"></i></a>
                     <a href="#"><i class="fa fa-twitter"></i></a>

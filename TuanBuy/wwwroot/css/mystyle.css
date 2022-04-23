@@ -64,29 +64,32 @@ footer {
     box-shadow: 0px 5px 10px rgb(91 91 91 / 10%);
 }
 
-.head-padding {
+.layout-padding {
     padding-right: 15px;
     padding-left: 15px;
 }
 
-.texthead1 {
-    text-align: left;
-    margin: 2% 0;
+.layout-img-logo {
+    height: 78px;
+    width: 157px;
+    margin-top: 4px;
 }
 
-.texthead2 {
-    text-align: start;
-    margin: 2% 0;
+.head-p-width {
+    width: 68%;
+    margin-top: 25px;
 }
 
-.texthead3 {
+.head-p-width2 {
+    width: 9%;
     text-align: right;
-    margin-top: 1.2%;
+    margin-top: 25px;
 }
 
-.texthead4 {
+.head-p-width3 {
+    width: 8%;
     text-align: right;
-    margin-top: 2%;
+    margin-top: 25px;
 }
 
 .textft1 {
@@ -105,34 +108,37 @@ footer {
 }
 
 .headsize {
-    font-size: 30px;
+    font-size: 32px;
     color: black;
 }
 
-.headsize1 {
-    font-size: 40px;
+.headsize-p1 {
+    font-size: 45px;
     color: rgb(180, 180, 180);
+    margin-top: 32px;
+    width: 2%;
 }
 
 .headsize3 {
-    font-size: 30px;
+    font-size: 32px;
     color: black;
-    width: 25%;
-    text-align: center;
 }
 
-.ft-size1 {
-    font-size: 30px;
-    color: black;
-    width: 25%;
-    text-align: center;
+.ft-width {
+    width: 18%;
+    text-align: right;
+    margin-top: 25px;
 }
 
-.ft-size2 {
-    font-size: 30px;
-    color: black;
-    width: 25%;
-    text-align: center;
+.ft-width2 {
+    width: 24%;
+    text-align: right;
+    margin-top: 25px;
+}
+
+.ft-width3 {
+    width: 20%;
+    text-align: right;
 }
 
 .margin10 {
@@ -267,9 +273,9 @@ footer {
     border-radius: .25rem;
 }
 
-.margin-3 {
+/*.margin-3 {
     margin: 3% 0;
-}
+}*/
 
 
 /* 熱門按鈕 */
@@ -734,7 +740,11 @@ justify-content: center; */
     }
 
 .dropnamefix {
-    bottom: 4%;
+    margin-top: 20px;
+}
+
+.bell-div {
+    margin-top: 15px;
 }
 
 .dorpiconcentermg {
@@ -1228,21 +1238,52 @@ direction: ltr;
 .rew50 {
     width: 50%;
     align-self: center;
-    text-align: right;
-    padding-top: 8rem;
+    text-align: center;
     padding-bottom: 8rem;
     padding-left: 4rem;
     padding-right: 4rem;
     font-size: 1.5rem;
 }
 
+
+.password-50 {
+    width: 50%;
+    align-self: center;
+    text-align: center;
+    padding-top: 5rem;
+    /* padding-bottom: 12rem; */
+    /* padding-left: 4rem; */
+    /* padding-right: 4rem; */
+    font-size: 1.5rem;
+}
+
 .regi {
     width: 50%;
-    padding-top: 8rem;
+    padding-top: 6rem;
     padding-bottom: 8rem;
     padding-left: 4rem;
     padding-right: 4rem;
     background-color: #fdfdfd;
+}
+
+.password-regi {
+    width: 50%;
+    padding-top: 15rem;
+    /* padding-bottom: 10rem; */
+    padding-left: 4rem;
+    padding-right: 4rem;
+    background-color: #fdfdfd;
+    height: 135%;
+}
+
+.buybuybuy {
+    width: 50%;
+    position: relative;
+}
+
+.titlelogoimg {
+    width: 50%;
+    position: relative;
 }
 
 .disflix {
@@ -1772,52 +1813,37 @@ direction: ltr;
 #notification {
     width: 100%;
     height: 400px;
-/*    border: 1px solid #ddd;*/
+    /* border: 1px solid #ddd; */
     position: relative;
-    bottom: 57px;
-    left: 300px;
+    bottom: 50px;
+    margin-left: 818px;
+    /* right: -70px; */
+    z-index: 999;
 }
 
-@media (min-width:0px) and (max-width:430px) {
-    #notification {
-        left: 0px;
-        bottom: 10px;
-        width: 85%;
-    }
-}
 
-@media (min-width:430px) and (max-width:509px) {
+@media (max-width:576px) {
     #notification {
-        left: 0px;
-        bottom: 5px;
-        width: 85%;
-    }
-}
-
-@media (min-width:509px) and (max-width:576px) {
-    #notification {
-        left: -40px;
-        width: 90%;
-        bottom: 68px;
+        margin-left: 0px;
+        margin-top: 152px;
     }
 }
 
 @media (min-width: 576px) and (max-width:768px) {
     #notification {
-        left: -95px;
-        bottom: 68px;
+        margin-left: 190px;
     }
 }
 
 @media (min-width: 768px) and (max-width:992px) {
     #notification {
-        left: 40px;
+        margin-left: 370px;
     }
 }
 
 @media (min-width: 992px) and (max-width:1200px) {
     #notification {
-        left: 160px;
+        margin-left: 610px;
     }
 }
 
@@ -2742,8 +2768,8 @@ p,
 }
 
 .demoproduct-personname-btn {
-    background-color: azure;
-    color: #666;
+    background-color: orangered;
+    color: #fff;
     border: 1px solid black;
     box-shadow: 0 1px 1px 0 rgb(0 0 0 / 3%);
     font-size: 18px;
@@ -2755,8 +2781,9 @@ p,
 }
 
     .demoproduct-personname-btn:hover, .demoproduct-personname-btn:active {
-        background-color: aliceblue;
-        border-color: #666;
+        color: #fff;
+        background-color: #c82333;
+        border-color: #bd2130;
     }
 
 .demoproduct-addchat-btn {
@@ -2782,165 +2809,44 @@ p,
     vertical-align: top;
 }
 
-/*RWD*/
-@media (min-width:0px) and (max-width:509px) {
-    .headsize3 {
-        margin: 0;
-        width: 30%;
-    }
-}
-
-
-@media (min-width:0px) and (max-width:509px) {
-    .texthead4,.texthead3 {
-        min-width: 100%;
-        text-align: left;
-        margin:0;
-    }
-}
-
-@media (min-width:509px) and (max-width:576px) {
-    .texthead4, .texthead3 {
-        min-width: 50%;
-    }
-}
-
-@media (min-width:576px) {
-    .texthead1 {
-        min-width: 32%
-    }
-}
-
-@media (min-width:576px) {
-    .texthead2 {
-        min-width: 24%
-    }
-}
-
-
-@media (min-width:576px) {
-    .texthead4, .texthead3 {
-        min-width: 44%
-    }
-}
-
-@media (min-width:768px) {
-    .texthead1 {
-        min-width: 24%
-    }
-}
-
-@media (min-width:768px) {
-    .texthead2 {
-        min-width: 24%
-    }
-}
-
-@media (min-width:768px) {
-    .texthead4, .texthead3 {
-        min-width: 52%
-    }
-}
-
-@media (min-width:992px) {
-    .texthead1 {
-        min-width: 18%
-    }
-}
-
-@media (min-width:992px) {
-    .texthead2 {
-        min-width: 30%
-    }
-}
-
-@media (min-width:992px) {
-    .texthead4, .texthead3 {
-        min-width: 52%
-    }
-}
-
-@media (min-width:1200px) {
-    .texthead1 {
-        min-width: 15%
-    }
-}
-
-@media (min-width:1200px) {
-    .texthead2 {
-        min-width: 30%
-    }
-}
-
-@media (min-width:1200px) {
-    .texthead4, .texthead3 {
-        min-width: 55%
-    }
-}
-
-.ft-mg-display {
+.ft-display {
     display: flex;
-    margin: 2% 0;
-}
-
-@media (min-width: 768px) and (max-width:992px) {
-    .ft-size1 {
-        width: 25%;
-    }
-}
-
-@media (min-width: 992px) and (max-width:1200px) {
-    .ft-size1 {
-        width: 25%;
-    }
-}
-
-@media (min-width: 768px) and (max-width:992px) {
-    .ft-size2 {
-        width: 25%;
-    }
-}
-
-@media (min-width: 992px) and (max-width:1200px) {
-    .ft-size2 {
-        width: 25%;
-    }
-}
-
-@media (min-width: 768px) and (max-width:992px) {
-    .footer__social {
-        width: 25%;
-    }
-}
-
-@media (min-width: 992px) and (max-width:1200px) {
-    .footer__social {
-        width:25%;
-    }
 }
 
 .footer__social {
-    width: 25%;
+    width: 24%;
     text-align: right;
+    margin-top: 25px;
 }
 
 .ft-logo {
     width: 25%;
 }
 
-@media (min-width: 0px) and (max-width:768px) {
-    .footer__social,.ft-size1,.ft-size2,.ft-logo {
-        width: 100%;
-        text-align:left;
-    }
-}
-
 .mystoresell-sellerdiv {
     display: flex;
-    background-color: #fff;
     margin: 0 15px;
-    width: 100%;
+    width: 50%;
     justify-content: space-evenly;
+    border: 2px solid burlywood;
+    border-radius: .5rem;
+}
+
+.mystore-img {
+    width: 10%;
+    margin-left: 4rem;
+}
+
+.mystore-img2 {
+    width: 27%;
+}
+
+.mystore-btn-mg {
+    margin: 2.5rem 0;
+}
+
+.mystore-seller-img {
+    margin: 0.6rem 0;
 }
 
 .sellp {
@@ -2954,15 +2860,183 @@ p,
     white-space: nowrap;
     position: relative;
     max-width: 38rem;
-    margin: .5rem 0;
-}
-
-@media (min-width: 576px) and (max-width: 768px) {
-    .headsize3 {
-        width: 40%;
-    }
+    margin: 2.5rem 0;
 }
 
 .stepper button:hover {
     background-color:burlywood;
+}
+
+.head-display{
+    display:flex;
+}
+
+.qrcode-size {
+    width: 78px;
+    height: 78px;
+    margin: 5px 0;
+}
+
+/*RWD*/
+@media (min-width: 1200px) {
+    .head-p-width {
+        width: 67%;
+    }
+}
+
+
+@media (min-width: 992px) and (max-width:1200px) {
+    .head-p-width {
+        width: 60%;
+    }
+}
+
+@media (min-width: 992px) and (max-width:1200px) {
+    .ft-width2 {
+        width: 22%;
+    }
+}
+
+@media (min-width: 992px) and (max-width:1200px) {
+    .ft-width3 {
+        width: 18%;
+    }
+}
+
+@media (min-width: 768px) and (max-width:992px) {
+    .head-p-width {
+        width: 48%;
+    }
+}
+
+@media (min-width: 768px) and (max-width:992px) {
+    .head-p-width2 {
+        width: 12%;
+    }
+}
+
+@media (min-width: 992px) and (max-width:1200px) {
+    .head-p-width2 {
+        width: 10%;
+    }
+}
+
+@media (min-width: 992px) and (max-width:1200px) {
+    .head-p-width3 {
+        width: 11%;
+    }
+}
+
+@media (min-width: 768px) and (max-width:992px) {
+    .head-p-width3 {
+        width: 15%;
+    }
+}
+
+@media (min-width: 768px) and (max-width:992px) {
+    .ft-width {
+        width: 12%;
+    }
+}
+
+@media (min-width: 768px) and (max-width:992px) {
+    .ft-width3 {
+        width: 15%;
+    }
+}
+
+@media (min-width: 576px) and (max-width:768px) {
+    .head-p-width {
+        width: 30%;
+    }
+}
+
+@media (max-width:576px) {
+    .head-p-width {
+        width: 100%;
+    }
+}
+
+
+@media (min-width: 576px) and (max-width:768px) {
+    .head-p-width2 {
+        width: 20%;
+    }
+}
+
+@media (min-width: 576px) and (max-width:768px) {
+    .head-p-width3 {
+        width: 17%;
+    }
+}
+
+@media (min-width: 576px) and (max-width:768px) {
+    .ft-width {
+        width: 26%;
+    }
+}
+
+@media (min-width: 576px) and (max-width:768px) {
+    .ft-width2 {
+        width: 43%;
+    }
+}
+
+@media (min-width: 576px) and (max-width:768px) {
+    .ft-width3 {
+        width: 15%;
+    }
+}
+
+@media (min-width: 576px) and (max-width:768px) {
+    .footer__social {
+        width: 85%;
+    }
+}
+
+@media (max-width:576px) {
+    .head-p-width2 {
+        width: 100%;
+        text-align:left;
+        margin:0;
+    }
+}
+
+@media (max-width:576px) {
+    .head-p-width3 {
+        width: 100%;
+        text-align: left;
+        margin: 0;
+    }
+}
+
+@media (max-width:576px) {
+    .ft-width {
+        width: 100%;
+        text-align: left;
+        margin: 0;
+    }
+}
+
+@media (max-width:576px) {
+    .ft-width2 {
+        width: 100%;
+        text-align: left;
+        margin: 0;
+    }
+}
+
+@media (max-width:576px) {
+    .ft-width3 {
+        width: 100%;
+        text-align: left;
+        margin: 0;
+    }
+}
+@media (max-width:576px) {
+    .footer__social {
+        width: 100%;
+        text-align: left;
+        margin: 0;
+    }
 }
