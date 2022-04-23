@@ -28,7 +28,7 @@ namespace TuanBuy.Controllers
         private readonly TuanBuyContext _dbContext;
         private readonly RedisProvider _redisdb;
         private readonly IUserService _userService;
-        public MemberCenterController(GenericRepository<User> userRepository, TuanBuyContext dbContext, RedisProvider redisdb,IUserService service)
+        public MemberCenterController(GenericRepository<User> userRepository, TuanBuyContext dbContext, RedisProvider redisdb, IUserService service)
         {
             _userRepository = userRepository;
             _dbContext = dbContext;
@@ -59,7 +59,7 @@ namespace TuanBuy.Controllers
         {
             var targetUser = GetTargetUser();
             var a = targetUser.Id;
-            var allNotify = _dbContext.UserNotify.Include(X => X.NotifyCategory).Where(x => x.UserId == targetUser.Id && x.Disable==false).OrderByDescending(x => x.CreateDateTime);
+            var allNotify = _dbContext.UserNotify.Include(X => X.NotifyCategory).Where(x => x.UserId == targetUser.Id && x.Disable == false).OrderByDescending(x => x.CreateDateTime);
             var result = allNotify.Select(x =>
                  new Notify()
                  {
