@@ -43,19 +43,19 @@ border-radius:10px!important;
     background-color: transparent!important;
     border:0!important;
 }
-.aaa > thead {
+.tablerow > thead {
     vertical-align: bottom;
     background-color: #343a40 !important;
     border-color: #454d55;
 }
 
-.bbb > :not(:last-child) > :last-child > * {
+.rowcolor > :not(:last-child) > :last-child > * {
     border-bottom-color: currentColor;
     color: white;
     font-size: 16px;
 }
 
-.ss {
+.layoutbackgrount {
     background-color: #F5F5F5;
 }
 
@@ -110,8 +110,8 @@ margin-left:2px;
 .hot {
 margin-top:-5px;
 }
-.qq {
-margin-bottom:14px;
+.trophys {
+    margin-bottom: 14px;
 }
 .productcount {
 font-size:20px;
@@ -127,5 +127,11 @@ font-size:20px;
 .couponstitle {
     background-color: #EB0000;
     color: white;
+}
+.row1 {
+    margin-top:10px;
+}
+.orderdialog {
+    background-color:#303030!important;
 }
 
