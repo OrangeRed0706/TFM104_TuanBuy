@@ -20,7 +20,7 @@ namespace TuanBuy.Controllers
         public BackstageMangeController(TuanBuyContext context, RedisProvider redisdb)
         {
             _dbcontext = context;
-            _redisdb=redisdb;
+            _redisdb = redisdb;
         }
 
         #region 會員管理
@@ -146,9 +146,9 @@ namespace TuanBuy.Controllers
                    (product, order) => new { product, order }
                ).Select(x => new HomeBackMangeViewModel
                {
-                 ProductName =  x.product.Name,
-                 ProductCount=x.order.Count(),
-                 
+                   ProductName = x.product.Name,
+                   ProductCount = x.order.Count(),
+
                }
                ).OrderByDescending(x => x.ProductCount).Take(3);
 
@@ -168,20 +168,21 @@ namespace TuanBuy.Controllers
 
             //var hotProduct = _dbcontext.OrderDetail.OrderBy(x => x.Count).Take(3);
             //var productName= hotProduct.Select(x => new { name = x.Product.Name });
-            HomeBackMangeViewModel homeBackMangeViewModel = new HomeBackMangeViewModel() 
+            HomeBackMangeViewModel homeBackMangeViewModel = new HomeBackMangeViewModel()
             {
                 UserCount = usercount,
                 ProductCount = productCount,
                 ProcessOrder = processOrder,
                 FinishOrder = finishOrder,
                 TotalSales = totalSales,
+                //HotproductCount = Convert.ToInt32(hotProduct),
+                ProductName = hotProduct.ToString()
                 //HotproductCount=Convert.ToInt32(hotProduct),
-                //ProductName= hotProduct.ToString()
                 //HotproductCount = Convert.ToInt32(hotProduct),
                 //ProductName = productName.ToString()
             };
             return homeBackMangeViewModel;
-            
+
 
 
         }
@@ -204,9 +205,9 @@ namespace TuanBuy.Controllers
                 _dbcontext.Vouchers.Add(voucher);
 
                 #region 新增優惠卷給所有使用者
+
                 var users = _dbcontext.User.ToList();
                 var notifyMessage = $"請輸入「{userVouchersViewModel.VouchersTitle}」兌換優惠卷喔";
-
                 var entityEntries = users.Select(x =>
                     _dbcontext.UserNotify.Add(
                         new UserNotify
@@ -214,36 +215,37 @@ namespace TuanBuy.Controllers
                             UserId = x.Id,
                             SenderId = 0,
                             Content = notifyMessage,
-                            Category = 1
+                            Category = 1,
+                            CreateDateTime = DateTime.Now
                         })).ToList();
                 _dbcontext.SaveChanges();
 
                 //存進Redis
-                var redis3 = _redisdb.GetRedisDb(3);
-                var listKey = "Notify_";
-                var test =new List<string[]>();
-                users.ForEach(x =>
-                {
-                    var cur = listKey + x.Id;
-                    redis3.SaveMessage(cur, notifyMessage);
+                //var redis3 = _redisdb.GetRedisDb(3);
+                //var listKey = "Notify_";
+                //var test = new List<string[]>();
+                //users.ForEach(x =>
+                //{
+                //    var cur = listKey + x.Id;
+                //    redis3.SaveMessage(cur, notifyMessage);
 
-                    //這邊只是我想看存進去的東西
-                    var a = new string[redis3.ListLength(cur)];
-                    for (int i = 0; i < (redis3.ListLength(cur)); i++)
-                    {
-                        a[i] = (string.Concat(redis3.ListRange(cur, i)));
-                    }
-                    test.Add(a);
-                });
-                
+                //        //這邊只是我想看存進去的東西
+                //        var a = new string[redis3.ListLength(cur)];
+                //    for (int i = 0; i < (redis3.ListLength(cur)); i++)
+                //    {
+                //        a[i] = (string.Concat(redis3.ListRange(cur, i)));
+                //    }
+                //    test.Add(a);
+                //});
+
 
 
 
 
                 #endregion
 
-                
-                
+
+
                 return Ok();
             }
         }
