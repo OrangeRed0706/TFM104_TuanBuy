@@ -120,7 +120,7 @@ namespace TuanBuy.Controllers
             {
                 var path = _environment.WebRootPath + "/MessagePicture";
                 var pic = picPath;
-                fileName = DateTime.Now.Ticks + pic.FileName;
+                fileName = DateTime.UtcNow.AddHours(8).Ticks + pic.FileName;
                 using var fs = System.IO.File.Create($"{path}/{fileName}");
                 await pic.CopyToAsync(fs);
                 //ChatHub chatHub = new ChatHub();
@@ -131,7 +131,7 @@ namespace TuanBuy.Controllers
                     messages.ChatRoomId = Guid.Parse(nowChatRoomId);
                     messages.MemberId = userid;
                     messages.Message = message;
-                    messages.CreateDate = DateTime.Now;
+                    messages.CreateDate = DateTime.UtcNow.AddHours(8);
                     messages.MessageImage = $"/MessagePicture/{fileName}";
                     _sqldb.ChatMessages.Add(messages);
                     _sqldb.SaveChanges();

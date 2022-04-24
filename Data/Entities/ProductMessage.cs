@@ -9,7 +9,7 @@ namespace Data.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow.AddHours(8);
         public int UserId { get; set; }
         public string MessageContent { get; set; }
         public int ProductId { get; set; }

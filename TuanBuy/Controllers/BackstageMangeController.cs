@@ -216,7 +216,7 @@ namespace TuanBuy.Controllers
                             SenderId = 0,
                             Content = notifyMessage,
                             Category = 1,
-                            CreateDateTime = DateTime.Now
+                            CreateDateTime = DateTime.UtcNow.AddHours(8)
                         })).ToList();
                 _dbcontext.SaveChanges();
 

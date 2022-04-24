@@ -115,7 +115,7 @@ namespace Topic.Hubs
             var result = sqlservices.Member_Chats.Where(x => x.MemberId == MemeberId).Select(x => new { x.ChatRoomId});
             UserData _user = new UserData();
             _user.Name = username;
-            _user.ConnectedTime = DateTime.Now;
+            _user.ConnectedTime = DateTime.UtcNow.AddHours(8);
             _user.Id = MemeberId.ToString();
             _user.UserAccount = userAccount;
             List<Guid> guids = new List<Guid>();
@@ -143,7 +143,7 @@ namespace Topic.Hubs
                     ChatRoomId = ChatRoomId,
                     MemberId = MemberId,
                     Message = Message,
-                    CreateDate = DateTime.Now
+                    CreateDate = DateTime.UtcNow.AddHours(8)
                 };
                 sqlservices.ChatMessages.Add(messages);
                 sqlservices.SaveChanges();

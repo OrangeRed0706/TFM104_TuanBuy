@@ -81,7 +81,7 @@ namespace TuanBuy.Service
             {
                 var path = _environment.WebRootPath + "/MemberPicture";
                 var pic = user.PicPath;
-                fileName = DateTime.Now.Ticks + pic.FileName;
+                fileName = DateTime.UtcNow.AddHours(8).Ticks + pic.FileName;
                 using var fs = System.IO.File.Create($"{path}/{fileName}");
                 pic.CopyTo(fs);
             }
