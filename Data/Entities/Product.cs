@@ -14,9 +14,9 @@ namespace Data.Entities
         [Key]
         public int Id { get; set; }
         //商品建立時間
-        public DateTime CreateTime { get; set; } = DateTime.Now;
+        public DateTime CreateTime { get; set; } = DateTime.UtcNow.AddHours(8);
         //商品結束時間
-        public DateTime EndTime { get; set; } = DateTime.Now.AddDays(10);
+        public DateTime EndTime { get; set; } = DateTime.UtcNow.AddHours(8).AddDays(10);
         //商品名稱
 
         [Required]

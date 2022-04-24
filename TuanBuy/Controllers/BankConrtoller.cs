@@ -73,7 +73,7 @@ namespace TuanBuy.Controllers
                 // * 串接程式版本
                 Version = version,
                 // * 商店訂單編號
-                //MerchantOrderNo = $"T{DateTime.Now.ToString("yyyyMMddHHmm")}",
+                //MerchantOrderNo = $"T{DateTime.UtcNow.AddHours(8).ToString("yyyyMMddHHmm")}",
                 MerchantOrderNo = ordernumber,
                 // * 訂單金額
                 Amt = amount,

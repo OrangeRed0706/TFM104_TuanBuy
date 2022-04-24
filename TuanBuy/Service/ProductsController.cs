@@ -141,7 +141,7 @@ namespace TuanBuy.Service
                 i.Content = p.Content;
                 i.Category = p.Category;
                 i.PicPath = p.PicPath;
-                TimeSpan timeSpan = p.EndTime.Subtract(DateTime.Now).Duration();
+                TimeSpan timeSpan = p.EndTime.Subtract(DateTime.UtcNow.AddHours(8)).Duration();
                 i.LastTime = timeSpan.Days + "天";
                 i.Price = p.Price;
                 i.Total = 0;
@@ -203,7 +203,7 @@ namespace TuanBuy.Service
                 i.Content = p.Content;
                 i.Category = p.Category;
                 i.PicPath = p.PicPath;
-                TimeSpan timeSpan = p.EndTime.Subtract(DateTime.Now).Duration();
+                TimeSpan timeSpan = p.EndTime.Subtract(DateTime.UtcNow.AddHours(8)).Duration();
                 i.LastTime = timeSpan.Days + "天";
                 i.Price = p.Price;
                 i.Total = 0;

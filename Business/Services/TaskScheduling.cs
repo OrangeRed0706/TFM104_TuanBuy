@@ -21,7 +21,7 @@ namespace Business.Services
 
         public void DailyBirthday()
         {
-            Console.WriteLine("現在時間："+DateTime.Now.ToString("d"));
+            Console.WriteLine("現在時間："+DateTime.UtcNow.AddHours(8).ToString("d"));
             //var getBirthday = _dbContext.User.Where(x=> x.Birth == )
             //foreach (var birthday in getBirthday)
             //{
