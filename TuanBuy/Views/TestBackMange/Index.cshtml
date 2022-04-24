@@ -132,7 +132,7 @@
                         <div class="card-body">
                             <div class="d-flex align-items-center">
                                 <img src="/img/payment/第一名獎牌.png" width="55" /> 
-                                <div class="ms-3"><b class="productcount">多力多滋</b> <h4>數量: 234</h4></div>
+                                <div class="ms-3"><b class="productcount">{{manger.productName}}</b> <h4>數量: {{manger.hotproductCount}}</h4></div>
                             </div>
                         </div>
                     </div>
@@ -205,7 +205,8 @@
         userCount = 0;
         totalSales = 0;
         hotProduct = 0;
-        
+        productName = 0;
+        hotproductCount = 0;   
     }
     var layout = new Vue({
         el: '#navBar',

@@ -43,7 +43,7 @@
                 </thead>
                 <tbody>
                     <!--分頁設定-->
-                    <tr v-for="item in counpons.slice(pageStart, pageStart + countOfPage)" v-if="search=='' || item.voucherName.includes(search)">
+                    <tr v-for="item in counpons" v-if="search=='' || item.voucherName.includes(search)">
                         <th scope="row">{{item. voucherName}}</th>
                         <td>{{item.voucherDescribe}}</td>
                         <td>{{item.vouchersDiscount}}</td>
@@ -63,17 +63,7 @@
                 </tbody>
             </table>
             <!--分頁-->
-            <div class="container">
-                <ul class="pagination">
-                    <li class="page-item" v-bind:class="{'disabled': (currPage === 1)}"
-                        @@click.prevent="setPage(currPage-1)"><a class="page-link" href="#">Previous</a></li>
-                    <li v-for="n in totalPage"
-                        v-bind:class="{'active': (currPage === (n))}"
-                        @@click.prevent="setPage(n)"><a class="page-link" href="#">{{n}}</a></li>
-                    <li class="page-item" v-bind:class="{'disabled': (currPage === totalPage)}"
-                        @@click.prevent="setPage(currPage+1)"><a class="page-link" href="#">Next</a></li>
-                </ul>
-            </div>
+
 
             <!--修改使用者的對話盒-->
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -177,16 +167,9 @@
             },
             search: '',
             target: null,
-        },
-        computed: {
-            pageStart: function () {
-                return (this.currPage - 1) * this.countOfPage;                 //當前頁面的起始筆數
-            },
-            totalPage: function () {
-                return Math.ceil(this.ordermanages.length / this.countOfPage);  //陣列長度除以每頁設定的筆數
-            },
 
         },
+
         methods: {
             update: function (e) {
                 let self = this;
