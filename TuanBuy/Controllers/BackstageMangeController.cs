@@ -175,8 +175,8 @@ namespace TuanBuy.Controllers
                 ProcessOrder = processOrder,
                 FinishOrder = finishOrder,
                 TotalSales = totalSales,
-                HotproductCount=Convert.ToInt32(hotProduct),
-                ProductName= hotProduct.ToString()
+                //HotproductCount=Convert.ToInt32(hotProduct),
+                //ProductName= hotProduct.ToString()
                 //HotproductCount = Convert.ToInt32(hotProduct),
                 //ProductName = productName.ToString()
             };

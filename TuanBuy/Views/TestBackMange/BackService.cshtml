@@ -499,7 +499,7 @@
                                 connection.invoke("SendMessage", "TuanBuy：", `優惠卷新增！請輸入：${app.vouchers.voucherName}兌換`).catch(function (err) {
                                     return console.error(err.toString());
                                 });
-
+                                window.location.reload();
                             },
                             error: function (response) {
                                 alert('發生例外錯誤');
