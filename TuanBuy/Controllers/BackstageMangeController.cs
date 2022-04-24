@@ -284,6 +284,7 @@ namespace TuanBuy.Controllers
         public IActionResult DeleteCounpons(string id)
         {
             var user = _dbcontext.Vouchers.FirstOrDefault(x => x.VoucherName == id);
+            if (user == null) return BadRequest();
             _dbcontext.Vouchers.Remove(user);
             _dbcontext.SaveChanges();
             return Ok();
