@@ -177,6 +177,7 @@ namespace TuanBuy.Controllers
                 TotalSales = totalSales,
                 //HotproductCount = Convert.ToInt32(hotProduct),
                 ProductName = hotProduct.ToString()
+                //HotproductCount=Convert.ToInt32(hotProduct),
                 //HotproductCount = Convert.ToInt32(hotProduct),
                 //ProductName = productName.ToString()
             };

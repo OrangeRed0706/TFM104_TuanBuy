@@ -499,7 +499,7 @@
                                 connection.invoke("SendMessage", "系統：", `優惠卷發放！請輸入：「${app.vouchers.voucherName}」兌換優惠卷！！！`).catch(function (err) {
                                     return console.error(err.toString());
                                 });
-
+                                window.location.reload();
                             },
                             error: function (response) {
                                 alert('發生例外錯誤');
