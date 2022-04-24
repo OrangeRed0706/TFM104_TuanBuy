@@ -496,7 +496,7 @@
                             },
                             success: function (response) {
                                 alert('優惠卷新增成功');
-                                connection.invoke("SendMessage", "TuanBuy：", `優惠卷新增！請輸入：${app.vouchers.voucherName}兌換`).catch(function (err) {
+                                connection.invoke("SendMessage", "系統：", `優惠卷發放！請輸入：「${app.vouchers.voucherName}」兌換優惠卷！！！`).catch(function (err) {
                                     return console.error(err.toString());
                                 });
 

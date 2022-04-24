@@ -64,7 +64,7 @@ namespace TuanBuy.Controllers
                  new Notify()
                  {
                      NotifyId = x.Id,
-                     CreateDateTime = x.CreateDateTime.ToString("G"),
+                     CreateDateTime =x.CreateDateTime.ToString("G"),
                      Content = x.Content,
                      Sender = x.NotifyCategory.Category
                  }).ToList();
@@ -246,7 +246,8 @@ namespace TuanBuy.Controllers
                         UserId = currentOrder.User.Id,
                         SenderId = sender.Id,
                         Content = notifyMessage,
-                        Category = 2
+                        Category = 2,
+                        CreateDateTime = DateTime.Now
                     });
 
                 _dbContext.SaveChanges();
