@@ -86,7 +86,9 @@ namespace TuanBuy.Service
                 pic.CopyTo(fs);
             }
 
+
             var fullMember = user.Name != "" || user.Phone != "" || user.Address != "" || user.Birth != null;
+
             if (_httpContextAccessor.HttpContext != null)
             {
                 targetUser.Name = user.Name;
@@ -119,7 +121,11 @@ namespace TuanBuy.Service
                 if (fullMember)
                 {
                     HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-                    targetUser.State = UserState.正式會員.ToString();
+                    if (targetUser.State != UserState.系統管理員.ToString())
+                    {
+                        targetUser.State = UserState.正式會員.ToString();
+
+                    }
                     //這段有問題 不能直接更改會員資料
                     var claims = new List<Claim>
                     {
