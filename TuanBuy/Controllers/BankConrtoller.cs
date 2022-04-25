@@ -83,7 +83,7 @@ namespace TuanBuy.Controllers
                 ExpireDate = null,
                 // 支付完成 返回商店網址
                 //ReturnURL = _bankInfoModel.ReturnURL,
-                ReturnURL = "https://tuanbuy.azurewebsites.net/MemberCenter/MyBuyProduct",
+                ReturnURL = "https://tuanbuy.azurewebsites.net/Bank/ReturnMemberCenter",
                 // 支付通知網址
                 NotifyURL = _bankInfoModel.NotifyURL,
                 // 商店取號網址
@@ -230,6 +230,10 @@ namespace TuanBuy.Controllers
             return Content("hello");
         }
 
+        public ActionResult ReturnMemberCenter()
+        {
+            return RedirectToAction("MyBuyProduct","MemberCenter");
+        }
         /// <summary>
         /// 銀行API測試
         /// </summary>

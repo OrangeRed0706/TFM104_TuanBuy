@@ -32,7 +32,8 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         },
         data: {
-            labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17"],
+            /*TODO 實作圖表*/
+            labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
             datasets: [
                 {
                     label: "Page Visitors",
@@ -54,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     pointHoverBorderWidth: 2,
                     pointRadius: 1,
                     pointHitRadius: 0,
-                    data: [50, 20, 60, 31, 52, 22, 40, 25, 30, 68, 56, 40, 60, 43, 55, 39, 47],
+                    data: [50, 20, 60, 31, 52, 22, 40, 25, 30, 100, 56, 40],
                     spanGaps: false
                 },
                 {
