@@ -93,7 +93,13 @@
                 this.product = resp.data
                 this.product.id = prdid;
                 var Today = new Date(resp.data.endTime);
-                app.todaynowDate = '' + Today.getFullYear() + "-0" + (Today.getMonth() + 1) + "-" + Today.getDate();
+                console.log(Today.getDate());
+                if (Today.getDate() >= 10) {
+                    app.todaynowDate = '' + Today.getFullYear() + "-0" + (Today.getMonth() + 1) + "-" + Today.getDate();
+                }
+                else {
+                    app.todaynowDate = '' + Today.getFullYear() + "-0" + (Today.getMonth() + 1) + "-0" + Today.getDate();
+                }
                 this.product.endTime = app.todaynowDate;
             });
         }

@@ -81,6 +81,8 @@ namespace TuanBuy.ViewModel
         public List<HotProduct> hotProducts { get; set; }
         //團主排行
         public List<SellerRanking> sellerRankings { get; set; }
+        //圖表資訊
+        public List<Graph> Graphs { get; set; }
     }
     public class HotProduct
     {
@@ -103,13 +105,11 @@ namespace TuanBuy.ViewModel
     //圖表
     public class Graph
     {
+        //年份
+        public int Year { get; set; }
         //月份
-        public DateTime Month { get; set; } 
+        public int Month { get; set; } 
         //月份金額
         public dynamic MonthPrice { get; set; }
-        //去年月份 
-        public DateTime LateMonth { get; set; }
-        //去年月份金額
-        public dynamic LateMonthPrice { get; set; }
     }
 }
