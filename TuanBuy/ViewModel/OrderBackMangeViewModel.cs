@@ -98,8 +98,18 @@ namespace TuanBuy.ViewModel
         //賣家名稱
         public string SellerName { get; set; }
         //賣家銷售金額
-        public dynamic Price { get; set; }
-        
+        public dynamic Price { get; set; }    
     }
-
+    //圖表
+    public class Graph
+    {
+        //月份
+        public DateTime Month { get; set; } 
+        //月份金額
+        public dynamic MonthPrice { get; set; }
+        //去年月份 
+        public DateTime LateMonth { get; set; }
+        //去年月份金額
+        public dynamic LateMonthPrice { get; set; }
+    }
 }
