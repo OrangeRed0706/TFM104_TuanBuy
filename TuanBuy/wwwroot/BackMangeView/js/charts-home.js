@@ -35,8 +35,8 @@ document.addEventListener("DOMContentLoaded", function () {
             /*TODO 實作圖表*/
             labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
             datasets: [
-                {
-                    label: "Page Visitors",
+                {                   
+                    label: "Sales this year",
                     fill: true,
                     lineTension: 0,
                     backgroundColor: "transparent",
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     spanGaps: false
                 },
                 {
-                    label: "Page Views",
+                    label: "Last year's sales",
                     fill: true,
                     lineTension: 0,
                     backgroundColor: "transparent",
@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     pointHoverBorderWidth: 2,
                     pointRadius: 1,
                     pointHitRadius: 10,
-                    data: [20, 7, 35, 17, 26, 8, 18, 10, 14, 46, 30, 30, 14, 28, 17, 25, 17, 40],
+                    data: [20, 7, 35, 17, 26, 8, 18, 10, 14, 46, 30, 30],
                     spanGaps: false
                 }
             ]
