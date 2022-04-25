@@ -281,7 +281,7 @@ namespace TuanBuy.Controllers
                     Description = p.Description,
                     Content = p.Content,
                     Category = p.Category,
-                    PicPath = "/productpicture/" + pic.FirstOrDefault()?.PicPath,
+                    PicPath = "/ProductPicture/" + pic.FirstOrDefault()?.PicPath,
                     EndTime = p.EndTime,
                     Price = p.Price,
                     //目標金額是商品的Total欄位
