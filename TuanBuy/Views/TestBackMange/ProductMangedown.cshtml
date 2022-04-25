@@ -62,7 +62,7 @@
                     <tr v-for="item in products" v-if="item.disable==Disable && search=='' || item.disable==Disable && item.productName.includes(search) || item.disable==Disable && item.userName.includes(search)">                        
                         <th scope="row">{{item.productId}}</th>
                         <td>
-                            <img :src="item.picPath" style="width:80px;height:80px;" />
+                            <a :href="'/Product/DemoProduct/'+item.productId"><img :src="item.picPath" style="width:80px;height:80px;" /> </a> @*<img :src="item.picPath" style="width:80px;height:80px;" />*@
                         </td>
                         <td>{{item.productName}}</td>
                         <td>{{item.userName}}</td>
@@ -214,6 +214,8 @@
 
 
 <script>
+    //var getUrlString = location.pathname;
+    //var articleId = getUrlString.replace("/Product/DemoProduct/", "");
     var app = new Vue({
         el: "#productMange",
         data: {
@@ -304,7 +306,7 @@
         },
         mounted: function () {
             let self = this;
-            axios.get("/BackstageMange/ProductJoin")
+            axios.get("/BackstageMange/ProductJoin" )
                 .then((resp) => {
                     self.products = resp.data;
                     console.log(self.products);

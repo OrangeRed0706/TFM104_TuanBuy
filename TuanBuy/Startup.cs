@@ -153,9 +153,10 @@ namespace TuanBuy
             app.UseHangfireDashboard();
             backgroundJobs.Enqueue(() => Console.WriteLine("Hello world from Hangfire!"));
             recurringJobManager.AddOrUpdate(
-                "Run every minute",
+                "寄發生日信",
                 ()=>serviceProvider.GetService<ITaskScheduling>().DailyBirthday(), Hangfire.Cron.Daily());
-
+            recurringJobManager.AddOrUpdate(
+                "商品下架",()=>serviceProvider.GetService<ITaskScheduling>().PullProduct(), Hangfire.Cron.Daily());
 
             //app.UseAuthorization();
             //使用Session Middleware
