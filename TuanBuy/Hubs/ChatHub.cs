@@ -49,8 +49,9 @@ namespace Topic.Hubs
         }
         public async Task SendPrivateNotify(string email, string message)
         {
-            var user = _userservice.GetUserList().Find(x => x.Email == email);
-            await Clients.Client(user.Sid).SendAsync("ReceiveMessage", user, message);
+            var userList = _userservice.GetUserList();
+            var user = userList.Find(x => x.UserAccount == email);
+            await Clients.Client(user.Sid).SendAsync("ReceiveMessage", "即時通知：", message);
 
         }
 

@@ -108,9 +108,11 @@
                                     <div class="delete">
                                         <i class="fa fa-trash"></i>
                                     </div>
+                                    <a href=@Url.Action("MyNotify","MemberCenter")>
                                     <div class="app-icon load-more">
                                         <i class="fa fa-bell"></i>
                                     </div>
+                                    </a>
                                 </div>
                                 <div class="notification-container list">
                                     <div class="item note note-gray fadeIn animated" v-for="item,index in message">
@@ -276,13 +278,11 @@
                             });
                             /*        connection.invoke("GetUserList");*/
 
-                            connection.invoke("GetOnlineUserList", userid).catch(function (err) {
-                                return console.error(err.toString());
-                            });
 
-                            connection.invoke("GetAllNotify").then(() => {
-                                console.log("取得通知成功！");
-                            });
+
+                            //connection.invoke("GetAllNotify").then(() => {
+                            //    console.log("取得通知成功！");
+                            //});
 
                             connection.invoke("GetUserList").then((msg) => {
                             });
@@ -364,7 +364,7 @@
 
 
 
-    // 傳送訊息事件
+    // 接受訊息事件
     connection.on("ReceiveMessage", function (user, message) {
         var msg = message;
         var encodedMsg = user+ msg;
@@ -372,7 +372,7 @@
             content:encodedMsg
         }
 
-        layout.message.push(notify);
+        layout.message.unshift(notify);
         layout.notifyCount += 1;
 
         //抓取鈴鐺通知給予class

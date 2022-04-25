@@ -276,19 +276,19 @@ namespace TuanBuy.Controllers
                 var redis3 = _redisdb.GetRedisDb(3);
                 var listKey = "Notify_";
                 var test =new List<string[]>();
-                users.ForEach(x =>
-                {
-                    var cur = listKey + x.Id;
-                    redis3.SaveMessage(cur, notifyMessage);
+                //users.ForEach(x =>
+                //{
+                //    var cur = listKey + x.Id;
+                //    redis3.SaveMessage(cur, notifyMessage);
 
-                    //這邊只是我想看存進去的東西
-                    var a = new string[redis3.ListLength(cur)];
-                    for (int i = 0; i < (redis3.ListLength(cur)); i++)
-                    {
-                        a[i] = (string.Concat(redis3.ListRange(cur, i)));
-                    }
-                    test.Add(a);
-                });
+                //    //這邊只是我想看存進去的東西
+                //    var a = new string[redis3.ListLength(cur)];
+                //    for (int i = 0; i < (redis3.ListLength(cur)); i++)
+                //    {
+                //        a[i] = (string.Concat(redis3.ListRange(cur, i)));
+                //    }
+                //    test.Add(a);
+                //});
                 
 
 
