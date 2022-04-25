@@ -150,12 +150,6 @@ namespace TuanBuy.Controllers
                 ).Where(x => x.orderdetil.ord.Order.StateId == 3).ToList().Sum(x =>
                         x.orderdetil.prd.Sum(y => y.Price * x.orderdetil.ord.Count)
                 ));
-
-
-
-
-
-
             var hotProduct = _dbcontext.Product.ToList().GroupJoin(_dbcontext.OrderDetail,
                    prd => prd.Id,
                    order => order.ProductId,
