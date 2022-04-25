@@ -139,7 +139,23 @@ namespace TuanBuy.Controllers
             var productCount = _dbcontext.Product.Where(x => x.Disable == false).Count();
             var processOrder = _dbcontext.Order.Where(x => x.StateId == 2).Count();
             var finishOrder = _dbcontext.Order.Where(x => x.StateId == 4).Count();
-            var totalSales = _dbcontext.OrderDetail.Select(x => x.Price).Sum();
+            var totalSales = (_dbcontext.OrderDetail.ToList().GroupJoin(_dbcontext.Product,
+                 ord => ord.ProductId,
+                 prd => prd.Id,
+                 (ord, prd) => new { ord, prd }
+                ).ToList().GroupJoin(_dbcontext.Order,
+                 orderdetil => orderdetil.ord.Order.Id,
+                 ord => ord.OrderDetails.OrderId,
+                 (orderdetil, ord) => new { orderdetil, ord }
+                ).Where(x => x.orderdetil.ord.Order.StateId == 3).ToList().Sum(x =>
+                        x.orderdetil.prd.Sum(y => y.Price * x.orderdetil.ord.Count)
+                ));
+
+
+
+
+
+
             var hotProduct = _dbcontext.Product.ToList().GroupJoin(_dbcontext.OrderDetail,
                    prd => prd.Id,
                    order => order.ProductId,
@@ -147,51 +163,78 @@ namespace TuanBuy.Controllers
                ).Select(x => new HotProduct
                {
                    HotProductName = x.product.Name,
-                   HotProductCount = x.order.Sum(y=>y.Count)
-               }).OrderByDescending(x => x.HotProductCount).Take(3);
-            var SellerRanking = _dbcontext.Product.ToList().GroupJoin(_dbcontext.User,
-                   product => product.UserId,
-                   user => user.Id,
-                   (product, user) => new { product, user}).ToList().GroupJoin(_dbcontext.OrderDetail,
-                     prd => prd.product.Id,
-                     ord => ord.ProductId,
-                     (prd, ord) => new { prd, ord }).ToList().Select(x => new SellerRanking
-                     {
-                         SellerId = x.prd.product.UserId,
-                         PicPath = x.prd.user.FirstOrDefault(y=>y.Id==x.prd.product.UserId).PicPath,
-                         SellerName = x.prd.user.FirstOrDefault(y => y.Id == x.prd.product.UserId).Name,
-                         Price = x.ord.Sum(x => x.Count * x.Product.Price)
-                     });
+                   HotProductCount = x.order.Sum(y => y.Count)
+               }).OrderByDescending(x => x.HotProductCount).Take(3).ToList<HotProduct>();
+            //團主銷售排行
+            //var SellerRanking = _dbcontext.Product.ToList().GroupJoin(_dbcontext.User,
+            //       product => product.UserId,
+            //       user => user.Id,
+            //       (product, user) => new { product, user }).ToList().GroupJoin(_dbcontext.OrderDetail,
+            //         prd => prd.product.Id,
+            //         ord => ord.ProductId,
+            //         (prd, ord) => new { prd, ord }).ToList().Select(x => new SellerRanking
+            //         {
+            //             SellerId = x.prd.product.UserId,
+            //             PicPath = "/MemberPicture/" + x.prd.user.FirstOrDefault(y => y.Id == x.prd.product.UserId).PicPath,
+            //             SellerName = x.prd.user.FirstOrDefault(y => y.Id == x.prd.product.UserId).Name,
+            //             Price = x.ord.Sum(x => x.Count * x.Product.Price)
+            //         }).ToList().GroupJoin(_dbcontext.Order,
+            //          prd => prd.SellerId,
+            //          ord => ord.UserId,
+            //          (prd, ord) => new { prd, ord }
+            //         ).SelectMany(
+            //            x => x.ord, (ord, name) => new { ord, name }
+            //         ).Where(x => x.name.StateId == 3).Select(x =>
+            //                new { x.name }
+            //         ).Select(x => x.name).GroupBy(x => x.UserId).Select(x => new SellerRanking
+            //         {
+            //             PicPath = x.FirstOrDefault(y => y.User.Id == x.Key).User.PicPath,
+            //             SellerId = x.Key,
+            //             SellerName = x.FirstOrDefault(y=>y.User.Id==x.Key).User.Name,
+            //             Price = x.Sum(x => x.OrderDetails.Count * x.OrderDetails.Product.Price)
+            //         }).ToList().OrderByDescending(x => x.Price).Take(3);
+            //團主銷售排行
+            var SellerRankingResult = _dbcontext.Order.ToList().GroupJoin(_dbcontext.OrderDetail,
+                    ord => ord.Id,
+                    orddetail => orddetail.OrderId,
+                    (ord, orddetail) => new { Ord = ord, detail = orddetail }
+                ).Where(x => x.Ord.StateId == 3).ToList().GroupJoin(_dbcontext.Product,
+                    ord => ord.Ord.OrderDetails.ProductId,
+                    prd => prd.Id,
+                    (ord, prd) => new { ord.detail, ord.Ord }
+                ).ToList().SelectMany(
+                   ord => ord.detail,
+                   (ord, name) => new { ord, name }
+                ).ToList().GroupJoin(_dbcontext.User,
+                  ord => ord.name.Product.UserId,
+                  user => user.Id,
+                  (ord, user) => new { ord, user }
+                ).GroupBy(x=>x.ord.name.Product.UserId).Select(x => new SellerRanking
+                {
+                    SellerId = x.Key,
+                    PicPath = x.FirstOrDefault(y => y.ord.name.Product.User.Id == x.Key).ord.name.Product.User.PicPath,
+                    SellerName = x.FirstOrDefault(y=>y.ord.name.Product.User.Id==x.Key).ord.name.Product.User.Name,
+                    Price =  x.Sum(y=>y.ord.name.Count * y.ord.name.Product.Price),
+                }).OrderByDescending(x => x.Price).Take(3).ToList<SellerRanking>(); 
 
-            //var SellerRanking = _dbcontext.Product.ToList().GroupJoin(_dbcontext.OrderDetail,
-            //        prd => prd.Id,
-            //        order => order.ProductId,
-            //        (product, order) => new { product, order }
-            //    ).Select(x => new
-            //    {
-            //        x
-            //          /* Price = x.order.Sum(y => y.Count * x.product.Price)*/,
-            //    }).ToList().GroupJoin(_dbcontext.User,
-            //        price => price.x.product.UserId,
-            //        user => user.Id,
-            //        (price, user) => new { price, user }
-            //    ).ToList().Select(x => new SellerRanking
-            //    {
-            //        Price = x.price.x.order.Sum(y => y.Count * x.price.x.product.Price),
-            //    }) ;
 
 
-            //Select(x=>new HotSeller
+            //.Select(x => new SellerRanking
+            // {
+            //     PicPath = x.FirstOrDefault(y => y.x.ord.prd.SellerId == x.Key).x.ord.prd.PicPath,
+            //     SellerId = x.Key,
+            //     SellerName = x.FirstOrDefault(y => y.x.ord.prd.SellerId == x.Key).x.ord.prd.SellerName,
+            //     Price = x.Sum(x => x.x.name.OrderDetails.Count * x.x.name.OrderDetails.Product.Price)
+            // }).ToList().OrderByDescending(x => x.Price).Take(3);
+            ////var SellerRankingResult = SellerRanking.Select(x => x).ToList().GroupBy(y => y.SellerId).Select(x => new SellerRanking
             //{
-            //    SellerName = x.user.Name,
-            //    SellerPicPath = x.user.PicPath,
-            //    TotalPrice = x.product.Select(x=>x)
-            //});
+            //    SellerId = x.Key,
+            //    SellerName = x.FirstOrDefault(y => y.SellerId == x.Key).SellerName,
+            //    PicPath = x.FirstOrDefault(y => y.SellerId == x.Key).PicPath,
+            //    Price = x.Sum(x => Convert.ToInt32(x.Price))
+            //}).ToList();
 
 
-
-            //var hotProduct = _dbcontext.OrderDetail.OrderBy(x => x.Count).Take(3);
-            //var productName= hotProduct.Select(x => new { name = x.Product.Name });
             HomeBackMangeViewModel homeBackMangeViewModel = new HomeBackMangeViewModel() 
             {
                 UserCount = usercount,
@@ -201,11 +244,10 @@ namespace TuanBuy.Controllers
                 TotalSales = totalSales,
                 //HotproductCount = Convert.ToInt32(hotProduct),
                 //ProductName = productName.ToString()
+                hotProducts = hotProduct,
+                sellerRankings = SellerRankingResult,
             };
             return homeBackMangeViewModel;
-            
-
-
         }
 
 

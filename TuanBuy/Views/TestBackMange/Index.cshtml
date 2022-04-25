@@ -9,11 +9,11 @@
         background: #796AEE;
     }
 
-    .sidebar-item-a> .sidebar-link:hover {
+        .sidebar-item-a > .sidebar-link:hover {
             background: #796AEE;
-    }
+        }
 
-   /* .sidebar-item li > .sidebar-link {
+    /* .sidebar-item li > .sidebar-link {
         color: #fff;
         border-left: 4px solid #3b25e6;
         background: #8e81f1;
@@ -21,12 +21,12 @@
 
 </style>
 
-    <!--我的css-->
-    <link rel="stylesheet" href="~/css/back.css">
+<!--我的css-->
+<link rel="stylesheet" href="~/css/back.css">
 
 
 @*中間內容變動區*@
-<div class="content-inner w-100" id="navBar" >
+<div class="content-inner w-100" id="navBar">
     <!-- Page Header儀錶板-->
     <header class="bg-white shadow-sm px-4 py-3 z-index-20">
         <div class="container-fluid px-0">
@@ -123,32 +123,16 @@
                     <div class="card mb-2" style="height:60px;">
                         <div class="card-body">
                             <div class="d-flex align-items-center">
-                                <img  style="margin-left: 10px;margin-top:-15px;" src="/img/payment/火.png" width="30" />
+                                <img style="margin-left: 10px;margin-top:-15px;" src="/img/payment/火.png" width="30" />
                                 <div class="ms-3 hot"><strong class="text-lg d-block lh-1 mb-1 " style="color:red;">熱銷商品</strong></div>
                             </div>
                         </div>
                     </div>
-                    <div class="card mb-3">
+                    <div class="card mb-3" v-for="hotproduct in manger.hotProducts">
                         <div class="card-body">
                             <div class="d-flex align-items-center">
-                                <img src="/img/payment/第一名獎牌.png" width="55" /> 
-                                <div class="ms-3"><b class="productcount">多力多滋</b> <h4>數量: 234</h4></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <img src="/img/payment/第二名獎牌.png" width="55" /> 
-                                <div class="ms-3"><b class="productcount" >乳清蛋白</b> <h4>數量: 234</h4></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <img src="/img/payment/第三名獎排.png" width="55" />
-                                <div class="ms-3"><b class="productcount" >遊戲網卡</b><h4>數量: 234</h4></div>
+                                <img :src="hotproduct.goldhref" width="55" />
+                                <div class="ms-3"><b class="productcount">{{hotproduct.hotProductName}}</b> <h4>數量: {{hotproduct.hotProductCount}}</h4></div>
                             </div>
                         </div>
                     </div>
@@ -168,17 +152,9 @@
                             <div class="ranking">
                                 <strong class="h2 mb-0 d-block text-violet " style="display: inline!important">團主排行</strong><img class="trophy" style="display: inline!important" src="/img/payment/皇冠.png" width="30" />
                             </div>
-                            <div class="d-flex align-items-center trophys"> 
-                                <img src="~/img/payment/獎盃.png"/><img class="avatar shadow-0 img-fluid rounded-circle"src="/img/Avatar.jpg"/>
-                                <div class="ms-3 sales" style="margin-left: 20px !important"><strong class="text-lg d-block lh-1 mb-1">$234</strong><h6>陳老師</h6></div>
-                            </div>
-                            <div class="d-flex align-items-center trophy2 trophys">
-                                <img src="/img/payment/第二名獎盃2.png"width="40" /><img class="avatar shadow-0 img-fluid rounded-circle avatar1" src="/img/Avatar.jpg" />
-                                <div class="ms-3"style="margin-left:20px!important"><strong class="text-lg d-block lh-1 mb-1">$234</strong><h6>王小明</h6></div>
-                            </div>
-                            <div class="d-flex align-items-center trophys"style="margin-left:2px;">
-                                <img class="trophy3" src="/img/payment/第三名獎盃.png"width="44"/><img class="avatar shadow-0 img-fluid rounded-circle avatar2" src="/img/Avatar.jpg" />
-                                <div class="ms-3"style="margin-left:19px!important"><strong class="text-lg d-block lh-1 mb-1">$234</strong><h6>小獅團購店</h6></div>
+                            <div class="d-flex align-items-center trophys" v-for="seller in manger.sellerRankings">
+                                <img :src="seller.medalHref"><img class="avatar shadow-0 img-fluid rounded-circle" :src="seller.picPath" />
+                                <div class="ms-3 sales" style="margin-left: 20px !important"><strong class="text-lg d-block lh-1 mb-1">${{seller.price}}</strong><h6>{{seller.sellerName}}</h6></div>
                             </div>
                         </div>
                     </div>
@@ -186,7 +162,7 @@
                     <div class="card mb-0">
                         <div class="card-body">
                             <div class="d-flex align-items-center">
-                                <img src="~/img/payment/錢.png"/> 
+                                <img src="~/img/payment/錢.png" />
                                 <div class="ms-3"><strong class="text-lg mb-0 d-block lh-1">${{manger.totalSales}}</strong><b>平台銷售總額</b></div>
                             </div>
                         </div>
@@ -205,7 +181,8 @@
         userCount = 0;
         totalSales = 0;
         hotProduct = 0;
-        
+        hotProducts = [];
+        sellerRankings = [];
     }
     var layout = new Vue({
         el: '#navBar',
@@ -213,7 +190,17 @@
             homes: [],
             manger: new Manger(),
             user: "",
-            picPath: ""
+            picPath: "",
+            medalHref :[
+                { medalHref: "/img/payment/獎盃.png" },
+                { medalHref: "/img/payment/第二名獎盃2.png" },
+                { medalHref: "/img/payment/第三名獎盃.png" },
+            ],
+            goldhref: [
+                { goldhref: "/img/payment/第一名獎牌.png" },
+                { goldhref: "/img/payment/第二名獎牌.png" },
+                { goldhref: "/img/payment/第三名獎排.png" },
+            ]
         },
         mounted: function () {
             let self = this;
@@ -230,6 +217,10 @@
                 .then((resp) => {
                     /*self.homes = resp.data*/
                     layout.manger = resp.data;
+                    for (let i = 0; i < layout.medalHref.length; i++) {
+                        this.$set(layout.manger.sellerRankings[i], 'medalHref', layout.medalHref[i].medalHref);
+                        this.$set(layout.manger.hotProducts[i], 'goldhref', layout.goldhref[i].goldhref);
+                    }
                     console.log(layout.manger);
                 })
                 .catch((res) => res.response.data);
