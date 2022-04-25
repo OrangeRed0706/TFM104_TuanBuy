@@ -72,47 +72,70 @@ namespace TuanBuy.Models.Entities
         public List<OrderViewModel> GetMyOrder(int id)
         {
             //撈出使用者訂單
-            var orders =
-                (from order in _dbContext.Order
-                 where order.UserId == id
-                 join orderDetail in _dbContext.OrderDetail on order.Id equals orderDetail.OrderId
-                 join product in _dbContext.Product on orderDetail.ProductId equals product.Id
-                 join seller in _dbContext.User on product.UserId equals seller.Id
-                 select new { order, product, orderDetail, seller }).ToList();
-            //拿使用者訂單去找每個產品的圖片
-            var productPics =
-                    from myOrderDetail in orders
-                    join pic in _dbContext.ProductPics on myOrderDetail.product.Id equals pic.ProductId into pics
-                    select new { myOrderDetail, pic = pics.First() };
-
-
-            var myOrderDetails = new List<OrderViewModel>();
-
-            foreach (var item in productPics)
-            {
-                var myOrderDetail = new OrderViewModel()
+            var result =
+                _dbContext.Order.Where(x => x.UserId == id).Select(x => new OrderViewModel
                 {
-                    OrderId = item.myOrderDetail.order.Id,
-                    OrderState = item.myOrderDetail.order.StateId,
-                    Description = item.myOrderDetail.order.Description,
-                    Count = item.myOrderDetail.orderDetail.Count,
-                    PaymentType = item.myOrderDetail.order.PaymentType,
-                    Address = item.myOrderDetail.order.Address,
-                    SellerId = item.myOrderDetail.seller.Id,
-                    SellerName = item.myOrderDetail.seller.Name,
-                    ProductName = item.myOrderDetail.product.Name,
-                    ProductDescription = item.myOrderDetail.product.Description,
-                    ProductPrice = item.myOrderDetail.product.Price,
-                    ProductId = item.myOrderDetail.product.Id,
-                    OrderPrice = item.myOrderDetail.orderDetail.Price
-                };
-                if (item.myOrderDetail.product.Id == item.pic.ProductId)
-                {
-                    myOrderDetail.ProductPath = "/productpicture/" + item.pic.PicPath;
-                }
-                myOrderDetails.Add(myOrderDetail);
-            }
-            return myOrderDetails;
+                    OrderId = x.Id,
+                    OrderState = x.StateId,
+                    Description = x.Description,
+                    Count = x.OrderDetails.Count,
+                    PaymentType = x.PaymentType,
+                    Address = x.Address,
+                    SellerId = x.OrderDetails.Product.UserId,
+                    SellerName = x.OrderDetails.Product.User.Name,
+                    ProductName = x.OrderDetails.Product.Name,
+                    ProductDescription = x.OrderDetails.Product.Description,
+                    ProductPrice = x.OrderDetails.Product.Price,
+                    ProductPath = "/productpicture/" +x.OrderDetails.Product.ProductPics.FirstOrDefault().PicPath,
+                    ProductId = x.OrderDetails.Product.Id,
+                    OrderPrice = x.OrderDetails.Product.Price
+                }).ToList();
+
+            #region 垃圾
+
+            //var orders =
+            //    (from order in _dbContext.Order
+            //     where order.UserId == id
+            //     join orderDetail in _dbContext.OrderDetail on order.Id equals orderDetail.OrderId
+            //     join product in _dbContext.Product on orderDetail.ProductId equals product.Id
+            //     join seller in _dbContext.User on product.UserId equals seller.Id
+            //     select new { order, product, orderDetail, seller }).ToList();
+            ////拿使用者訂單去找每個產品的圖片
+            //var productPics =
+            //        from myOrderDetail in orders
+            //        join pic in _dbContext.ProductPics on myOrderDetail.product.Id equals pic.ProductId into pics
+            //        select new { myOrderDetail, pic = pics.First() };
+
+
+            //var myOrderDetails = new List<OrderViewModel>();
+
+            //foreach (var item in productPics)
+            //{
+            //    var myOrderDetail = new OrderViewModel()
+            //    {
+            //        OrderId = item.myOrderDetail.order.Id,
+            //        OrderState = item.myOrderDetail.order.StateId,
+            //        Description = item.myOrderDetail.order.Description,
+            //        Count = item.myOrderDetail.orderDetail.Count,
+            //        PaymentType = item.myOrderDetail.order.PaymentType,
+            //        Address = item.myOrderDetail.order.Address,
+            //        SellerId = item.myOrderDetail.seller.Id,
+            //        SellerName = item.myOrderDetail.seller.Name,
+            //        ProductName = item.myOrderDetail.product.Name,
+            //        ProductDescription = item.myOrderDetail.product.Description,
+            //        ProductPrice = item.myOrderDetail.product.Price,
+            //        ProductId = item.myOrderDetail.product.Id,
+            //        OrderPrice = item.myOrderDetail.orderDetail.Price
+            //    };
+            //    if (item.myOrderDetail.product.Id == item.pic.ProductId)
+            //    {
+            //        myOrderDetail.ProductPath = "/productpicture/" + item.pic.PicPath;
+            //    }
+            //    myOrderDetails.Add(myOrderDetail);
+            //}
+            #endregion
+            return result;
+            //return myOrderDetails;
         }
 
         /// <summary>

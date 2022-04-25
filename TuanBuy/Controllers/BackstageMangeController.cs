@@ -20,7 +20,7 @@ namespace TuanBuy.Controllers
         public BackstageMangeController(TuanBuyContext context, RedisProvider redisdb)
         {
             _dbcontext = context;
-            _redisdb = redisdb;
+            _redisdb=redisdb;
         }
 
         #region 會員管理
@@ -139,36 +139,97 @@ namespace TuanBuy.Controllers
             var productCount = _dbcontext.Product.Where(x => x.Disable == false).Count();
             var processOrder = _dbcontext.Order.Where(x => x.StateId == 2).Count();
             var finishOrder = _dbcontext.Order.Where(x => x.StateId == 4).Count();
-            var totalSales = _dbcontext.OrderDetail.Select(x => x.Price).Sum();
+            var totalSales = (_dbcontext.OrderDetail.ToList().GroupJoin(_dbcontext.Product,
+                 ord => ord.ProductId,
+                 prd => prd.Id,
+                 (ord, prd) => new { ord, prd }
+                ).ToList().GroupJoin(_dbcontext.Order,
+                 orderdetil => orderdetil.ord.Order.Id,
+                 ord => ord.OrderDetails.OrderId,
+                 (orderdetil, ord) => new { orderdetil, ord }
+                ).Where(x => x.orderdetil.ord.Order.StateId == 3).ToList().Sum(x =>
+                        x.orderdetil.prd.Sum(y => y.Price * x.orderdetil.ord.Count)
+                ));
             var hotProduct = _dbcontext.Product.ToList().GroupJoin(_dbcontext.OrderDetail,
                    prd => prd.Id,
                    order => order.ProductId,
                    (product, order) => new { product, order }
-               ).Select(x => new HomeBackMangeViewModel
+               ).Select(x => new HotProduct
                {
-                   ProductName = x.product.Name,
-                   ProductCount = x.order.Count(),
+                   HotProductName = x.product.Name,
+                   HotProductCount = x.order.Sum(y => y.Count)
+               }).OrderByDescending(x => x.HotProductCount).Take(3).ToList<HotProduct>();
+            //團主銷售排行
+            //var SellerRanking = _dbcontext.Product.ToList().GroupJoin(_dbcontext.User,
+            //       product => product.UserId,
+            //       user => user.Id,
+            //       (product, user) => new { product, user }).ToList().GroupJoin(_dbcontext.OrderDetail,
+            //         prd => prd.product.Id,
+            //         ord => ord.ProductId,
+            //         (prd, ord) => new { prd, ord }).ToList().Select(x => new SellerRanking
+            //         {
+            //             SellerId = x.prd.product.UserId,
+            //             PicPath = "/MemberPicture/" + x.prd.user.FirstOrDefault(y => y.Id == x.prd.product.UserId).PicPath,
+            //             SellerName = x.prd.user.FirstOrDefault(y => y.Id == x.prd.product.UserId).Name,
+            //             Price = x.ord.Sum(x => x.Count * x.Product.Price)
+            //         }).ToList().GroupJoin(_dbcontext.Order,
+            //          prd => prd.SellerId,
+            //          ord => ord.UserId,
+            //          (prd, ord) => new { prd, ord }
+            //         ).SelectMany(
+            //            x => x.ord, (ord, name) => new { ord, name }
+            //         ).Where(x => x.name.StateId == 3).Select(x =>
+            //                new { x.name }
+            //         ).Select(x => x.name).GroupBy(x => x.UserId).Select(x => new SellerRanking
+            //         {
+            //             PicPath = x.FirstOrDefault(y => y.User.Id == x.Key).User.PicPath,
+            //             SellerId = x.Key,
+            //             SellerName = x.FirstOrDefault(y=>y.User.Id==x.Key).User.Name,
+            //             Price = x.Sum(x => x.OrderDetails.Count * x.OrderDetails.Product.Price)
+            //         }).ToList().OrderByDescending(x => x.Price).Take(3);
+            //團主銷售排行
+            var SellerRankingResult = _dbcontext.Order.ToList().GroupJoin(_dbcontext.OrderDetail,
+                    ord => ord.Id,
+                    orddetail => orddetail.OrderId,
+                    (ord, orddetail) => new { Ord = ord, detail = orddetail }
+                ).Where(x => x.Ord.StateId == 3).ToList().GroupJoin(_dbcontext.Product,
+                    ord => ord.Ord.OrderDetails.ProductId,
+                    prd => prd.Id,
+                    (ord, prd) => new { ord.detail, ord.Ord }
+                ).ToList().SelectMany(
+                   ord => ord.detail,
+                   (ord, name) => new { ord, name }
+                ).ToList().GroupJoin(_dbcontext.User,
+                  ord => ord.name.Product.UserId,
+                  user => user.Id,
+                  (ord, user) => new { ord, user }
+                ).GroupBy(x=>x.ord.name.Product.UserId).Select(x => new SellerRanking
+                {
+                    SellerId = x.Key,
+                    PicPath = x.FirstOrDefault(y => y.ord.name.Product.User.Id == x.Key).ord.name.Product.User.PicPath,
+                    SellerName = x.FirstOrDefault(y=>y.ord.name.Product.User.Id==x.Key).ord.name.Product.User.Name,
+                    Price =  x.Sum(y=>y.ord.name.Count * y.ord.name.Product.Price),
+                }).OrderByDescending(x => x.Price).Take(3).ToList<SellerRanking>(); 
 
-               }
-               ).OrderByDescending(x => x.ProductCount).Take(3);
-
-            //var hotOperators = _dbcontext.User.ToList().GroupJoin(_dbcontext.OrderDetail,
-            //      user => user.Id,
-            //      order => order.Price,
-            //      (product, order) => new { product, order }
-            //  ).Select(x => new HomeBackMangeViewModel
-            //  {
-            //     Name=x.order
-            //  }
-            //  ).OrderByDescending(x => x.ProductCount).Take(3);
 
 
+            //.Select(x => new SellerRanking
+            // {
+            //     PicPath = x.FirstOrDefault(y => y.x.ord.prd.SellerId == x.Key).x.ord.prd.PicPath,
+            //     SellerId = x.Key,
+            //     SellerName = x.FirstOrDefault(y => y.x.ord.prd.SellerId == x.Key).x.ord.prd.SellerName,
+            //     Price = x.Sum(x => x.x.name.OrderDetails.Count * x.x.name.OrderDetails.Product.Price)
+            // }).ToList().OrderByDescending(x => x.Price).Take(3);
+            ////var SellerRankingResult = SellerRanking.Select(x => x).ToList().GroupBy(y => y.SellerId).Select(x => new SellerRanking
+            //{
+            //    SellerId = x.Key,
+            //    SellerName = x.FirstOrDefault(y => y.SellerId == x.Key).SellerName,
+            //    PicPath = x.FirstOrDefault(y => y.SellerId == x.Key).PicPath,
+            //    Price = x.Sum(x => Convert.ToInt32(x.Price))
+            //}).ToList();
 
 
-
-            //var hotProduct = _dbcontext.OrderDetail.OrderBy(x => x.Count).Take(3);
-            //var productName= hotProduct.Select(x => new { name = x.Product.Name });
-            HomeBackMangeViewModel homeBackMangeViewModel = new HomeBackMangeViewModel()
+            HomeBackMangeViewModel homeBackMangeViewModel = new HomeBackMangeViewModel() 
             {
                 UserCount = usercount,
                 ProductCount = productCount,
@@ -176,15 +237,11 @@ namespace TuanBuy.Controllers
                 FinishOrder = finishOrder,
                 TotalSales = totalSales,
                 //HotproductCount = Convert.ToInt32(hotProduct),
-                ProductName = hotProduct.ToString()
-                //HotproductCount=Convert.ToInt32(hotProduct),
-                //HotproductCount = Convert.ToInt32(hotProduct),
                 //ProductName = productName.ToString()
+                hotProducts = hotProduct,
+                sellerRankings = SellerRankingResult,
             };
             return homeBackMangeViewModel;
-
-
-
         }
 
 
@@ -205,9 +262,10 @@ namespace TuanBuy.Controllers
                 _dbcontext.Vouchers.Add(voucher);
 
                 #region 新增優惠卷給所有使用者
-
                 var users = _dbcontext.User.ToList();
                 var notifyMessage = $"請輸入「{userVouchersViewModel.VouchersTitle}」兌換優惠卷喔";
+
+
                 var entityEntries = users.Select(x =>
                     _dbcontext.UserNotify.Add(
                         new UserNotify
@@ -215,37 +273,36 @@ namespace TuanBuy.Controllers
                             UserId = x.Id,
                             SenderId = 0,
                             Content = notifyMessage,
-                            Category = 1,
-                            CreateDateTime = DateTime.Now
+                            Category = 1
                         })).ToList();
                 _dbcontext.SaveChanges();
 
                 //存進Redis
-                //var redis3 = _redisdb.GetRedisDb(3);
-                //var listKey = "Notify_";
-                //var test = new List<string[]>();
-                //users.ForEach(x =>
-                //{
-                //    var cur = listKey + x.Id;
-                //    redis3.SaveMessage(cur, notifyMessage);
+                var redis3 = _redisdb.GetRedisDb(3);
+                var listKey = "Notify_";
+                var test =new List<string[]>();
+                users.ForEach(x =>
+                {
+                    var cur = listKey + x.Id;
+                    redis3.SaveMessage(cur, notifyMessage);
 
-                //        //這邊只是我想看存進去的東西
-                //        var a = new string[redis3.ListLength(cur)];
-                //    for (int i = 0; i < (redis3.ListLength(cur)); i++)
-                //    {
-                //        a[i] = (string.Concat(redis3.ListRange(cur, i)));
-                //    }
-                //    test.Add(a);
-                //});
-
+                    //這邊只是我想看存進去的東西
+                    var a = new string[redis3.ListLength(cur)];
+                    for (int i = 0; i < (redis3.ListLength(cur)); i++)
+                    {
+                        a[i] = (string.Concat(redis3.ListRange(cur, i)));
+                    }
+                    test.Add(a);
+                });
+                
 
 
 
 
                 #endregion
 
-
-
+                
+                
                 return Ok();
             }
         }
@@ -286,7 +343,6 @@ namespace TuanBuy.Controllers
         public IActionResult DeleteCounpons(string id)
         {
             var user = _dbcontext.Vouchers.FirstOrDefault(x => x.VoucherName == id);
-            if (user == null) return BadRequest();
             _dbcontext.Vouchers.Remove(user);
             _dbcontext.SaveChanges();
             return Ok();

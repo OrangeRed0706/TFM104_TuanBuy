@@ -19,7 +19,7 @@ namespace Data.Entities
 
         public string MessageImage { get; set; }
 
-        public DateTime CreateDate { get; set; } = DateTime.Now;
+        public DateTime CreateDate { get; set; } = DateTime.UtcNow.AddHours(8);
         //public int ChatId { get; set; }
         public virtual ChatRoom ChatRoom { get; set; }
 

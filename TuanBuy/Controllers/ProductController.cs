@@ -55,11 +55,41 @@ namespace TuanBuy.Controllers
             return View();
         }
 
-        ////商品介紹頁
-        //public IActionResult DemoProduct()
-        //{
-        //    return View();
-        //}
+        #region 商品更新頁面
+        //商品更新頁
+        [HttpGet]
+        public IActionResult UpdateProduct(int id)
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ProductViewModel GetUpdateProductData(int id)
+        {
+            ProductManage product = new ProductManage(_dbContext);
+            var result = product.GetProductViewModel(id);
+            return result;
+        }
+        [HttpPost]
+        public IActionResult UpdateProductData(ProductViewModel product)
+        {
+            using(_dbContext)
+            {
+                var result = _dbContext.Product.SingleOrDefault(x => x.Id == product.Id);
+                result.Category = product.Category;
+                result.Content = product.Content;
+                result.Description = product.Description;
+                result.EndTime = product.EndTime;
+                result.Name = product.Name;
+                result.Price = product.Price;
+                result.Total = (decimal)product.Total;                  
+                _dbContext.SaveChanges();
+            }
+            return RedirectToAction("Index","Home");
+        }
+        #endregion
+
+
         #region 商品介紹頁
         [HttpGet]
         public IActionResult DemoProduct(int id)
@@ -275,7 +305,7 @@ namespace TuanBuy.Controllers
                 i.Content = p.Content;
                 i.Category = p.Category;
                 i.PicPath = p.PicPath;
-                TimeSpan timeSpan = p.EndTime.Subtract(DateTime.Now).Duration();
+                TimeSpan timeSpan = p.EndTime.Subtract(DateTime.UtcNow.AddHours(8)).Duration();
                 i.LastTime = timeSpan.Days + "天";
                 i.Price = p.Price;
                 i.Total = 0;
@@ -347,7 +377,7 @@ namespace TuanBuy.Controllers
             {
                 Order order = new Order();
                 OrderDetail orderDetail = new OrderDetail();
-                order.CreateDate = DateTime.Now;
+                order.CreateDate = DateTime.UtcNow.AddHours(8);
                 order.Description = addOrderViewModel.OrderDescription;
                 order.Address = addOrderViewModel.BuyerAddress;
                 order.StateId = 1;
@@ -425,7 +455,7 @@ namespace TuanBuy.Controllers
                 Content = product.Content,
                 Category = product.Category,
                 Description = product.Description,
-                CreateTime = DateTime.Now,
+                CreateTime = DateTime.UtcNow.AddHours(8),
                 EndTime = product.EndTime,
                 Price = product.Price,
                 User = targetUser,
@@ -446,7 +476,7 @@ namespace TuanBuy.Controllers
             {
                 if (file != null)
                 {
-                    var fileName = DateTime.Now.Ticks + file.FileName;
+                    var fileName = DateTime.UtcNow.AddHours(8).Ticks + file.FileName;
                     using var fs = System.IO.File.Create($"{path}/{fileName}");
                     file.CopyTo(fs);
                     var pPic = new ProductPic()

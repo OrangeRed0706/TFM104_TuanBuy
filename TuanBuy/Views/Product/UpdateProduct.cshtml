@@ -1,0 +1,113 @@
+﻿<script src="https://cdn.tiny.cloud/1/ae0u9492k71mx60vj8ngvhw6a1mbqyjbfzl4fza87g9relu9/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<body class="colerwhite">
+    <!-- 新增商品 -->
+    <div class="container" id="form1">
+        <div class="row">
+            <h2 class="col-12 addh2">商品修改</h2>
+            <div class="col-12 addborder">
+                <form method="post" action="/Product/UpdateProductData" enctype="multipart/form-data">
+                    <input hidden="hidden" name="id" v-model="product.id">
+                    <!--商品名稱-->
+                    <label class="addp" for="productname">商品名稱</label>
+                    <input class="addtext" type="text" name="Name" id="productname" v-model="product.name">
+
+                    <!--結束時間-->
+                    <label class="addp" for="endtime">結束時間</label>
+                    <input class="addtext" type="date" name="EndTime" id="endtime" :min="todaynowDate" v-model="product.endTime">
+
+                    <label class="addp" for="target">目標金額</label>
+                    <input class="addtext" type="text" name="Total" id="target" placeholder="NTD" v-model="product.targetPrice">
+
+                    <!--類別-->
+                    <label class="addp" for="category">類別</label>
+                    <select class="addselect addimg" name="category" id="category" v-model="product.category">
+                        <option value="未分類">選擇計畫分類</option>
+                        <option value="票卷">票券</option>
+                        <option value="食品">美食</option>
+                        <option value="衣服">衣服</option>
+                        <option value="3C">3C</option>
+                    </select>
+
+                    <!--商品簡介-->
+                    <label class="addp" for="productdetail">商品簡介</label>
+                    <input class="addtext" type="text" name="Description" id="productdetail" v-model="product.description">
+
+                    <!--商品內容-->
+                    <!--<label class="addp" for="productcontent">商品內容</label>
+    <input class="addtext" type="text" name="" id="productcontent" v-model="product.content">-->
+                    <!--商品單價-->
+                    <label class="addp" for="productprice">商品單價</label>
+                    <input class="addtext" type="text" name="Price" id="productprice" v-model="product.price">
+
+                    <!--商品內容-->
+                    <label class="addp" for="productcontent">商品內容</label>
+                    <textarea id="mytextarea" name="Content" placeholder="請描述你的商品內容!" v-model="product.content"></textarea>
+
+                    <button class="addbtn" type="submit">編輯</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- 新增商品結束 -->
+
+</body>
+  
+
+<script>
+    //抓取Url資訊
+    let str = window.location.pathname.split("/");
+    /*抓取Url id*/
+    let prdid = str[str.length - 1];
+    var app = new Vue({
+        el: "#form1",
+        data: {
+            product: {
+                name: "商品",
+                price: 300,
+                description: "描述",
+                content: "內容",
+                picPath: [],
+                category: "商品種類",
+                endTime: null,
+                targetPrice: 1000
+            },
+            user: {
+                name: "",
+                email: ""
+            },
+            preview: null,
+            image: null,
+            preview_list: [],
+            image_list: [],
+            todaynowDate: "",
+        },
+        methods: {
+            UpdateData: function () {
+                console.log('更新表單');
+            }
+        },
+        mounted: function () {
+            let self = this;
+            axios.get("/Product/GetUpdateProductData/" + prdid).then((resp) => {
+                console.log(resp.data);
+                this.product = resp.data
+                this.product.id = prdid;
+                var Today = new Date(resp.data.endTime);
+                app.todaynowDate = '' + Today.getFullYear() + "-0" + (Today.getMonth() + 1) + "-" + Today.getDate();
+                this.product.endTime = app.todaynowDate;
+            });
+        }
+    });
+
+        tinymce.init({
+            selector: '#mytextarea',
+        plugins: [
+        'a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'export',
+        'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks',
+        'powerpaste', 'fullscreen', 'formatpainter', 'insertdatetime', 'media', 'table', 'help', 'wordcount'
+        ],
+        toolbar: 'undo redo | formatpainter casechange blocks | bold italic backcolor | ' +
+        'alignleft aligncenter alignright alignjustify | ' +
+        'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help'
+        });
+</script>

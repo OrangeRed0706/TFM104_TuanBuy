@@ -21,8 +21,8 @@
 
 
                         <!-- 修改按鍵，按鈕綁id -->
-                        <button type="button" class="btn btn-ddd cardmgtp" data-toggle="modal" data-target="#exampleModal"
-                                data-whatever="" v-on:click="updateProduct($event)" v-bind:value="item.id">
+                        <button type="button" class="btn btn-ddd cardmgtp" @*data-toggle="modal" data-target="#exampleModal"
+                                data-whatever=""*@ v-on:click="updateProduct($event)" v-bind:value="item.id">
                             修改
                         </button>
 
@@ -63,7 +63,7 @@
                                             取消
                                         </button>
                                         <!--觸發事件修改-->
-                                        <button type="button" class="btn btn-ddd" v-on:click="readyUpdate">修改</button>
+                                        <button type="button" class="btn btn-ddd"  v-on:click="readyUpdate">修改</button>
                                     </div>
                                 </div>
                             </div>
@@ -120,7 +120,7 @@
                 price: '',
                 content: '',
                 description: '',
-                endTime: ''
+                endTime: '',
             },
             user: {
                 name: "",
@@ -130,7 +130,8 @@
                 sex: "",
                 uploadPicPath: ""
             },
-            target: null
+            target: null,
+            updateProducthref:'/Product/UpdateProduct/',
         },
         methods: {
             //更新商品資料
@@ -142,6 +143,7 @@
                 let target = self.products.find((i) => { return +i.id === +productId });
                 self.product = target;
                 console.log(target);
+                window.location = app.updateProducthref + target.id;
             },
             //按下按鈕更新資料
             readyUpdate: function() {
