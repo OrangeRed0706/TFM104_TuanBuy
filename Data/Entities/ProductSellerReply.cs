@@ -10,7 +10,7 @@ namespace Data.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int UserId { get; set; }
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow.AddHours(8);
         public string MessageContent { get; set; }
 
         [ForeignKey("ProductMessage")]

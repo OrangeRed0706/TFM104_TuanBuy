@@ -64,14 +64,30 @@ namespace TuanBuy.Controllers
                  new Notify()
                  {
                      NotifyId = x.Id,
-                     CreateDateTime = x.CreateDateTime.ToString("G"),
+                     CreateDateTime =x.CreateDateTime.ToString("G"),
                      Content = x.Content,
                      Sender = x.NotifyCategory.Category
                  }).ToList();
 
             return result;
-
         }
+
+        public List<IndexNotify> GetIndexNotify()
+        {
+            var targetUser = GetTargetUser();
+            var a = targetUser.Id;
+            var allNotify = _dbContext.UserNotify.Include(X => X.NotifyCategory).Where(x => x.UserId == targetUser.Id && x.Disable == false).OrderByDescending(x => x.CreateDateTime);
+            var result = allNotify.OrderByDescending(x=>x.CreateDateTime).Select(x =>
+                new IndexNotify()
+                {
+                    NotifyId = x.Id,
+                    Content = x.NotifyCategory.Category+"："+x.Content,
+                }).Take(5).ToList();
+
+            return result;
+        }
+
+
         [HttpPost]
         public IActionResult DeleteNotify(int id)
         {
@@ -102,7 +118,11 @@ namespace TuanBuy.Controllers
             public string Sender { get; set; }
             public string Content { get; set; }
         }
-
+        public class IndexNotify
+        {
+            public int NotifyId { get; set; }
+            public string Content { get; set; }
+        }
         public IActionResult Coupon()
         {
             return View();
@@ -246,7 +266,8 @@ namespace TuanBuy.Controllers
                         UserId = currentOrder.User.Id,
                         SenderId = sender.Id,
                         Content = notifyMessage,
-                        Category = 2
+                        Category = 2,
+                        CreateDateTime = DateTime.UtcNow.AddHours(8)
                     });
 
                 _dbContext.SaveChanges();

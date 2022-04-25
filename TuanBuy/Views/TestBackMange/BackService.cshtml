@@ -82,12 +82,12 @@
                         <div class="card-body">
                             <p class="text-sm">發送LINE訊息給使用者</p>
                             <form class="form-horizontal">
-                                <div class="row gy-2 mb-4">
+                                @*<div class="row gy-2 mb-4">
                                     <label class="col-sm-3 form-label" for="inputHorizontalElOne">Email</label>
                                     <div class="col-sm-9">
                                         <input class="form-control" id="inputHorizontalElOne" type="email" placeholder="Email Address"><small class="form-text">傳送給所有使用者</small>
                                     </div>
-                                </div>
+                                </div>*@
                                 <div class="row gy-2 mb-4">
                                     <label class="col-sm-3 form-label" for="inputHorizontalElTwo">訊息輸入</label>
                                     <div class="col-sm-9">
@@ -496,10 +496,10 @@
                             },
                             success: function (response) {
                                 alert('優惠卷新增成功');
-                                connection.invoke("SendMessage", "TuanBuy：", `優惠卷新增！請輸入：${app.vouchers.voucherName}兌換`).catch(function (err) {
+                                connection.invoke("SendMessage", "系統：", `優惠卷發放！請輸入：「${app.vouchers.voucherName}」兌換優惠卷！！！`).catch(function (err) {
                                     return console.error(err.toString());
                                 });
-
+                                window.location.reload();
                             },
                             error: function (response) {
                                 alert('發生例外錯誤');

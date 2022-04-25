@@ -145,7 +145,7 @@
                                 取消
                             </button>
                             <!--按下按鈕觸發刪除的API-->
-                            <button type="button" class="btn btn-danger" v-on:click="deleteUser">刪除</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" v-on:click="deleteOrder">刪除</button>
                         </div>
                     </div>
                 </div>
@@ -226,16 +226,24 @@
                 window.location.reload();
 
             },
-            deleteUser: function () {
+            deleteOrder: function () {
                 let self = this;
                 axios.delete("/BackstageMange/DeleteOrder/" + self.target)
                     .then((res) => {
+                        var deleteIndex = self.ordermanages.findIndex(function (obj) {      //不跳轉頁面刪除畫面內容
+                            if (obj.orderId == self.target) {
+                                return true;
 
+                            } else {
+                                return false;
+                            }
+                        });
+                        self.ordermanages.splice(deleteIndex, 1);
                         console.log(res);
                     })
                     .catch((res) => console.log(res.response.data));
                 console.log("/BackstageMange/DeleteOrder/" + self.target);
-                window.location.reload();
+                /*window.location.reload();*/
             },
             setPage: function (idx) {
                 if (idx <= 0 || idx > this.totalPage) {       //限制頁數

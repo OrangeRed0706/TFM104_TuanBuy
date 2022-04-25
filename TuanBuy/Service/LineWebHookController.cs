@@ -253,7 +253,7 @@ namespace TuanBuy.Service
                     new Message()
                     {
                         type="text",
-                        text=$"我來了 來自服務通知...{DateTime.Now} "
+                        text=$"我來了 來自服務通知...{DateTime.UtcNow.AddHours(8)} "
                     }
                 }
             };

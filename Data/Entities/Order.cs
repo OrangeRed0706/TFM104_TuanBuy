@@ -13,7 +13,7 @@ namespace Data.Entities
         public string Id { get; set; } = GenerateStringID();
 
         //訂單建立時間 
-        public DateTime CreateDate { get; set; } = DateTime.Now;
+        public DateTime CreateDate { get; set; } = DateTime.UtcNow.AddHours(8);
         //訂單軟刪除
         public bool Disable { get; set; } = false;
         //訂單備註
@@ -46,7 +46,7 @@ namespace Data.Entities
             {
                 i *= ((int)b + 1);
             }
-            return string.Format("TuanBuy_" + "{0:x}", i - DateTime.Now.Ticks);
+            return string.Format("TuanBuy_" + "{0:x}", i - DateTime.UtcNow.AddHours(8).Ticks);
         }
     }
 }
