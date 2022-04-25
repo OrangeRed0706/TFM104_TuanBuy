@@ -23,10 +23,9 @@ namespace Business.Services
 
         public void DailyBirthday()
         {
-
             var body = $@"<h3>Happy Birthday！</h3>
                 <p> 生日快樂！我們幫你準備了生日優惠卷！</p>";
-            var getHappyBirthday = _dbContext.User.Where(x => x.Birth == DateTime.Today).ToList();
+            var getHappyBirthday = _dbContext.User.Where(x => x.Birth.Value.Month == DateTime.Today.Month).ToList();
             getHappyBirthday.ForEach((x) =>
             {
                 Mail.SendMail(x.Email,"TuanBuy祝你生日快樂！ 這是您的生日優惠卷", body);

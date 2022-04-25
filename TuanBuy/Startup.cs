@@ -154,7 +154,7 @@ namespace TuanBuy
             backgroundJobs.Enqueue(() => Console.WriteLine("Hello world from Hangfire!"));
             recurringJobManager.AddOrUpdate(
                 "寄發生日信",
-                ()=>serviceProvider.GetService<ITaskScheduling>().DailyBirthday(), Hangfire.Cron.Daily());
+                ()=>serviceProvider.GetService<ITaskScheduling>().DailyBirthday(), Hangfire.Cron.Monthly());
             recurringJobManager.AddOrUpdate(
                 "商品下架",()=>serviceProvider.GetService<ITaskScheduling>().PullProduct(), Hangfire.Cron.Daily());
 
