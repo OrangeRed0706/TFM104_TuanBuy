@@ -210,9 +210,6 @@ namespace TuanBuy.Controllers
                     SellerName = x.FirstOrDefault(y=>y.ord.name.Product.User.Id==x.Key).ord.name.Product.User.Name,
                     Price =  x.Sum(y=>y.ord.name.Count * y.ord.name.Product.Price),
                 }).OrderByDescending(x => x.Price).Take(3).ToList<SellerRanking>(); 
-
-
-
             //.Select(x => new SellerRanking
             // {
             //     PicPath = x.FirstOrDefault(y => y.x.ord.prd.SellerId == x.Key).x.ord.prd.PicPath,
@@ -227,8 +224,6 @@ namespace TuanBuy.Controllers
             //    PicPath = x.FirstOrDefault(y => y.SellerId == x.Key).PicPath,
             //    Price = x.Sum(x => Convert.ToInt32(x.Price))
             //}).ToList();
-
-
             HomeBackMangeViewModel homeBackMangeViewModel = new HomeBackMangeViewModel() 
             {
                 UserCount = usercount,
