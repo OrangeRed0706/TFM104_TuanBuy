@@ -463,19 +463,25 @@
         vouchersDiscount = 0;
         vouchersAvlAmount = 0;
     }
+    class lineMessage {
+        text='';
+    }
     var app = new Vue({
         el: '#app',
         data: {
             user: "",
             picPath: "",
             vouchers: new Vouchers(),
-            message:{text:""}
+            message:{text:""},
         },
         mounted: function () {
 
         },
         methods: {
             AddVoucher: function () {
+                let a = new lineMessage();
+                a.text = "您好～"+app.vouchers.voucherDescribe+"！請輸入 「"+app.vouchers.voucherName+"」 兌換優惠卷！";
+                
                 //判斷資料是否有填寫完
                 for (let i in app.vouchers) {
                     if (app.vouchers[i] === '' || app.vouchers[i] == 0) {
@@ -495,11 +501,19 @@
                                 VouchersAvlAmount: app.vouchers.vouchersAvlAmount,
                             },
                             success: function (response) {
-                                alert('優惠卷新增成功');
+
+                                axios.post("/api/LineWebHook/Line/LinePushMessage", a ).catch(res=>res.data);
+
+                                Swal.fire(
+                                    'Good job!',
+                                    '優惠卷新增成功',
+                                    'success'
+                                ).then((result) => {
+                                });
+                                
                                 connection.invoke("SendMessage", "即時通知：", `優惠卷發放！請輸入：「${app.vouchers.voucherName}」兌換優惠卷！！！`).catch(function (err) {
                                     return console.error(err.toString());
                                 });
-                                window.location.reload();
                             },
                             error: function (response) {
                                 alert('發生例外錯誤');

@@ -202,9 +202,9 @@
     connection.on("ReceiveMessage", function (user, message) {
         var msg = message;
         var encodedMsg = user + " says " + msg;
-        var li = document.createElement("li");
-        li.textContent = encodedMsg;
-        document.getElementById("msgDiv").appendChild(li);
+        //var li = document.createElement("li");
+        //li.textContent = encodedMsg;
+        //document.getElementById("msgDiv").appendChild(li);
     });
     // 連接事件
     connection.start().then((res) => console.log("後臺的連線成功")).catch(function (err) {

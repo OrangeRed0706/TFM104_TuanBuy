@@ -245,6 +245,7 @@
                     if (userAccount != null) {
 
                         connection.start().then(function () {
+                            console.log("前台的的連線成功");
                             //先取得當前使用者連線id
                             connection.invoke('getConnectionId')
                                 .then(function (connectionId) {
