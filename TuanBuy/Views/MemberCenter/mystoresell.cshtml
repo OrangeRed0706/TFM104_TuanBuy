@@ -20,10 +20,10 @@
                 <img v-bind:src="user.picPath"
                      alt="頭像" height="100" width="100" class="Largeheadsticker mystore-seller-img">
                 <p class="sellp  mystore-btn-mg">{{user.name}}</p>
-                <button class="demoproduct-addchat-btn mystore-btn-mg">聊聊</button>
+                <button class="demoproduct-addchat-btn mystore-btn-mg" v-on:click="AddChat">聊聊</button>
             </div>
-            <img class="mystore-img" src="~/img/kikicat-kikiapp.gif"/>
-            <img class="mystore-img2" src="~/img/Title.png"/>
+            <img class="mystore-img" src="~/img/kikicat-kikiapp.gif" />
+            <img class="mystore-img2" src="~/img/Title.png" />
         </div>
     </div>
 
@@ -58,12 +58,8 @@
 
         </div>
     </div>
-
-
-
-
-
 </body>
+</html>
 <script>
 
     var app = new Vue({
@@ -100,6 +96,26 @@
             }
         },
         methods: {
+            AddChat: function () {
+                //抓取Url資訊
+                let str = window.location.pathname.split("/");
+                /*抓取Url id*/
+                let userId = str[str.length - 1];
+                $.ajax({
+                    type: "POST",
+                    url: "/Member/AddChatRoom",
+                    data: {
+                        SellerId: userId,
+                        MemberId: app.useUserId,
+                    },
+                    success: function (response) {
+                        window.location.href = '/Member/chatRoom/';
+                    },
+                    error: function (response) {
+                        alert(response);
+                    }
+                });
+            },
         },
         mounted: function () {
             let self = this;
@@ -108,11 +124,9 @@
             /*抓取Url id*/
             let userId = str[str.length - 1];
             axios.get("/MemberCenter/GetSellerData/" + userId).then((resp) => { this.user = resp.data });
+            axios.get("/Member/GetOnlineMember/").then((resp) => { app.useUserId = resp.data.id; });
         },
         computed: {
         }
     });
 </script>
-
-
-</html>
