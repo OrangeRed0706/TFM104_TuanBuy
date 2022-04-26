@@ -5,6 +5,7 @@ using System.Text;
 using Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using TuanBuy.Models;
 
 namespace Data
 {

@@ -138,42 +138,42 @@
                 </div>
                 <!--回後台首頁-->
                 <ul class="list-unstyled py-4">
-                    <li class="sidebar-item active">
-                        <a class="sidebar-link" href="/TestBackMange/index">
+                    <li @*class="sidebar-item active"*@ :class="[nowhref==item.href ? 'sidebar-item active':'sidebar-item']" v-for="item in list" >
+                        <a class="sidebar-link" :href="item.href">
                             <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
-                                <use xlink:href="#real-estate-1"> </use>
-                            </svg>首頁
+                                <use  xlink :href="item.csshref"> </use>
+                            </svg>{{item.title}}
                         </a>
                     </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="/TestBackMange/UserManger">
+                    @*<li :class="[nowhref=='/TestBackMange/UserManger' ? 'sidebar-item active':'sidebar-item']">
+                        <a class="sidebar-link" href="/TestBackMange/UserManger" >
                             <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
                                 <use xlink:href="#portfolio-grid-1"> </use>
                             </svg>使用者管理
                         </a>
                     </li>
-                    <li class="sidebar-item ">
-                        <a class="sidebar-link" href="/TestBackMange/OrderManger">
+                    <li :class="[nowhref=='/TestBackMange/OrderManger' ? 'sidebar-item active':'sidebar-item']">
+                        <a class="sidebar-link" href="/TestBackMange/OrderManger" >
                             <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
                                 <use xlink:href="#portfolio-grid-1"> </use>
                             </svg>訂單管理
                         </a>
                     </li>
-                    <li class="sidebar-item ">
+                    <li :class="[nowhref=='/TestBackMange/ProductMangedown' ? 'sidebar-item active':'sidebar-item']">
                         <a class="sidebar-link" href="/TestBackMange/ProductMangedown">
                             <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
                                 <use xlink:href="#portfolio-grid-1"> </use>
                             </svg>商品管理
                         </a>
                     </li>
-                    <li class="sidebar-item ">
-                        <a class="sidebar-link" href="/TestBackMange/Counpons">
+                    <li :class="[nowhref=='/TestBackMange/Counpons' ? 'sidebar-item active':'sidebar-item']">
+                        <a class="sidebar-link" href="/TestBackMange/Counpons" >
                             <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
                                 <use xlink:href="#portfolio-grid-1"> </use>
                             </svg>優惠卷管理
                         </a>
                     </li>
-                    <li class="sidebar-item">
+                    <li :class="[nowhref=='/TestBackMange/index' ? 'sidebar-item active':'sidebar-item']">
                         <a class="sidebar-link" href="charts.html">
                             <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
                                 <use xlink:href="#sales-up-1"> </use>
@@ -181,12 +181,12 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="/TestBackMange/BackService">
+                        <a class="sidebar-link" href="/TestBackMange/BackService" >
                             <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
                                 <use xlink:href="#survey-1"> </use>
                             </svg>服務
                         </a>
-                    </li>
+                    </li>*@
                 </ul>
             </nav>
 
@@ -202,9 +202,9 @@
     connection.on("ReceiveMessage", function (user, message) {
         var msg = message;
         var encodedMsg = user + " says " + msg;
-        var li = document.createElement("li");
-        li.textContent = encodedMsg;
-        document.getElementById("msgDiv").appendChild(li);
+        //var li = document.createElement("li");
+        //li.textContent = encodedMsg;
+        //document.getElementById("msgDiv").appendChild(li);
     });
     // 連接事件
     connection.start().then((res) => console.log("後臺的連線成功")).catch(function (err) {
@@ -213,22 +213,40 @@
 </script>
 
 <script>
+    var nowhref = window.location.pathname;
+    console.log(nowhref);
     var backLayout = new Vue({
         el: '#backUserData',
         data: {
+            list: [
+                { title: '首頁', href: '/TestBackMange/index', csshref: '#real-estate-1' },
+                { title: '使用者管理', href: '/TestBackMange/UserManger', csshref: '#portfolio-grid-1' },
+                { title: '訂單管理', href: '/TestBackMange/OrderManger', csshref:'#sales-up-1'  },
+                { title: '商品管理', href: '/TestBackMange/ProductMangedown', csshref:'#imac-screen-1' },
+                { title: '優惠卷管理', href: '/TestBackMange/Counpons', csshref:'#browser-window-1' },
+                { title: '服務', href: '/TestBackMange/BackService', csshref:'#survey-1'}
+                
+            ],
             user: "",
-            picPath: ""
+            picPath: "",
+            reshref:"",
         },
-        mounted: function () {
+        mounted: function () {         
             let self = this;
             axios.get("/api/LoginAndRegister/")
                 .then((resp) => {
                     self.user = resp.data;
+                    //設置url
+                    backLayout.reshref = nowhref;
                 })
                 .catch((res) => res.response.data);
             axios.get("/api/MemberCenter/")
                 .then((resp) => { this.picPath = resp.data })
                 .catch((res) => res.response.data);
+           
+        },
+        created: function () {
+
         },
         methods: {
 
@@ -240,7 +258,6 @@
         el: '#logoutt',
         methods: {
             logout: function () {
-                alert("處發");
                 axios.delete("/api/LoginAndRegister").then(() => {
                     window.location.href = "/Home/Index";
                 });
@@ -249,6 +266,7 @@
 
     });
 </script>
+
 
 
 

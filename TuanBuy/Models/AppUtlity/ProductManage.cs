@@ -16,6 +16,24 @@ namespace TuanBuy.Models.Entities
         {
             _dbContext = dbContext;
         }
+
+        public ProductViewModel GetProductViewModel(int id)
+        {
+            using (_dbContext)
+            {
+                var result = _dbContext.Product.Where(x => x.Id == id).Select(x=>new ProductViewModel { 
+                    Name = x.Name,
+                    TargetPrice = x.Total,
+                    EndTime = x.EndTime,
+                    Price = x.Price,
+                    Category = x.Category,
+                    Description = x.Description,
+                    Content = x.Content,
+                }).FirstOrDefault();
+                return result;
+            }
+        }
+
         #region 取得商品頁資料
         public DemoProductViewModel GetDemoProductData(int ProductId)
         {
@@ -181,7 +199,7 @@ namespace TuanBuy.Models.Entities
                 productMessage.ProductId = ProductId;
                 productMessage.UserId = UserId;
                 productMessage.MessageContent = MessageContent;
-                productMessage.CreatedDate = DateTime.Now;
+                productMessage.CreatedDate = DateTime.UtcNow.AddHours(8);
                 _dbContext.ProductMessages.Add(productMessage);
                 _dbContext.SaveChanges();
             }
@@ -195,7 +213,7 @@ namespace TuanBuy.Models.Entities
             {
                 ProductSellerReply productSellerReply = new ProductSellerReply();
                 productSellerReply.UserId = SellerId;
-                productSellerReply.CreatedDate = DateTime.Now;
+                productSellerReply.CreatedDate = DateTime.UtcNow.AddHours(8);
                 productSellerReply.MessageContent = MessageContent;
                 productSellerReply.ProductMessageId = ProductMessageId;
                 _dbContext.ProductSellerReplies.Add(productSellerReply);
@@ -223,7 +241,7 @@ namespace TuanBuy.Models.Entities
                 i.Content = p.Content;
                 i.Category = p.Category;
                 i.PicPath = p.PicPath;
-                TimeSpan timeSpan = p.EndTime.Subtract(DateTime.Now).Duration();
+                TimeSpan timeSpan = p.EndTime.Subtract(DateTime.UtcNow.AddHours(8)).Duration();
                 i.LastTime = timeSpan.Days + "天";
                 i.Price = p.Price;
                 i.Total = 0;
@@ -292,7 +310,7 @@ namespace TuanBuy.Models.Entities
                         Category = p.Category,
                         PicPath = p.PicPath
                     };
-                    TimeSpan timeSpan = p.EndTime.Subtract(DateTime.Now).Duration();
+                    TimeSpan timeSpan = p.EndTime.Subtract(DateTime.UtcNow.AddHours(8)).Duration();
                     i.LastTime = timeSpan.Days + "天";
                     i.Price = p.Price;
                     i.Total = 0;

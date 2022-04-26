@@ -4,8 +4,8 @@
 }
 
 <!--我的css-->
-<link rel="stylesheet" href="~/css/back.css">
-<div class="content-inner w-100 ss" id="app">
+<link rel="stylesheet" href="~/css/back.css" >
+<div class="content-inner w-100 layoutbackgrount" id="app">
     <!-- Page Header-->
     <header class="bg-white shadow-sm px-4 py-3 z-index-20">
         <div class="container-fluid px-0">
@@ -24,14 +24,14 @@
         </div>
     </div>
     <div class="container " id="app">
-        <div class="row ss">
+        <div class="row layoutbackgrount">
             <div class="search1">
                 <div class="form-group has-search">
                     <span class="fa fa-search form-control-feedback"></span>
                     <input type="text" class="form-control" placeholder="Search" v-model="search">
                 </div>
             </div>
-            <table class="table table-striped col-gl-4 dropdown table-hover aaa bbb">
+            <table class="table table-striped col-gl-4 dropdown table-hover tablerow rowcolor">
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">訂單編號</th>
@@ -44,7 +44,7 @@
                 </thead>
                 <tbody>
                     <!--分頁設定-->
-                    <tr v-for="item in ordermanages.slice(pageStart, pageStart + countOfPage)" v-if="search=='' || item.orderId==search || item.userName==search || item.productName==search ">
+                    <tr v-for="item in ordermanages.slice(pageStart, pageStart + countOfPage)" v-if="search=='' || item.orderId.includes(search) || item.userName.includes(search) || item.productName.includes(search)">
                         <th scope="row">{{item.orderId}}</th>
                         <td>{{item.userName}}</td>
                         <td>{{item.productName}}</td>
@@ -90,7 +90,7 @@
                         <div class="modal-body">
                             <!--綁定form表單資料-->
                             <table class="table table-striped col-gl-12 dropdown">
-                                <thead>
+                                <thead style="background-color: #303030; color: white; ">
                                     <tr>
                                         <th class="orderitem" scope="col">訂單編號</th>
                                         <th class="orderitem" scope="col">商品名稱</th>
@@ -145,7 +145,7 @@
                                 取消
                             </button>
                             <!--按下按鈕觸發刪除的API-->
-                            <button type="button" class="btn btn-danger" v-on:click="deleteUser">刪除</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" v-on:click="deleteOrder">刪除</button>
                         </div>
                     </div>
                 </div>
@@ -226,16 +226,24 @@
                 window.location.reload();
 
             },
-            deleteUser: function () {
+            deleteOrder: function () {
                 let self = this;
                 axios.delete("/BackstageMange/DeleteOrder/" + self.target)
                     .then((res) => {
+                        var deleteIndex = self.ordermanages.findIndex(function (obj) {      //不跳轉頁面刪除畫面內容
+                            if (obj.orderId == self.target) {
+                                return true;
 
+                            } else {
+                                return false;
+                            }
+                        });
+                        self.ordermanages.splice(deleteIndex, 1);
                         console.log(res);
                     })
                     .catch((res) => console.log(res.response.data));
                 console.log("/BackstageMange/DeleteOrder/" + self.target);
-                window.location.reload();
+                /*window.location.reload();*/
             },
             setPage: function (idx) {
                 if (idx <= 0 || idx > this.totalPage) {       //限制頁數

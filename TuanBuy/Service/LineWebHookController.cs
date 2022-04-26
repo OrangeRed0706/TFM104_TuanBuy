@@ -233,7 +233,7 @@ namespace TuanBuy.Service
         }
         [Route("Line/LinePushMessage")]
         [HttpPost]
-        public void LinePushMessage()
+        public void LinePushMessage(Message text)
         {
             //設計HttpClient for .net framework
             //1建構一個HttpClient物件
@@ -253,7 +253,8 @@ namespace TuanBuy.Service
                     new Message()
                     {
                         type="text",
-                        text=$"我來了 來自服務通知...{DateTime.Now} "
+                        text= text.text
+                        //text=$"我來了 來自服務通知...{DateTime.UtcNow.AddHours(8)} "
                     }
                 }
             };
@@ -281,6 +282,7 @@ namespace TuanBuy.Service
             public string type { get; set; }
             public string text { get; set; }
         }
+
     }
 }
 

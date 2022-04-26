@@ -47,11 +47,13 @@ namespace Topic.Hubs
             db.ListRange("company").ToList().ForEach(d => Console.WriteLine(d));
             await Clients.All.SendAsync("ReceiveMessage", "接受到的通知");
         }
+        public async Task SendPrivateNotify(string email, string message)
+        {
+            var userList = _userservice.GetUserList();
+            var user = userList.Find(x => x.UserAccount == email);
+            await Clients.Client(user.Sid).SendAsync("ReceiveMessage", "即時通知：", message);
 
-        //public int GetTargetUser()
-        //{
-            
-        //}
+        }
 
         #endregion
 

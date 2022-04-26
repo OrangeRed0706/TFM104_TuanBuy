@@ -10,8 +10,10 @@ using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Claims;
 using System.Text;
+using Business.IServices;
 using Data;
 using Data.Entities;
+using Hangfire;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -38,13 +40,61 @@ namespace TuanBuy.Controllers
         private readonly IWebHostEnvironment _environment;
         private static IDistributedCache _distributedCache;
         private readonly RedisProvider _mydb;
+        private readonly IRecurringJobManager _recurringJobManager;
+        private readonly ITaskScheduling _taskScheduling;
 
-        public DemoController(TuanBuyContext context, IWebHostEnvironment environment, IDistributedCache distributedCache, RedisProvider Mydb)
+        public DemoController(TuanBuyContext context, IWebHostEnvironment environment, IDistributedCache distributedCache, RedisProvider Mydb, IRecurringJobManager recurringJobManager, ITaskScheduling taskScheduling)
         {
             _dbContext = context;
             _environment = environment;
             _distributedCache = distributedCache;
             _mydb = Mydb;
+            _recurringJobManager = recurringJobManager;
+            _taskScheduling = taskScheduling;
+        }
+
+        public IActionResult CheckTask()
+        {
+            var a = _dbContext.User.Where(x => x.Birth == DateTime.Today).ToList();
+            return Ok(a);
+        }
+
+
+        public void TestTask(int day, int category)
+        {
+            var AAA = "";
+            switch (day)
+            {
+                case 1:
+                    //每天12:00
+                    AAA = "0 0 * * *";
+                    break;
+                case 2:
+                    //每小時
+                    AAA = "0 * * * *";
+                    break;
+                case 3:
+                    //每分鐘
+                    AAA = "* * * * *";
+                    break;
+                default:
+                    break;
+            }
+            switch (category)
+            {
+                case 1:
+                    _recurringJobManager.AddOrUpdate(
+                        "Run every minute", () =>
+                            _taskScheduling.DailyBirthday(), AAA);
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                default:
+                    break;
+            }
+          
         }
 
         public IActionResult SingalR()
@@ -56,7 +106,7 @@ namespace TuanBuy.Controllers
         {
 
             var _IDatabase = _mydb.GetRedisDb(3);
-            var listKey = "Notify_"+1;
+            var listKey = "Notify_" + 1;
             _IDatabase.KeyDelete(listKey, CommandFlags.FireAndForget);//delete all item
             _IDatabase.SaveMessage(listKey, "通知內容");
             //存取每一個字元
@@ -270,8 +320,8 @@ namespace TuanBuy.Controllers
         #endregion
 
         #region 文字編輯器
-        public IActionResult HtmlEditText()      
-        {    
+        public IActionResult HtmlEditText()
+        {
             return View();
         }
         [HttpPost]

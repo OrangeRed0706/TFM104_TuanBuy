@@ -14,6 +14,8 @@
                 <div class="col-lg-8">
                     <label class="prop" for="name">姓名</label>
                     <input class="protext" type="text" name="" id="name" v-model="user.name">
+                    <label class="prop" for="NickName">綽號</label>
+                    <input class="protext" type="text" name="" id="NickName" v-model="user.nickName">
                     <label class="prop promgtop" for="phone">手機號碼</label>
                     <input class="protext" type="text" name="" id="phone" v-model="user.phone">
                     <label class="prop promgtop" for="addres">地址</label>
@@ -71,6 +73,7 @@
                 birth: "",
                 address: "",
                 sex: "",
+                nickName:"",
                 uploadPicPath: ""
             },
             preview: null
@@ -104,6 +107,7 @@
                 bodyFormData.append("Sex", u.sex);
                 bodyFormData.append("Address", u.address);
                 bodyFormData.append("PicPath", u.uploadPicPath);
+                bodyFormData.append("NickName", u.nickName);
                 console.log(bodyFormData);
                 axios({
                     method: "post",

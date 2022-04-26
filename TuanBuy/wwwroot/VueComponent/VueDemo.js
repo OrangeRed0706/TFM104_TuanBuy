@@ -50,7 +50,7 @@
                             <h2 class="mb-0 bgcf5">
                                 <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
                                     data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    通知總攬
+                                    通知總覽
                                 </button>
                             </h2>
                         </div>

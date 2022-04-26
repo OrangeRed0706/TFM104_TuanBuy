@@ -1,4 +1,4 @@
-﻿
+﻿    
 @{
     Layout = "_BackstageLayout";
 }
@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="~/css/back.css">
 
 
-    <div class="content-inner w-100 ss">
+    <div class="content-inner w-100 layoutbackgrount" >
         <!-- Page Header-->
         <header class="bg-white shadow-sm px-4 py-3 z-index-20">
             <div class="container-fluid px-0">
@@ -32,7 +32,7 @@
                         <input type="text" class="form-control" placeholder="Search"v-model="search">
                     </div>
                 </div>
-                <table class="table table-striped col-gl-12 dropdown table-hover aaa bbb">
+                <table class="table table-striped col-gl-12 dropdown table-hover tablerow rowcolor">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">使用者Email</th>
@@ -42,7 +42,7 @@
                         </tr>   
                     </thead>
                     <tbody>
-                        <tr v-for="item in users.slice( pageStart,  pageStart + countOfPage)"v-if="search=='' || item.email==search || item.name==search">
+                        <tr v-for="item in users.slice( pageStart,  pageStart + countOfPage)"v-if="search=='' || item.email.includes(search) || item.name.includes(search)">
                             <th scope="row">{{item.email}}</th>
                             <td>{{item.name}}</td>
                             <td>{{item.state}}</td>
@@ -140,7 +140,7 @@
                                     取消
                                 </button>
                                 <!--按下按鈕觸發刪除的API-->
-                                <button type="button" class="btn btn-danger" v-on:click="deleteUser">刪除</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal" v-on:click="deleteUser">刪除</button>
                             </div>
                         </div>
                     </div>
@@ -207,11 +207,19 @@
                 let self = this;
                 axios.delete("/BackstageMange/DeleteUser/" + self.target)
                     .then((res) => {
+                        var deleteIndex = self.users.findIndex(function (obj) {      //不跳轉頁面刪除畫面內容
+                            if (obj.email == self.target) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        });
+                        self.users.splice(deleteIndex, 1);
                         console.log(res);
                     })
                     .catch((res) => console.log(res));
                 console.log("/BackstageMange/DeleteUser/" + self.target);
-                window.location.reload();
+               /* window.location.reload();*/
             },
             setPage: function (idx) {
                 if (idx <= 0 || idx > this.totalPage) {       //限制頁數

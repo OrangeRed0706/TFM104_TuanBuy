@@ -15,29 +15,9 @@ namespace Business.Services
         /// 新增商品
         /// </summary>
         /// <param name="product"></param>
-        public void AddProduct(Product product)
-        {
-            _dbContext.Product.Add(product);
-        }
-
-        public void Add(ProductPic instance)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Update(ProductPic instance)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Delete(ProductPic instance)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public void Add(Product instance)
         {
-            throw new System.NotImplementedException();
+            _dbContext.Product.Add(instance);
         }
 
         public void Update(Product instance)
@@ -52,7 +32,7 @@ namespace Business.Services
 
         public void SaveChanges()
         {
-            throw new System.NotImplementedException();
+            _dbContext.SaveChanges();
         }
     }
 }

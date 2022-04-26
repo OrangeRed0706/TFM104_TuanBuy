@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
+using Business.IServices;
 using Data;
 using Data.Entities;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Math.EC.Rfc7748;
@@ -24,12 +28,13 @@ namespace TuanBuy.Controllers
         private readonly IRepository<User> _userRepository;
         private readonly TuanBuyContext _dbContext;
         private readonly RedisProvider _redisdb;
-
-        public MemberCenterController(GenericRepository<User> userRepository, TuanBuyContext dbContext, RedisProvider redisdb)
+        private readonly IUserService _userService;
+        public MemberCenterController(GenericRepository<User> userRepository, TuanBuyContext dbContext, RedisProvider redisdb, IUserService service)
         {
             _userRepository = userRepository;
             _dbContext = dbContext;
             _redisdb = redisdb;
+            _userService = service;
         }
 
         //會員中心首頁
@@ -55,19 +60,35 @@ namespace TuanBuy.Controllers
         {
             var targetUser = GetTargetUser();
             var a = targetUser.Id;
-            var allNotify = _dbContext.UserNotify.Include(X => X.NotifyCategory).Where(x => x.UserId == targetUser.Id && x.Disable==false).OrderByDescending(x => x.CreateDateTime);
+            var allNotify = _dbContext.UserNotify.Include(X => X.NotifyCategory).Where(x => x.UserId == targetUser.Id && x.Disable == false).OrderByDescending(x => x.CreateDateTime);
             var result = allNotify.Select(x =>
                  new Notify()
                  {
                      NotifyId = x.Id,
-                     CreateDateTime = x.CreateDateTime.ToString("G"),
+                     CreateDateTime =x.CreateDateTime.ToString("G"),
                      Content = x.Content,
                      Sender = x.NotifyCategory.Category
                  }).ToList();
 
             return result;
-
         }
+
+        public List<IndexNotify> GetIndexNotify()
+        {
+            var targetUser = GetTargetUser();
+            var a = targetUser.Id;
+            var allNotify = _dbContext.UserNotify.Include(X => X.NotifyCategory).Where(x => x.UserId == targetUser.Id && x.Disable == false).OrderByDescending(x => x.CreateDateTime);
+            var result = allNotify.OrderByDescending(x=>x.CreateDateTime).Select(x =>
+                new IndexNotify()
+                {
+                    NotifyId = x.Id,
+                    Content = x.NotifyCategory.Category+"："+x.Content,
+                }).Take(5).ToList();
+
+            return result;
+        }
+
+
         [HttpPost]
         public IActionResult DeleteNotify(int id)
         {
@@ -98,7 +119,11 @@ namespace TuanBuy.Controllers
             public string Sender { get; set; }
             public string Content { get; set; }
         }
-
+        public class IndexNotify
+        {
+            public int NotifyId { get; set; }
+            public string Content { get; set; }
+        }
         public IActionResult Coupon()
         {
             return View();
@@ -227,12 +252,13 @@ namespace TuanBuy.Controllers
             var currentOrder = order.FirstOrDefault(x => x.Id == id);
 
             var sender = _dbContext.User.FirstOrDefault(x => x.Id == currentOrder.OrderDetails.Product.UserId);
+            var notifyMessage = "";
+
 
             if (currentOrder != null)
             {
                 currentOrder.StateId = 3;
                 //找賣家ID
-                var notifyMessage = "";
                 //通知訊息
                 notifyMessage = $"您訂購的商品{currentOrder.OrderDetails.Product.Name}已經出貨囉！";
 
@@ -242,7 +268,8 @@ namespace TuanBuy.Controllers
                         UserId = currentOrder.User.Id,
                         SenderId = sender.Id,
                         Content = notifyMessage,
-                        Category = 2
+                        Category = 2,
+                        CreateDateTime = DateTime.UtcNow.AddHours(8)
                     });
 
                 _dbContext.SaveChanges();
@@ -250,10 +277,50 @@ namespace TuanBuy.Controllers
                 var redis3 = _redisdb.GetRedisDb(3);
                 var listKey = "Notify_" + currentOrder.User.Id;
                 redis3.SaveMessage(listKey, notifyMessage);
+
+
+
             }
 
-            return Ok("訂單狀態已被改變");
+            var userNotify = new UserNotifyViewModel()
+            {
+                Email = currentOrder.User.Email,
+                Message = notifyMessage
+            };
+
+
+
+
+            return Ok(userNotify);
         }
+
+        public class UserNotifyViewModel
+        {
+            public string Email { get; set; }
+            public string Message { get; set; }
+        }
+
+
+        [HttpPost]
+        [AllowAnonymous]
+        //忘記密碼
+        public IActionResult ForgetPassword([FromBody] ForgetUser user)
+        {
+            var newPassword = _userService.ForgetPassword(user.Email);
+            _userService.SaveChanges();
+
+
+
+            var mailbody = $@"<h3>您好這是您的新密碼：</h3>";
+
+            Mail.SendMail(user.Email, "TuanBuy會員忘記密碼", mailbody + newPassword);
+
+            return Ok("成功");
+        }
+
+
+
+
         private User GetTargetUser()
         {
             var claim = HttpContext.User.Claims;

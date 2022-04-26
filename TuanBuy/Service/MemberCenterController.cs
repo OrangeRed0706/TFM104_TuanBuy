@@ -59,7 +59,8 @@ namespace TuanBuy.Service
                 Birth = targetUser.Birth,
                 Sex = targetUser.Sex,
                 BankAccount = targetUser.BankAccount,
-                PicPath = "/MemberPicture/" + targetUser.PicPath
+                PicPath = "/MemberPicture/" + targetUser.PicPath,
+                NickName = targetUser.NickName
             };
             return userData;
         }
@@ -80,15 +81,18 @@ namespace TuanBuy.Service
             {
                 var path = _environment.WebRootPath + "/MemberPicture";
                 var pic = user.PicPath;
-                fileName = DateTime.Now.Ticks + pic.FileName;
+                fileName = DateTime.UtcNow.AddHours(8).Ticks + pic.FileName;
                 using var fs = System.IO.File.Create($"{path}/{fileName}");
                 pic.CopyTo(fs);
             }
 
+
             var fullMember = user.Name != "" || user.Phone != "" || user.Address != "" || user.Birth != null;
+
             if (_httpContextAccessor.HttpContext != null)
             {
                 targetUser.Name = user.Name;
+                targetUser.NickName = user.NickName;
                 targetUser.Phone = user.Phone;
                 targetUser.Birth = user.Birth;
                 targetUser.Address = user.Address;
@@ -113,19 +117,15 @@ namespace TuanBuy.Service
                     //重新設置新session
                     HttpContext.Session.SetString("userData", jsonstring);
                 }
-                ////將使用者資訊session重新更新;
-                //var jsonstring = JsonConvert.SerializeObject(new
-                //{
-                //    user.Email,
-                //    user.NickName,
-                //    user.Id,
-                //    user.PicPath
-                //});
-                //HttpContext.Session.SetString("userData", jsonstring);
+
                 if (fullMember)
                 {
                     HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-                    targetUser.State = UserState.正式會員.ToString();
+                    if (targetUser.State != UserState.系統管理員.ToString())
+                    {
+                        targetUser.State = UserState.正式會員.ToString();
+
+                    }
                     //這段有問題 不能直接更改會員資料
                     var claims = new List<Claim>
                     {

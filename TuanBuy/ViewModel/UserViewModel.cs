@@ -11,6 +11,7 @@ namespace TuanBuy.ViewModel
         public string BankAccount { get; set; }
         public DateTime? Birth { get; set; }
         public int Sex { get; set; }
+        public string NickName { get; set; }
         public string Address { get; set; }
         public string PicPath { get; set; }
     }

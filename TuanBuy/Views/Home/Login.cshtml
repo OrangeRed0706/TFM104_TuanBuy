@@ -2,7 +2,7 @@
     Layout = null;
 }
 <script>
-    var user = function() {
+    var user = function () {
         this.email = "";
         this.password = "";
     };
@@ -17,12 +17,15 @@
 <script src="~/js/vue.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <!-- 歡迎註冊 -->
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <!--加載 Google 平台庫-->
 
 <body>
     <div class="disflix" id="app">
-        <div class="rew50"><a href=@Url.Action("Index","Home")><img src="~/img/Log.png" alt=""> 一起讓美好的事物發生</a></div>
+        <div class="rew50">
+            <a href=@Url.Action("Index","Home")><img class="buybuybuy" src="~/img/kikicat-kikiapp.gif" alt=""></a>
+            <a href=@Url.Action("Index","Home")><img class="titlelogoimg" src="~/img/Title.png" alt=""></a>
+        </div>
         <div class="regi">
             <h2>會員登入</h2>
             <label class="addp" for="email">電子郵件</label>
@@ -32,8 +35,11 @@
             <div class="registerdiv">
                 <input type="submit" name="commit" value="登入" class="registerbtn" data-disable-with="登入" v-on:click="login">
             </div>
-            <div class="iagree">繼續進行代表你同意<a href="">服務條款</a></div>
-            
+            <div class="iagree">
+                繼續進行代表你同意
+                <a href="">服務條款</a>
+            </div>
+
             <div class="registerdiv">
                 <a class="registerbtn2" href=@Url.Action("GoogleLogin","Home")>Google登入</a>
                 <a class="registerbtn2" href=@Url.Action("FbLogin","Home")>FaceBook登入</a>
@@ -52,11 +58,11 @@
 <script>
     var app = new Vue({
         el: "#app",
-        data : {
-            user:new user()
+        data: {
+            user: new user()
         },
         methods: {
-            login:function() {
+            login: function () {
                 let self = this;
                 console.log("1234")
                 axios.post("/api/LoginAndRegister", self.user).then((resp) => {

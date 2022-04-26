@@ -32,7 +32,7 @@ namespace TuanBuy.Controllers
             HashIV = "C3eAKK9XZ4hxa4NP",
             ReturnURL = "",
             NotifyURL = "https://tuanbuy.azurewebsites.net/Bank/SpgatewayReturn",
-            CustomerURL = "https://tuanbuy.azurewebsites.net/MemberCenter/MyBuyProduct",
+            CustomerURL = "https://tuanbuy.azurewebsites.net/Home/Index",
             AuthUrl = "https://ccore.spgateway.com/MPG/mpg_gateway",
             CloseUrl = "https://core.newebpay.com/API/CreditCard/Close"
         };
@@ -73,7 +73,7 @@ namespace TuanBuy.Controllers
                 // * 串接程式版本
                 Version = version,
                 // * 商店訂單編號
-                //MerchantOrderNo = $"T{DateTime.Now.ToString("yyyyMMddHHmm")}",
+                //MerchantOrderNo = $"T{DateTime.UtcNow.AddHours(8).ToString("yyyyMMddHHmm")}",
                 MerchantOrderNo = ordernumber,
                 // * 訂單金額
                 Amt = amount,
@@ -83,13 +83,13 @@ namespace TuanBuy.Controllers
                 ExpireDate = null,
                 // 支付完成 返回商店網址
                 //ReturnURL = _bankInfoModel.ReturnURL,
-                ReturnURL = "https://core.newebpay.com/MemberCenter/MyBuyProduct",
+                ReturnURL = "https://tuanbuy.azurewebsites.net/Bank/ReturnMemberCenter",
                 // 支付通知網址
                 NotifyURL = _bankInfoModel.NotifyURL,
                 // 商店取號網址
                 CustomerURL = _bankInfoModel.CustomerURL,
                 // 支付取消 返回商店網址
-                ClientBackURL = "https://core.newebpay.com/",
+                ClientBackURL = "https://tuanbuy.azurewebsites.net/",
                 // * 付款人電子信箱
                 Email = string.Empty,
                 // 付款人電子信箱 是否開放修改(1=可修改 0=不可修改)
@@ -197,7 +197,7 @@ namespace TuanBuy.Controllers
                     using(_dbContext)
                     {
                       var order = _dbContext.Order.Single(x => x.Id == convertModel.MerchantOrderNo);
-                        order.StateId = 3;
+                        order.StateId = 2;
                         _dbContext.SaveChanges();
                         HttpContext.Session.Remove("ShoppingCart");
                     }
@@ -230,6 +230,10 @@ namespace TuanBuy.Controllers
             return Content("hello");
         }
 
+        public ActionResult ReturnMemberCenter()
+        {
+            return RedirectToAction("MyBuyProduct","MemberCenter");
+        }
         /// <summary>
         /// 銀行API測試
         /// </summary>

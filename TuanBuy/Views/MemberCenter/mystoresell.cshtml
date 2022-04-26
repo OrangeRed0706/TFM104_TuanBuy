@@ -14,70 +14,49 @@
 
 <body>
     <!-- 賣場標題 -->
-    <div class="container" id="app">
+    <div class="container mt2rem" id="app">
         <div class="row">
-            <div class="sellborder col-lg-12">
-                <div>
-                    <div class="display col-3 form-row">
-                        <img v-bind:src="user.picPath"
-                             alt="頭像" height="80" width="80" class="Largeheadsticker">
-                    </div>
-                    <div class="display col-9 form-row ">
-                        <p class="sellp">{{user.name}}</p>
-                    </div>
-                </div>
-                <div class="center">
-                    <div class="display col-6 form-row"><button class="sellbtn">關注</button></div>
-                    <div class="display col-6 form-row"><button class="sellbtn2">聊聊</button></div>
-                </div>
+            <div class="mystoresell-sellerdiv">
+                <img v-bind:src="user.picPath"
+                     alt="頭像" height="100" width="100" class="Largeheadsticker mystore-seller-img">
+                <p class="sellp  mystore-btn-mg">{{user.name}}</p>
+                <button class="demoproduct-addchat-btn mystore-btn-mg">聊聊</button>
             </div>
+            <img class="mystore-img" src="~/img/kikicat-kikiapp.gif"/>
+            <img class="mystore-img2" src="~/img/Title.png"/>
         </div>
     </div>
 
-    <!-- 導覽列 -->
+    <!-- 商品 -->
     <div class="container">
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active" id="all-tallab" data-toggle="tab" href="#all" role="tab" aria-controls="all"
-                   aria-selected="false">所有商品</a>
-            </li>
-        </ul>
-    </div>
-    <div class="tab-content">
-        <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
-            <div class="container">
-                <div class="row"  id="productCard">
+        <div class="row" id="productCard">
+            <div class="col-md-4" v-for="item in products">
+                <div class="card ">
+                    <a v-bind:href="item.href">
+                        <img class="card-img-top"
+                             v-bind:src="item.picPath"
+                             alt="Card image" style="width: 100%" width="320" height="200">
+                        <div class="card-body">
 
-                    <div class="col-md-4" v-for="item in products">
-                        <div class="card ">
-                            <a v-bind:href="item.href">
-                                <img class="card-img-top"
-                                     v-bind:src="item.picPath"
-                                     alt="Card image" style="width: 100%" width="320" height="200">
-                                <div class="card-body">
+                            @*商品創立時間*@
+                            <h5>{{item.createTime}}</h5>
+                            @*商品名稱*@
+                            <h4 class="card-title">{{item.name}}</h4>
+                            @*商品描述*@
+                            <p class="card-text">{{item.description}}</p>
+                            <div class="progressbargreen" v-bind:style="{width:item.percentage,borderColor:item.color}"></div>
+                            <div class="bridto"></div>
 
-                                    @*商品創立時間*@
-                                    <h5>{{item.createTime}}</h5>
-                                    @*商品名稱*@
-                                    <h4 class="card-title">{{item.name}}</h4>
-                                    @*商品描述*@
-                                    <p class="card-text">{{item.description}}</p>
-                                    <div class="progressbargreen" v-bind:style="{width:item.percentage,borderColor:item.color}"></div>
-                                    <div class="bridto"></div>
-
-                                    <div class="ntless">NT${{item.total}}</div>
-                                    <span class="fday">
-                                        <i class="material-icons lessicon">timelapse</i> 剩下 {{item.lastTime}}
-                                    </span>
-                                </div>
-                            </a>
+                            <div class="ntless">NT${{item.total}}</div>
+                            <span class="fday">
+                                <i class="material-icons lessicon">timelapse</i> 剩下 {{item.lastTime}}
+                            </span>
                         </div>
-                    </div>
-
+                    </a>
                 </div>
             </div>
-        </div>
 
+        </div>
     </div>
 
 

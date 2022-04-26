@@ -73,5 +73,43 @@ namespace TuanBuy.ViewModel
         public int HotproductCount { get; set; }
         //熱銷產品名稱
         public string ProductName { get; set; }
+        //user團主姓名
+        public string Name { get; set; }
+        //團主銷售額
+        public decimal Totalturnover{ get; set;}
+        //熱門產品數量
+        public List<HotProduct> hotProducts { get; set; }
+        //團主排行
+        public List<SellerRanking> sellerRankings { get; set; }
+        //圖表資訊
+        public List<Graph> Graphs { get; set; }
+    }
+    public class HotProduct
+    {
+        //熱門產品名稱
+        public string HotProductName { get; set; }
+        //熱門產品數量
+        public int HotProductCount { get; set; }
+    }
+    public class SellerRanking
+    {
+        //賣家id
+        public int SellerId { get; set; }
+        //賣家頭像圖片
+        public string PicPath { get; set; }
+        //賣家名稱
+        public string SellerName { get; set; }
+        //賣家銷售金額
+        public dynamic Price { get; set; }    
+    }
+    //圖表
+    public class Graph
+    {
+        //年份
+        public int Year { get; set; }
+        //月份
+        public int Month { get; set; } 
+        //月份金額
+        public dynamic MonthPrice { get; set; }
     }
 }

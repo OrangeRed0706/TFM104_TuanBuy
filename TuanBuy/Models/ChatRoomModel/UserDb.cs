@@ -201,20 +201,20 @@ namespace TuanBuy.Models
         #region 新增聊天室將賣家及買家加入
         public void AddChatRoom(int SellerId,int MemberId)
         {
-            if(SellerId!=MemberId)
+            if (SellerId != MemberId)
             {
                 using (_dbContext)
                 {
-                    var member = _dbContext.Member_Chats.Where(x => x.MemberId == MemberId).Select(x=> new ChatRoomMember { ChatRoomId = x.ChatRoomId,
-                    Id = x.Id, ChatRoom = x.ChatRoom,MemberId=x.MemberId}).ToList();
-                    var seller = _dbContext.Member_Chats.Where(x=>x.MemberId==SellerId).Select(x => new ChatRoomMember
+                    var member = _dbContext.Member_Chats.Where(x => x.MemberId == MemberId).Select(x => new ChatRoomMember { ChatRoomId = x.ChatRoomId,
+                        Id = x.Id, ChatRoom = x.ChatRoom, MemberId = x.MemberId }).ToList();
+                    var seller = _dbContext.Member_Chats.Where(x => x.MemberId == SellerId).Select(x => new ChatRoomMember
                     {
                         ChatRoomId = x.ChatRoomId,
                         Id = x.Id,
                         ChatRoom = x.ChatRoom,
                         MemberId = x.MemberId
                     }).ToList();
-                    IEnumerable<ChatRoomMember> result = member.Intersect<ChatRoomMember>(seller).Select(x=>x);
+                    IEnumerable<ChatRoomMember> result = member.Intersect<ChatRoomMember>(seller).Select(x => x);
                     //var result = (from sellers in _dbContext.Member_Chats
                     //              join chat in _dbContext.ChatRooms on sellers.ChatRoomId equals chat.ChatRoomId
                     //              where(member.Select(x=>x.ChatRoomId).Contains(sellers.ChatRoomId))
@@ -226,8 +226,8 @@ namespace TuanBuy.Models
                     //             where (member.Select(x=> x.ChatRoomId).Contains(sellers.ChatRoomId) 
                     //             && member.Select(x=>x.MemberId).Contains(sellers.MemberId))
                     //             select new { sellers,chat}).ToList().GroupBy(x=>x.sellers.ChatRoomId);
-                        //如果沒有相同聊天室才加
-                        if(result.Count()==0)
+                    //如果沒有相同聊天室才加
+                    if (result.Count() == 0)
                         {
                               ChatRoom chatRoom = new ChatRoom() { };
                               List<ChatRoomMember> chatRoomMembers = new List<ChatRoomMember>()
