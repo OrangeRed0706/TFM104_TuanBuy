@@ -83,7 +83,8 @@ namespace TuanBuy.ViewModel
 
         //熱門產品累積金額
         public dynamic HotProductPrice { get; set; }
-
+        //熱門產品圖片
+        public string HotProductPicHref { get; set; }
     }
 
     public class ProductMessageViewModel

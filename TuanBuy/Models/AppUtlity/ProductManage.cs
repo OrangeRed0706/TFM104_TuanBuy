@@ -76,6 +76,7 @@ namespace TuanBuy.Models.Entities
                     HotProductSeller = x.product.User.Name,
                     HotProductSellerhref = "/MemberCenter/mystoresell/"+x.product.User.Id,
                     HotProductTitle = x.product.Name,
+                    HotProductPicHref = "/ProductPicture/" + x.product.ProductPics.FirstOrDefault(x => x.ProductId == x.Product.Id).PicPath,
                     HotProductLastTime = x.product.EndTime.Subtract(x.product.CreateTime).Duration().Days.ToString()
                 }
                 ).OrderByDescending(x=>x.HotProductPrice).Take(3);
