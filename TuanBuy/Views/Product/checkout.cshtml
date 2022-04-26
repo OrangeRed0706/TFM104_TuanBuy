@@ -206,6 +206,14 @@
                     url: "/Product/DelectShoppingCart",
                     data: { productId: e },
                     success: function (response) {
+                        //刪除勾選陣列
+                        for(var i = 0; i < app.checkProduct.length; i++)
+                        {
+                            if (app.checkProduct[i] == e) {
+                                app.checkProduct.splice(i, 1);
+                            }
+                        }
+
                         //刪除購物車商品
                         for (var i = 0; i < app.productShoppings.length; i++) {
                             if (app.productShoppings[i].productId == e) {
