@@ -34,7 +34,7 @@ namespace TuanBuy.Controllers
         private static IDistributedCache _distributedCache;
         private readonly RedisProvider _redisDb;
         private readonly IProductService _productService;
-        public ProductController(IWebHostEnvironment environment, GenericRepository<User> userRepository, TuanBuyContext dbContext, IDistributedCache distributedCache, RedisProvider redisDb, IProductService productService)
+        public ProductController(IWebHostEnvironment environment, GenericRepository<User> userRepository, TuanBuyContext dbContext, IDistributedCache distributedCache, RedisProvider redisDb,IProductService productService)
         {
             _environment = environment;
             _userRepository = userRepository;
@@ -73,22 +73,19 @@ namespace TuanBuy.Controllers
         [HttpPost]
         public IActionResult UpdateProductData(ProductViewModel product)
         {
-            using (_dbContext)
+            using(_dbContext)
             {
                 var result = _dbContext.Product.SingleOrDefault(x => x.Id == product.Id);
-                if (product.Category != null)
-                {
-                    result.Category = product.Category;
-                }
+                result.Category = product.Category;
                 result.Content = product.Content;
                 result.Description = product.Description;
                 result.EndTime = product.EndTime;
                 result.Name = product.Name;
                 result.Price = product.Price;
-                result.Total = (decimal)product.Total;
+                result.Total = (decimal)product.Total;                  
                 _dbContext.SaveChanges();
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index","Home");
         }
         #endregion
 
@@ -147,7 +144,7 @@ namespace TuanBuy.Controllers
 
         #region 將商品加入購物車
         [Authorize(Roles = "FullUser")]
-        public void AddProductOrder(int ProductId, int UserId, int ProductCount)
+        public void AddProductOrder(int ProductId, int UserId,int ProductCount)
         {
             var productData = (from product in _dbContext.Product
                                join productpic in _dbContext.ProductPics on product.Id equals productpic.ProductId
@@ -160,13 +157,13 @@ namespace TuanBuy.Controllers
 
 
             #region 原本session
-            if (HttpContext.Session.GetString("ShoppingCart") != null)
+            if (HttpContext.Session.GetString("ShoppingCart") != null) 
             {
                 var shoppjson = HttpContext.Session.GetString("ShoppingCart");
                 var shoppingcarts = JsonConvert.DeserializeObject<List<ProductCheckViewModel>>(shoppjson);
 
                 //如果購物車商品重複則只重新加數量不加商品
-                if (shoppingcarts.Any(x => x.ProductId == ProductId))
+                if(shoppingcarts.Any(x=>x.ProductId== ProductId))
                 {
                     shoppingcarts.FirstOrDefault(x => x.ProductId == ProductId).ProductCount += ProductCount;
                 }
@@ -205,7 +202,7 @@ namespace TuanBuy.Controllers
                     ProductPrice = productData.product.Price,
                     ProductDescription = productData.product.Description,
                     ProductCount = ProductCount,
-                    BuyerId = UserId,
+                    BuyerId = UserId,                  
                     BuyerName = userData.Name,
                     BuyerPhone = userData.Phone,
                     BuyerAddress = userData.Address
@@ -268,7 +265,7 @@ namespace TuanBuy.Controllers
             var claim = HttpContext.User.Claims;
             var userId = claim.FirstOrDefault(a => "Userid" == a.Type)?.Value;
             var db = _redisDb.GetRedisDb(2);
-
+           
             var userShopCar = RedisProvider.ConvertToDictionaryInt((db.HashGetAll(userId)));
             var keyList = userShopCar.Select(i => i.Key).ToList();
             var productList = _dbContext.Product.Where(x => x.Disable == false & keyList.Contains(x.Id)).ToList().GroupJoin(
@@ -284,7 +281,7 @@ namespace TuanBuy.Controllers
                     Description = p.Description,
                     Content = p.Content,
                     Category = p.Category,
-                    PicPath = "/ProductPicture/" + pic.FirstOrDefault()?.PicPath,
+                    PicPath = "/productpicture/" + pic.FirstOrDefault()?.PicPath,
                     EndTime = p.EndTime,
                     Price = p.Price,
                     //目標金額是商品的Total欄位
@@ -296,8 +293,8 @@ namespace TuanBuy.Controllers
 
             var orderDetails =
                 (from orderDetail in _dbContext.OrderDetail
-                     //where (products.Select(x => x.Id)).Contains(orderDetail.ProductId)
-                 select new { orderdetail = orderDetail }).ToList();
+                    //where (products.Select(x => x.Id)).Contains(orderDetail.ProductId)
+                    select new { orderdetail = orderDetail }).ToList();
             var result = new List<ProductViewModel>();
             foreach (var p in productList)
             {
@@ -553,11 +550,11 @@ namespace TuanBuy.Controllers
         }
 
         #region 會員輸入優惠碼增加優惠卷方法並且返回新增的優惠卷
-        public object AddVoucher(int UserId, string VoucherName)
+        public object AddVoucher(int UserId,string VoucherName)
         {
             ProductManage product = new ProductManage(_dbContext);
             var result = product.AddVoucher(UserId, VoucherName);
-            if (result != null)
+            if(result!=null)
             {
                 return result;
             }

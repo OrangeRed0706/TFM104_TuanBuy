@@ -35,8 +35,6 @@ namespace TuanBuy.ViewModel
         public int OrderState { get; set; }
         //訂單金額
         public decimal OrderPrice { get; set; }
-        //每筆商品總金額
-        public decimal OrderPriceSum { get; set; }
     }
 
     public class SellerOrderViewModel
