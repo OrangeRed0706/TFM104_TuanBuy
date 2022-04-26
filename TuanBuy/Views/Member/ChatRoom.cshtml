@@ -322,6 +322,7 @@
                                     </div>
                                 </li>
                             </ul>
+                            
                         </div>
                         <div class="chat-message clearfix">
                             <div class="input-group mb-0">
@@ -329,7 +330,7 @@
                                     <span class="input-group-text"><i class="fa fa-send"></i></span>
                                 </div>
                                 <temlate v-if="preview!==null">
-                                    <img v-bind:src="preview" width="100" height="100" />
+                                    <img v-bind:src="preview" width="100" height="100" / hidden="hidden">
                                 </temlate>
                                 <input type="text" id="msg" v-on:keyup.enter="sendMessage" class="form-control" placeholder="Enter text here..." />
                             </div>
@@ -442,8 +443,8 @@
                 }
             }
         }
-
     });
+
 </script>
 <script>
     const options = {
@@ -580,6 +581,7 @@
                         var res1 = document.getElementById('' + response[0].chatRoomId);
                         res1.click();
                     })
+                    getChatheight();
                 },
                 error: function(response) {
                     alert(response);
@@ -588,37 +590,8 @@
         },
         methods: {
             sendMessage: function() {
-                var messagecontext = document.getElementById("msg").value;
-                //todo 使用者傳送訊息圖片
-                if (app.preview != null) {
-                    //如果使用者寄發圖片則發ajax請求新增在呼叫Hub方式
-                    var bodyFormData = new FormData();
-                    bodyFormData.append('nowChatRoomId', app.nowChatRoomId);
-                    bodyFormData.append('userid', userid);
-                    bodyFormData.append('message', messagecontext);
-                    bodyFormData.append('connectionId', userConnectionId)
-                    bodyFormData.append('picPath', messageimgahe);
-                    axios({
-                        method: "post",
-                        url: "/Member/CreateChatMessage",
-                        data: bodyFormData,
-                        headers: { "Content-Type": "multipart/form-data" }
-                    }).then((resp) => {
-                        app.preview = null;
-                        var message = new Message();
-                        const date = new Date(Date.now());
-                        message.createDate = new Intl.DateTimeFormat('zh-TW', options).format(date)
-                        message.PicPath = userPicPath;
-                        message.myMessages = messagecontext;
-                        message.myMessageImage = resp.data;
-                        app.messages.push(message);
-                        //清除輸入框
-                        document.getElementById("msg").value = '';
-                        //觸發HUB接收事件
-                        connection.invoke("SendPrivateImageMessage", app.nowChatRoomId, userid, userName, userPicPath, messagecontext, userConnectionId, resp.data);
-                    })
-                }
                 //判斷使用者是否只有輸入文字 如果帶有圖片則使用上面寄發圖片及文字方法
+                var messagecontext = document.getElementById("msg").value;
                 if (messagecontext != '' && app.preview == null) {
                     connection.invoke("SendPrivateMessage", app.nowChatRoomId, userid, messagecontext);
                     var message = new Message();
@@ -629,6 +602,8 @@
                     app.messages.push(message);
                     document.getElementById("msg").value = '';
                 }
+                //聊天室視窗自動下滑
+                getChatheight();
             },
             /*取得與好友對話資訊*/
             getUserMessage: function(event) {
@@ -674,6 +649,8 @@
                             app.message.nickName = response[i].nickName;
                             app.messages.push(app.message);
                         }
+                        //聊天室視窗自動下滑
+                        getChatheight();
                     },
                     error: function(response) {
                         alert(response);
@@ -693,7 +670,41 @@
                     this.image = input.files[0];
                     reader.readAsDataURL(input.files[0]);
                 }
+                app.sendImage();
             },
+            //使用者寄送圖片方法
+            sendImage: function () {
+                var messagecontext = document.getElementById("msg").value;
+                //todo 使用者傳送訊息圖片
+                    //如果使用者寄發圖片則發ajax請求新增在呼叫Hub方式
+                    var bodyFormData = new FormData();
+                    bodyFormData.append('nowChatRoomId', app.nowChatRoomId);
+                    bodyFormData.append('userid', userid);
+                    bodyFormData.append('message', messagecontext);
+                    bodyFormData.append('connectionId', userConnectionId)
+                    bodyFormData.append('picPath', messageimgahe);
+                    axios({
+                        method: "post",
+                        url: "/Member/CreateChatMessage",
+                        data: bodyFormData,
+                        headers: { "Content-Type": "multipart/form-data" }
+                    }).then((resp) => {
+                        app.preview = null;
+                        var message = new Message();
+                        const date = new Date(Date.now());
+                        message.createDate = new Intl.DateTimeFormat('zh-TW', options).format(date)
+                        message.PicPath = userPicPath;
+                        message.myMessages = messagecontext;
+                        message.myMessageImage = resp.data;
+                        app.messages.push(message);
+                        //清除輸入框
+                        document.getElementById("msg").value = '';
+                        //觸發HUB接收事件
+                        connection.invoke("SendPrivateImageMessage", app.nowChatRoomId, userid, userName, userPicPath, messagecontext, userConnectionId, resp.data);
+                        //聊天室視窗自動下滑
+                        getChatheight();
+                    })
+            }
         },
     });
 
@@ -799,6 +810,8 @@
         if (app.chatMessageTitle == currentUser) {
             app.messages.push(messagesobject);
         }
+        //聊天室視窗自動下滑
+        getChatheight();
     })
 
     /* 接收其他使用者傳來的圖片訊息*/
@@ -814,6 +827,8 @@
         if (app.chatMessageTitle == userName) {
             app.messages.push(messagesobject);
         }
+                                //聊天室視窗自動下滑
+                        getChatheight();
     })
 
 
@@ -829,7 +844,16 @@
                     document.getElementById('' + msg.id).innerHTML = '<i class="fa fa-circle online"></i> 在線狀態';
                 }
             }
-        });
+        }
+    )
+    //聊天室視窗自動下滑
+    function getChatheight() {
+        app.$nextTick(function () {
+            var result = document.getElementById('history')
+            result.scrollTop = result.scrollHeight;
+        })
+    }
+  
 
 
     connection.on("ReceiveMessage", function (user, message) {
