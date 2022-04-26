@@ -75,11 +75,7 @@ namespace TuanBuy.Models.Entities
                     HotProducthref = "/Product/DemoProduct/" + x.product.Id,
                     HotProductSeller = x.product.User.Name,
                     HotProductSellerhref = "/MemberCenter/mystoresell/"+x.product.User.Id,
-                    HotProductTitle = x.product.Name,
-<<<<<<< HEAD
                     HotProductPicHref = "/ProductPicture/" + x.product.ProductPics.FirstOrDefault(x => x.ProductId == x.Product.Id).PicPath,
-=======
->>>>>>> parent of 3014495 (Merge branch 'HelloDevop' into HelloHarry)
                     HotProductLastTime = x.product.EndTime.Subtract(x.product.CreateTime).Duration().Days.ToString()
                 }
                 ).OrderByDescending(x=>x.HotProductPrice).Take(3);
