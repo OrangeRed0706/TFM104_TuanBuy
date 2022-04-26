@@ -810,6 +810,8 @@
         if (app.chatMessageTitle == currentUser) {
             app.messages.push(messagesobject);
         }
+        //聊天室視窗自動下滑
+        getChatheight();
     })
 
     /* 接收其他使用者傳來的圖片訊息*/
@@ -825,6 +827,8 @@
         if (app.chatMessageTitle == userName) {
             app.messages.push(messagesobject);
         }
+                                //聊天室視窗自動下滑
+                        getChatheight();
     })
 
 
@@ -841,7 +845,7 @@
                 }
             }
         }
-    })
+    )
     //聊天室視窗自動下滑
     function getChatheight() {
         app.$nextTick(function () {
