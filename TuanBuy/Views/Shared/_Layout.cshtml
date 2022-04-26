@@ -223,6 +223,52 @@
 </html>
 
 <script>
+    var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+
+    var userid = 0;
+    var userAccount = '';
+    var userName = '';
+    var userPicPath = '';
+    var userConnectionId = '';
+
+
+
+
+    // 接受訊息事件
+    connection.on("ReceiveMessage", function (user, message) {
+        var msg = message;
+        var encodedMsg = user + msg;
+        let notify = {
+            content: encodedMsg
+        }
+
+        layout.message.unshift(notify);
+        layout.notifyCount += 1;
+
+        //抓取鈴鐺通知給予class
+        var ball = document.getElementById("ball");
+        var group = document.getElementById("group");
+        var notificationHello = document.getElementById("notificationHello");
+        ball.classList.add('bellball');
+        group.classList.add('bellgroup');
+        notificationHello.classList.add('bellNotififShow');
+        setTimeout(() => {
+            ball.classList.remove('bellball');
+            group.classList.remove('bellgroup');
+
+            if (layout.notifyCount == 0) {
+                notificationHello.classList.remove("bellNotififShow");
+            }
+        }, 3000);
+
+
+
+        console.log(encodedMsg);
+    });
+</script>
+
+
+<script>
     var fullShow = "@User.IsInRole("FullUser")";
     var helloMember = "@User.IsInRole("HelloMember")";
     var nomalShow = "@User.IsInRole("User")";
@@ -332,51 +378,3 @@
     });
 </script>
 
-<script>
-    var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
-
-    var userid = 0;
-    var userAccount = '';
-    var userName = '';
-    var userPicPath = '';
-    var userConnectionId = '';
-
-
-
-
-    // 接受訊息事件
-    connection.on("ReceiveMessage", function (user, message) {
-        var msg = message;
-        var encodedMsg = user + msg;
-        let notify = {
-            content: encodedMsg
-        }
-
-        layout.message.unshift(notify);
-        layout.notifyCount += 1;
-
-        //抓取鈴鐺通知給予class
-        var ball = document.getElementById("ball");
-        var group = document.getElementById("group");
-        var notificationHello = document.getElementById("notificationHello");
-        ball.classList.add('bellball');
-        group.classList.add('bellgroup');
-        notificationHello.classList.add('bellNotififShow');
-        setTimeout(() => {
-            ball.classList.remove('bellball');
-            group.classList.remove('bellgroup');
-
-            if (layout.notifyCount == 0) {
-                notificationHello.classList.remove("bellNotififShow");
-            }
-        }, 3000);
-
-
-
-        console.log(encodedMsg);
-    });
-    //// 連接事件
-    //connection.start().then((res) => console.log("前台的的連線成功")).catch(function (err) {
-    //    return console.error(err.toString());
-    //});
-</script>

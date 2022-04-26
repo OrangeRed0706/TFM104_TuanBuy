@@ -538,9 +538,9 @@
                                 return console.error(err.toString());
                             });
 
-                            connection.invoke("GetAllNotify").then(() => {
-                                console.log("取得通知成功！");
-                            });
+                            //connection.invoke("GetAllNotify").then(() => {
+                            //    console.log("取得通知成功！");
+                            //});
 
                             connection.invoke("GetUserList").then((msg) => {
                             });
@@ -763,7 +763,7 @@
     //第一次進入頁面查找好友是否在線
     connection.on('GetOnlineUserList', msg => {
         if (Object.keys(msg).length === 0) {
-            console.log('目前尚未有好友在線中')
+            console.log('目前尚未有好友在線中');
         }
         else {
             /*            console.log('這個是使用者目前好友在線名單');*/
