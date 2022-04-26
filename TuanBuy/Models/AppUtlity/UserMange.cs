@@ -27,8 +27,7 @@ namespace TuanBuy.Models.AppUtlity
         #region 傳入使用者ID加入團Buy廣場
         public void CreateTuanButChat(int MemberId)
         {
-            using(_dbContext)
-            {
+
                 var result = _dbContext.ChatRooms.FirstOrDefault(x => x.ChatRoomTitle == "團Buy廣場");
                 if (result == null)
                 {
@@ -48,7 +47,7 @@ namespace TuanBuy.Models.AppUtlity
                     _dbContext.Member_Chats.Add(chatRoomMembers);
                     _dbContext.SaveChanges();
                 }
-            }
+            
         }
         #endregion
     }

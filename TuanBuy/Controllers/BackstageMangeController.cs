@@ -160,34 +160,6 @@ namespace TuanBuy.Controllers
                    HotProductCount = x.order.Sum(y => y.Count)
                }).OrderByDescending(x => x.HotProductCount).Take(3).ToList<HotProduct>();
             //團主銷售排行
-            //var SellerRanking = _dbcontext.Product.ToList().GroupJoin(_dbcontext.User,
-            //       product => product.UserId,
-            //       user => user.Id,
-            //       (product, user) => new { product, user }).ToList().GroupJoin(_dbcontext.OrderDetail,
-            //         prd => prd.product.Id,
-            //         ord => ord.ProductId,
-            //         (prd, ord) => new { prd, ord }).ToList().Select(x => new SellerRanking
-            //         {
-            //             SellerId = x.prd.product.UserId,
-            //             PicPath = "/MemberPicture/" + x.prd.user.FirstOrDefault(y => y.Id == x.prd.product.UserId).PicPath,
-            //             SellerName = x.prd.user.FirstOrDefault(y => y.Id == x.prd.product.UserId).Name,
-            //             Price = x.ord.Sum(x => x.Count * x.Product.Price)
-            //         }).ToList().GroupJoin(_dbcontext.Order,
-            //          prd => prd.SellerId,
-            //          ord => ord.UserId,
-            //          (prd, ord) => new { prd, ord }
-            //         ).SelectMany(
-            //            x => x.ord, (ord, name) => new { ord, name }
-            //         ).Where(x => x.name.StateId == 3).Select(x =>
-            //                new { x.name }
-            //         ).Select(x => x.name).GroupBy(x => x.UserId).Select(x => new SellerRanking
-            //         {
-            //             PicPath = x.FirstOrDefault(y => y.User.Id == x.Key).User.PicPath,
-            //             SellerId = x.Key,
-            //             SellerName = x.FirstOrDefault(y=>y.User.Id==x.Key).User.Name,
-            //             Price = x.Sum(x => x.OrderDetails.Count * x.OrderDetails.Product.Price)
-            //         }).ToList().OrderByDescending(x => x.Price).Take(3);
-            //團主銷售排行
             var SellerRankingResult = _dbcontext.Order.ToList().GroupJoin(_dbcontext.OrderDetail,
                     ord => ord.Id,
                     orddetail => orddetail.OrderId,
@@ -209,9 +181,30 @@ namespace TuanBuy.Controllers
                     PicPath = x.FirstOrDefault(y => y.ord.name.Product.User.Id == x.Key).ord.name.Product.User.PicPath,
                     SellerName = x.FirstOrDefault(y=>y.ord.name.Product.User.Id==x.Key).ord.name.Product.User.Name,
                     Price =  x.Sum(y=>y.ord.name.Count * y.ord.name.Product.Price),
-                }).OrderByDescending(x => x.Price).Take(3).ToList<SellerRanking>(); 
+                }).OrderByDescending(x => x.Price).Take(3).ToList<SellerRanking>();
+            //圖表資訊
+            var GraphResult = _dbcontext.Order.ToList().GroupJoin(_dbcontext.OrderDetail,
+                    ord => ord.Id,
+                    orddetail => orddetail.OrderId,
+                    (ord, orddetail) => new { Ord = ord, detail = orddetail }
+                ).Where(x => x.Ord.StateId == 3).ToList().GroupJoin(_dbcontext.Product,
+                    ord => ord.Ord.OrderDetails.ProductId,
+                    prd => prd.Id,
+                    (ord, prd) => new { ord.detail, ord.Ord }
+                ).ToList().SelectMany(
+                    ordResult => ordResult.detail,
+                    (ordResult, result) => new { ordResult, result }
+                ).GroupBy(x => new { x.ordResult.Ord.CreateDate.Year, x.ordResult.Ord.CreateDate.Month }).Select(x => new Graph
+                {
+                    Year = x.Key.Year,
+                    Month = x.Key.Month,
+                    MonthPrice = x.Sum(y=>y.ordResult.Ord.OrderDetails.Count * y.ordResult.Ord.OrderDetails.Product.Price)
+                }).OrderByDescending(x=>x.Year).ThenBy(x=>x.Month).ToList<Graph>();
 
-
+            //.GroupBy(x => x.ordResult.Ord.CreateDate.Month).Select(x=>new Graph { 
+            //   Month = x.Key,
+            //   MonthPrice = x.Sum(y=>y.ordResult.Ord.OrderDetails.Count * y.ordResult.Ord.OrderDetails.Product.Price)  
+            //});
 
             //.Select(x => new SellerRanking
             // {
@@ -227,9 +220,7 @@ namespace TuanBuy.Controllers
             //    PicPath = x.FirstOrDefault(y => y.SellerId == x.Key).PicPath,
             //    Price = x.Sum(x => Convert.ToInt32(x.Price))
             //}).ToList();
-
-
-            HomeBackMangeViewModel homeBackMangeViewModel = new HomeBackMangeViewModel() 
+            HomeBackMangeViewModel homeBackMangeViewModel = new HomeBackMangeViewModel()
             {
                 UserCount = usercount,
                 ProductCount = productCount,
@@ -240,6 +231,7 @@ namespace TuanBuy.Controllers
                 //ProductName = productName.ToString()
                 hotProducts = hotProduct,
                 sellerRankings = SellerRankingResult,
+                Graphs = GraphResult,
             };
             return homeBackMangeViewModel;
         }
@@ -281,19 +273,19 @@ namespace TuanBuy.Controllers
                 var redis3 = _redisdb.GetRedisDb(3);
                 var listKey = "Notify_";
                 var test =new List<string[]>();
-                users.ForEach(x =>
-                {
-                    var cur = listKey + x.Id;
-                    redis3.SaveMessage(cur, notifyMessage);
+                //users.ForEach(x =>
+                //{
+                //    var cur = listKey + x.Id;
+                //    redis3.SaveMessage(cur, notifyMessage);
 
-                    //這邊只是我想看存進去的東西
-                    var a = new string[redis3.ListLength(cur)];
-                    for (int i = 0; i < (redis3.ListLength(cur)); i++)
-                    {
-                        a[i] = (string.Concat(redis3.ListRange(cur, i)));
-                    }
-                    test.Add(a);
-                });
+                //    //這邊只是我想看存進去的東西
+                //    var a = new string[redis3.ListLength(cur)];
+                //    for (int i = 0; i < (redis3.ListLength(cur)); i++)
+                //    {
+                //        a[i] = (string.Concat(redis3.ListRange(cur, i)));
+                //    }
+                //    test.Add(a);
+                //});
                 
 
 

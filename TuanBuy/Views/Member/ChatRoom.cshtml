@@ -1,4 +1,4 @@
-﻿@{ 
+﻿@{
     Layout = null;
 }
 <!DOCTYPE html>
@@ -100,94 +100,125 @@
     </div>
     <!-- Offcanvas Menu End -->
     <!-- Header Section Begin -->
-    <header class="header" id="layout">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-2 texthead1">
-                    <a href=@Url.Action("Index","Home")><img src="/img/Log.png" alt=""></a>
-                </div>
-                <div class="col-lg-7 texthead2">
-                    <p class="display headsize1">|</p>
-                    <a class="display headsize" href="#" v-on:click="checkUser">開團</a>
+    <header class="header" >
+        <div class="container" id="layouttt">
+            <div class="row layout-padding head-display">
+                <a class="layout-img-logo" href=@Url.Action("Index","Home")><img src="~/img/Tuanbuylogo.png" alt=""></a>
+                <p class="headsize-p1">|</p>
+                <div class="head-p-width">
+                    <a class="headsize" href="#" v-on:click="checkUser">開團</a>
                 </div>
                 @{
                     System.Diagnostics.Debug.Assert(User.Identity != null, "User.Identity != null");
                     if (User.Identity.IsAuthenticated)
                     {
-                        <div class="col-lg-3 texthead3">
-                            <a class="display" href="#" id="bell">
-                                <div class="bell-icon" tabindex="0" id="notifyBell">
-                                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-                                         y="0px" width="60px" height="40px" viewBox="0 0 50 30" enable-background="new 0 0 50 30"
-                                         xml:space="preserve">
-                                    <g class="bell-icon__group">
-                                    <path class="bell-icon__ball" id="ball" fill-rule="evenodd" stroke-width="1.5" clip-rule="evenodd"
-                                          fill="none" stroke="#currentColor" stroke-miterlimit="10"
-                                          d="M28.7,25 c0,1.9-1.7,3.5-3.7,3.5s-3.7-1.6-3.7-3.5s1.7-3.5,3.7-3.5S28.7,23,28.7,25z" />
-                                    <path class="bell-icon__shell" id="shell" fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF"
-                                          stroke="#currentColor" stroke-width="2" stroke-miterlimit="10"
-                                          d="M35.9,21.8c-1.2-0.7-4.1-3-3.4-8.7c0.1-1,0.1-2.1,0-3.1h0c-0.3-4.1-3.9-7.2-8.1-6.9c-3.7,0.3-6.6,3.2-6.9,6.9h0 c-0.1,1-0.1,2.1,0,3.1c0.6,5.7-2.2,8-3.4,8.7c-0.4,0.2-0.6,0.6-0.6,1v1.8c0,0.2,0.2,0.4,0.4,0.4h22.2c0.2,0,0.4-0.2,0.4-0.4v-1.8 C36.5,22.4,36.3,22,35.9,21.8L35.9,21.8z" />
-                                        </g>
-                                    </svg>
-                                    <div class="notification-amount">
-                                        <span>5</span>
-                                    </div>
+
+                        <a class="bell-div" href="#" id="bell" v-on:click="showNotify">
+                            <div class="bell-icon" tabindex="0" id="notifyBell">
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+                                     y="0px" width="60px" height="40px" viewBox="0 0 50 30" enable-background="new 0 0 50 30"
+                                     xml:space="preserve">
+                                <g class="bell-icon__group" id="group"><!--鈴鐺擺動-->
+                                                        <!--鈴鐺搖晃-->
+                                <path class="bell-icon__ball" id="ball" fill-rule="evenodd" stroke-width="1.5" clip-rule="evenodd"
+                                      fill="none" stroke="#currentColor" stroke-miterlimit="10"
+                                      d="M28.7,25 c0,1.9-1.7,3.5-3.7,3.5s-3.7-1.6-3.7-3.5s1.7-3.5,3.7-3.5S28.7,23,28.7,25z" />
+                                <path class="bell-icon__shell" id="shell" fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF"
+                                      stroke="#currentColor" stroke-width="2" stroke-miterlimit="10"
+                                      d="M35.9,21.8c-1.2-0.7-4.1-3-3.4-8.7c0.1-1,0.1-2.1,0-3.1h0c-0.3-4.1-3.9-7.2-8.1-6.9c-3.7,0.3-6.6,3.2-6.9,6.9h0 c-0.1,1-0.1,2.1,0,3.1c0.6,5.7-2.2,8-3.4,8.7c-0.4,0.2-0.6,0.6-0.6,1v1.8c0,0.2,0.2,0.4,0.4,0.4h22.2c0.2,0,0.4-0.2,0.4-0.4v-1.8 C36.5,22.4,36.3,22,35.9,21.8L35.9,21.8z" />
+                                                    </g>
+                                                </svg>
+                                <div class="notification-amount bellNotificationamout" id="notificationHello">
+                                    <span>{{notifyCount}}</span>
                                 </div>
-                            </a>
-                            <!-- The example -->
-                            <div id="demo-notification" class="notifidiv">
-                                <div id="notification">
-                                    <div class="toolbar">
-                                        <div class="delete">
-                                            <i class="fa fa-trash"></i>
-                                        </div>
+                            </div>
+                        </a>
+                        <!-- The example -->
+                        <div id="demo-notification" class="notifidiv">
+                            <div id="notification">
+                                <div class="toolbar">
+                                    <div class="delete">
+                                    </div>
+                                    <a href=@Url.Action("MyNotify","MemberCenter")>
                                         <div class="app-icon load-more">
                                             <i class="fa fa-bell"></i>
                                         </div>
-                                    </div>
-                                    <div class="notification-container list">
-                                        <div class="item note note-gray fadeIn animated">
-                                            <div class="item-image note-icon">
-                                                <i class="fa fa-coffee"></i>
-                                            </div>
-                                            <div class="item-body note-text">
-                                                {{message}}
-                                            </div>
-                                            <a href="#" class="note-close">
-                                                <i class="fa fa-close"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    @*<div class="read-more load-more">
-                                            <i class="fa fa-bell"></i>
-                                            Read More
-                                        </div>*@
+                                    </a>
                                 </div>
+                                <div class="notification-container list">
+                                    <div class="item note note-gray fadeIn animated" v-for="item,index in message">
+                                        <div class="item-image note-icon">
+                                            <i class="fa fa-circle" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="item-body note-text">
+                                            {{item.content}}
+                                        </div>
+                                        <a href="#" class="note-close" v-on:click="closeNotify(index)" v-if="message.length>0">
+                                            <i class="fa fa-close"></i>
+                                        </a>
+                                    </div>
+                                    <div class="item note note-gray fadeIn animated" v-if="message.length==0">
+                                        <div class="item-image note-icon">
+                                            <i class="fa fa-times" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="item-body note-text">
+                                            目前沒有任何通知
+                                        </div>
+
+                                    </div>
+
+                                    <div class="item note note-gray fadeIn animated" v-if="message.length>0">
+                                        <div class="item-image note-icon">
+                                            <i class="fa fa-envelope-open" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="item-body note-text section">
+                                            查看所有通知
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                @*<div class="read-more load-more">
+                                    <i class="fa fa-bell"></i>
+                                    Read More
+                                    </div>*@
                             </div>
-                            <!-- End example -->
-                            <div class="dropdown display  dropnamefix">
-                                <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
-                                    <img v-bind:src="picPath.picPath" alt="Avatar" width="50" height="50" class="Largeheadsticker">
-                                    <p class="headnamesize display">{{user}}</p>
-                                </button>
-                                <div class="dropdown-menu dropmenufix" aria-labelledby="dropdownMenuButton">
-                                    <div><a href=@Url.Action("Index", "MemberCenter")><i class="fa fa-user-o dorpiconcentermg"></i>會員中心</a></div>
-                                    @if (User.IsInRole("SystemAdmin"))
-                                    {
-                                        <div><a href=@Url.Action("Index", "TestBackMange")><i class="fa fa-user-o dorpiconcentermg"></i>後臺管理</a></div>
-                                    }
-                                    <div><a href=@Url.Action("ChatRoom", "Member")><i class="fa fa-comment-o dorpiconmessagemg" aria-hidden="true"></i>聊天室</a></div>
-                                    <div><a href=@Url.Action("ReadyProduct", "Product")><i class="fa fa-bookmark-o dorpiconaddmg" aria-hidden="true"></i>收藏</a></div>
-                                    <div><a href="#" v-on:click="logout"><i class="fa fa-sign-out dorpiconlogoutmg" aria-hidden="true"></i>登出</a></div>
+                        </div>
+                        <!-- End example -->
+                        <div class="dropdown display  dropnamefix">
+                            <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+                                <img v-bind:src="picPath.picPath" alt="Avatar" width="50" height="50" class="Largeheadsticker">
+                                <p class="headnamesize display">{{user}}</p>
+                            </button>
+                            <div class="dropdown-menu dropmenufix" aria-labelledby="dropdownMenuButton">
+                                <div>
+                                    <a href=@Url.Action("Index", "MemberCenter")><i class="fa fa-user-o dorpiconcentermg"></i>會員中心</a>
+                                </div>
+                                @if (User.IsInRole("SystemAdmin"))
+                                {
+                                    <div>
+                                        <a href=@Url.Action("Index", "TestBackMange")><i class="fa fa-user-o dorpiconcentermg"></i>後臺管理</a>
+                                    </div>
+                                }
+                                <div>
+                                    <a href=@Url.Action("ChatRoom", "Member")><i class="fa fa-comment-o dorpiconmessagemg" aria-hidden="true"></i>聊天室</a>
+                                </div>
+                                <div>
+                                    <a href=@Url.Action("ReadyProduct", "Product")><i class="fa fa-bookmark-o dorpiconaddmg" aria-hidden="true"></i>收藏</a>
+                                </div>
+                                <div>
+                                    <a href="#" v-on:click="logout"><i class="fa fa-sign-out dorpiconlogoutmg" aria-hidden="true"></i>登出</a>
                                 </div>
                             </div>
                         </div>
                     }
                     else
                     {
-                        <div class="col-lg-3 texthead4">
-                            <a class="display headsize3" href=@Url.Action("Register","Home")>註冊</a>
-                            <a class="display headsize" href=@Url.Action("Login","Home")>登入</a>
+                        <div class="head-p-width2">
+                            <a class="headsize" href=@Url.Action("Register","Home")>註冊</a>
+                        </div>
+                        <div class="head-p-width3">
+                            <a class="headsize" href=@Url.Action("Login","Home")>登入</a>
                         </div>
                     }
                 }
@@ -200,7 +231,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     @*通知套件*@
     @*<link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.2/dist/flowbite.min.css" />
-    <script src="https://unpkg.com/flowbite@1.4.2/dist/flowbite.js"></script>*@
+        <script src="https://unpkg.com/flowbite@1.4.2/dist/flowbite.js"></script>*@
 
     <div class="container" id="app" style="margin-top:40px">
         <div class="row clearfix">
@@ -209,7 +240,7 @@
                     <div id="plist" class="people-list">
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-search" ></i></span>
+                                <span class="input-group-text"><i class="fa fa-search"></i></span>
                             </div>
                             <input type="text" class="form-control" placeholder="Search..." v-model="userSearch">
                         </div>
@@ -269,7 +300,8 @@
                                 <li class="clearfix" v-for="p in messages" v-if="p.myMessages!==null || p.myMessageImage!==null">
                                     <div class="message-data text-right">
                                         <span class="message-data text-right">{{p.mynickName}}</span>
-                                        <img :src="p.PicPath" alt="avatar"><br />
+                                        <img :src="p.PicPath" alt="avatar">
+                                        <br />
                                         <span class="message-data-time">{{p.createDate}}</span>
                                     </div>
                                     <div class="message other-message float-right">
@@ -280,7 +312,8 @@
                                 <li class="clearfix" v-else>
                                     <div class="message-data text-left">
                                         <img :src="p.PicPath" alt="avatar">
-                                        <span class="message-data text-left">{{p.nickName}}</span><br />
+                                        <span class="message-data text-left">{{p.nickName}}</span>
+                                        <br />
                                         <span class="message-data-time">{{p.createDate}}</span>
                                     </div>
                                     <div class="message my-message">
@@ -289,6 +322,7 @@
                                     </div>
                                 </li>
                             </ul>
+                            
                         </div>
                         <div class="chat-message clearfix">
                             <div class="input-group mb-0">
@@ -296,7 +330,7 @@
                                     <span class="input-group-text"><i class="fa fa-send"></i></span>
                                 </div>
                                 <temlate v-if="preview!==null">
-                                    <img v-bind:src="preview" width="100" height="100" />
+                                    <img v-bind:src="preview" width="100" height="100" / hidden="hidden">
                                 </temlate>
                                 <input type="text" id="msg" v-on:keyup.enter="sendMessage" class="form-control" placeholder="Enter text here..." />
                             </div>
@@ -311,41 +345,44 @@
             </div>
 
             @*<div id="toast-notification" class="absolute bottom-5 right-5 max-w-xs p-4 text-gray-900 bg-white rounded-lg shadow dark:bg-gray-800 dark:text-gray-300" role="alert">
-                <div class="flex items-center mb-3">
-                    <span class="mb-1 text-sm font-semibold text-gray-900 dark:text-white">新訊息!</span>
-                    <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-notification" aria-label="Close">
-                        <span class="sr-only">Close</span>
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                    </button>
-                </div>
-                <div class="flex items-center">
-                    <div class="relative inline-block shrink-0">
-                        <img class="w-12 h-12 rounded-full" src="/MemberPicture/6378609833956106726cea7cb52cd19c5de6508aaada85628a.jpg" alt="Jese Leos image" />
-                        <span class="absolute bottom-0 right-0 inline-flex items-center justify-center w-6 h-6 bg-blue-600 rounded-full">
-                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 13V5a2 2 0 00-2-2H4a2 2 0 00-2 2v8a2 2 0 002 2h3l3 3 3-3h3a2 2 0 002-2zM5 7a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1zm1 3a1 1 0 100 2h3a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
-                        </span>
+                    <div class="flex items-center mb-3">
+                        <span class="mb-1 text-sm font-semibold text-gray-900 dark:text-white">新訊息!</span>
+                        <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-notification" aria-label="Close">
+                            <span class="sr-only">Close</span>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        </button>
                     </div>
-                    <div class="ml-3 text-sm font-normal">
-                        <h4 class="text-sm font-semibold text-gray-900 dark:text-white">黃志輝</h4>
-                        <div class="text-sm font-normal">黃志輝回覆訊息了哦!快去看看吧~</div>
-                        <span class="text-xs font-medium text-blue-600 dark:text-blue-500">五秒前</span>
+                    <div class="flex items-center">
+                        <div class="relative inline-block shrink-0">
+                            <img class="w-12 h-12 rounded-full" src="/MemberPicture/6378609833956106726cea7cb52cd19c5de6508aaada85628a.jpg" alt="Jese Leos image" />
+                            <span class="absolute bottom-0 right-0 inline-flex items-center justify-center w-6 h-6 bg-blue-600 rounded-full">
+                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 13V5a2 2 0 00-2-2H4a2 2 0 00-2 2v8a2 2 0 002 2h3l3 3 3-3h3a2 2 0 002-2zM5 7a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1zm1 3a1 1 0 100 2h3a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+                            </span>
+                        </div>
+                        <div class="ml-3 text-sm font-normal">
+                            <h4 class="text-sm font-semibold text-gray-900 dark:text-white">黃志輝</h4>
+                            <div class="text-sm font-normal">黃志輝回覆訊息了哦!快去看看吧~</div>
+                            <span class="text-xs font-medium text-blue-600 dark:text-blue-500">五秒前</span>
+                        </div>
                     </div>
-                </div>
-            </div>*@
+                </div>*@
         </div>
     </div>
     <!-- Footer Section Begin -->
     <footer class="ftborder">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-3 textft1">
-                    <a href="#"><img src="/img/Log.png" alt="logo"></a>
+            <div class="row layout-padding ft-display">
+                <a class="layout-img-logo" href="#"><img src="/img/Tuanbuylogo.png" alt="logo"></a>
+                <div class="ft-width">
+                    <a class="headsize" href="#">關於</a>
                 </div>
-                <div class="col-lg-6 textft2">
-                    <a class="display headsize3" href="#">關於</a>
-                    <a class="display headsize3" href="#">聯絡我們</a>
+                <div class="ft-width2">
+                    <a class="headsize" href="#">聯絡我們</a>
                 </div>
-                <div class="col-lg-3 footer__social textft3">
+                <div class="ft-width3">
+                    <img class="qrcode-size" src="~/img/Qrcord.png" alt="QRcode">
+                </div>
+                <div class="footer__social">
                     <a href="#"><i class="fa fa-facebook"></i></a>
                     <a href="#"><i class="fa fa-twitter"></i></a>
                     <a href="#"><i class="fa fa-instagram"></i></a>
@@ -406,8 +443,8 @@
                 }
             }
         }
-
     });
+
 </script>
 <script>
     const options = {
@@ -453,6 +490,7 @@
         myMessageImage = null;
         friendMessageImage = null;
     }
+
     var app = new Vue({
         el: '#app',
         data: {
@@ -470,12 +508,13 @@
             messageimgahe: '',
             onreload: true,
             userSearch: '',
+            notifyCount:0
         },
-        created: function () {            
+        created: function() {
             $.ajax({
                 type: "GET",
                 url: "/Member/GetOnlineMember",
-                success: function (response) {
+                success: function(response) {
                     userid = response.id;
                     userAccount = response.email;
                     userName = response.nickName;
@@ -483,42 +522,42 @@
                     app.chatMessageTitle = userName + '個人聊天室';
                     app.chatMessagePicPath = userPicPath;
                     if (userAccount != null) {
-                        connection.start().then(function () {
+                        connection.start().then(function() {
                             //先取得當前使用者連線id
                             connection.invoke('getConnectionId')
-                                .then(function (connectionId) {
+                                .then(function(connectionId) {
                                     userConnectionId = connectionId;
                                 }).catch(err => console.error(err.toString()));;
 
                             // 加入群組
-                            connection.invoke("AddUserList", userName, userid, userAccount).catch(function (err) {
+                            connection.invoke("AddUserList", userName, userid, userAccount).catch(function(err) {
                                 return console.error(err.toString());
                             });
                             /*        connection.invoke("GetUserList");*/
 
-                            connection.invoke("GetOnlineUserList", userid).catch(function (err) {
+                            connection.invoke("GetOnlineUserList", userid).catch(function(err) {
                                 return console.error(err.toString());
                             });
 
-                            connection.invoke("GetAllNotify").then(() => {
-                                console.log("取得通知成功！");
-                            });
+                            //connection.invoke("GetAllNotify").then(() => {
+                            //    console.log("取得通知成功！");
+                            //});
 
                             connection.invoke("GetUserList").then((msg) => {
                             });
                         });
                     }
                 },
-                error: function (response) {
+                error: function(response) {
                     console.log('尚未登入');
                 }
             });
         },
-        mounted: function () {
+        mounted: function() {
             $.ajax({
                 type: "POST",
                 url: "/Member/getChatRoomUser",
-                success: function (response) {
+                success: function(response) {
                     /*var res1 = document.getElementsByClassName('list-unstyled chat-list mt-2 mb-0');*/
                     for (var i = 0; i < response.length; i++) {
                         var cotactobject = new ContactPerson();
@@ -529,7 +568,7 @@
                             userobject.chatRoomId = response[i].chatRoomId;
                             userobject.chatRoomTitle = response[i].chatRoomTitle;
                             userobject.nickName = response[i].users[s].nickName;
-                            userobject.picPath = '/MemberPicture/'+response[i].users[s].picPath;
+                            userobject.picPath = '/MemberPicture/' + response[i].users[s].picPath;
                             userobject.id = response[i].users[s].userId;
                             userobject.userAccount = response[i].users[s].userAccount;
                             userobject.status = false;
@@ -538,28 +577,112 @@
                         app.cotactpersons.push(cotactobject);
 
                     }
-                    app.$nextTick(function () {
+                    app.$nextTick(function() {
                         var res1 = document.getElementById('' + response[0].chatRoomId);
                         res1.click();
                     })
+                    getChatheight();
                 },
-                error: function (response) {
+                error: function(response) {
                     alert(response);
                 }
             });
         },
         methods: {
-            sendMessage: function () {
+            sendMessage: function() {
+                //判斷使用者是否只有輸入文字 如果帶有圖片則使用上面寄發圖片及文字方法
+                var messagecontext = document.getElementById("msg").value;
+                if (messagecontext != '' && app.preview == null) {
+                    connection.invoke("SendPrivateMessage", app.nowChatRoomId, userid, messagecontext);
+                    var message = new Message();
+                    const date = new Date(Date.now());
+                    message.createDate = new Intl.DateTimeFormat('zh-TW', options).format(date)
+                    message.myMessages = messagecontext;
+                    message.PicPath = userPicPath;
+                    app.messages.push(message);
+                    document.getElementById("msg").value = '';
+                }
+                //聊天室視窗自動下滑
+                getChatheight();
+            },
+            /*取得與好友對話資訊*/
+            getUserMessage: function(event) {
+                //先將聊天室訊息清除
+                app.messages = [];
+                //將聊天室id帶回vue參數
+                app.nowChatRoomId = event.currentTarget.id;
+                //查詢目前點擊的ID帶入聊天室Title
+                let chatdata = app.cotactpersons.find(x => x.chatRoomId == event.currentTarget.id);
+                if (chatdata.chatRoomTitle == null) {
+                    app.chatMessageTitle = chatdata.users[0].nickName;
+                    app.chatMessagePicPath = chatdata.users[0].picPath;
+                } else {
+                    app.chatMessageTitle = chatdata.chatRoomTitle;
+                    //群組圖片
+                    app.chatMessagePicPath = "data:image/jpeg;base64,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";
+                }
+                console.log(chatdata);
+                $.ajax({
+                    type: "POST",
+                    url: "/Member/GetChatMessage",
+                    data: { chatRoomId: event.currentTarget.id },
+                    success: function(response) {
+                        /*時間格式化*/
+                        for (var i = 0; i < response.length; i++) {
+                            app.message = new Message();
+                            const date = new Date(response[i].createDate);
+                            app.message.createDate = new Intl.DateTimeFormat('zh-TW', options).format(date)
+                            app.message.memberId = response[i].memberId;
+
+                            //將訊息進行分類處理
+                            if (response[i].myMessage !== null || response[i].myMessageImage !== null) {
+                                app.message.friendMessage = null;
+                                app.message.myMessages = response[i].myMessage;
+                                app.message.myMessageImage = response[i].myMessageImage;
+                            } else {
+                                app.message.myMessages = null;
+                                app.message.friendMessage = response[i].friendMessage;
+                                app.message.friendMessageImage = response[i].friendMessageImage;
+                            }
+                            app.message.PicPath = '/MemberPicture/' + response[i].picPath;
+                            app.message.memberId = response[i].messageId;
+                            app.message.nickName = response[i].nickName;
+                            app.messages.push(app.message);
+                        }
+                        //聊天室視窗自動下滑
+                        getChatheight();
+                    },
+                    error: function(response) {
+                        alert(response);
+                    }
+                });
+            },
+
+            //上傳圖片方法
+            up: function(event) {
+                messageimgahe = event.target.files[0];
+                var input = event.target;
+                if (input.files) {
+                    var reader = new FileReader();
+                    reader.onload = (e) => {
+                        this.preview = e.target.result;
+                    }
+                    this.image = input.files[0];
+                    reader.readAsDataURL(input.files[0]);
+                }
+                app.sendImage();
+            },
+            //使用者寄送圖片方法
+            sendImage: function () {
                 var messagecontext = document.getElementById("msg").value;
                 //todo 使用者傳送訊息圖片
-                if (app.preview != null) {
                     //如果使用者寄發圖片則發ajax請求新增在呼叫Hub方式
                     var bodyFormData = new FormData();
                     bodyFormData.append('nowChatRoomId', app.nowChatRoomId);
                     bodyFormData.append('userid', userid);
                     bodyFormData.append('message', messagecontext);
                     bodyFormData.append('connectionId', userConnectionId)
-                    bodyFormData.append('picPath', messageimgahe);             
+                    bodyFormData.append('picPath', messageimgahe);
                     axios({
                         method: "post",
                         url: "/Member/CreateChatMessage",
@@ -578,88 +701,70 @@
                         document.getElementById("msg").value = '';
                         //觸發HUB接收事件
                         connection.invoke("SendPrivateImageMessage", app.nowChatRoomId, userid, userName, userPicPath, messagecontext, userConnectionId, resp.data);
+                        //聊天室視窗自動下滑
+                        getChatheight();
                     })
-                }
-                //判斷使用者是否只有輸入文字 如果帶有圖片則使用上面寄發圖片及文字方法
-                if (messagecontext != '' && app.preview==null) {
-                    connection.invoke("SendPrivateMessage", app.nowChatRoomId, userid, messagecontext);
-                    var message = new Message();
-                    const date = new Date(Date.now());
-                    message.createDate = new Intl.DateTimeFormat('zh-TW', options).format(date)
-                    message.myMessages = messagecontext;
-                    message.PicPath = userPicPath;
-                    app.messages.push(message);
-                    document.getElementById("msg").value = '';
-                }
-            },
-            /*取得與好友對話資訊*/
-            getUserMessage: function (event) {
-                //先將聊天室訊息清除
-                app.messages = [];
-                //將聊天室id帶回vue參數
-                app.nowChatRoomId = event.currentTarget.id;
-                //查詢目前點擊的ID帶入聊天室Title
-                let chatdata = app.cotactpersons.find(x => x.chatRoomId == event.currentTarget.id);
-                if (chatdata.chatRoomTitle == null) {
-                    app.chatMessageTitle = chatdata.users[0].nickName;  
-                    app.chatMessagePicPath = chatdata.users[0].picPath;
-                }
-                else {
-                    app.chatMessageTitle = chatdata.chatRoomTitle;
-                    //群組圖片
-                    app.chatMessagePicPath = "data:image/jpeg;base64,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";
-                }
-                console.log(chatdata);
-                $.ajax({
-                    type: "POST",
-                    url: "/Member/GetChatMessage",
-                    data: { chatRoomId: event.currentTarget.id },
-                    success: function (response) {
-                        /*時間格式化*/
-                        for (var i = 0; i < response.length; i++) {
-                            app.message = new Message();
-                            const date = new Date(response[i].createDate);
-                            app.message.createDate = new Intl.DateTimeFormat('zh-TW', options).format(date)
-                            app.message.memberId = response[i].memberId;
-                            
-                            //將訊息進行分類處理
-                            if (response[i].myMessage !== null || response[i].myMessageImage !==null) {
-                                app.message.friendMessage = null;
-                                app.message.myMessages = response[i].myMessage;
-                                app.message.myMessageImage = response[i].myMessageImage;
-                            }
-                            else {
-                                app.message.myMessages = null;
-                                app.message.friendMessage = response[i].friendMessage;
-                                app.message.friendMessageImage = response[i].friendMessageImage;
-                            }
-                            app.message.PicPath = '/MemberPicture/'+response[i].picPath;
-                            app.message.memberId = response[i].messageId;
-                            app.message.nickName = response[i].nickName;
-                            app.messages.push(app.message);
-                        }
-                    },
-                    error: function (response) {
-                        alert(response);
-                    }
-                });
-            },
-
-            //上傳圖片方法
-            up: function (event) {
-                messageimgahe = event.target.files[0];
-                var input = event.target;
-                if (input.files) {
-                    var reader = new FileReader();
-                    reader.onload = (e) => {
-                        this.preview = e.target.result;
-                    }
-                    this.image = input.files[0];
-                    reader.readAsDataURL(input.files[0]);
-                }
             }
         },
-    })
+    });
+
+
+    var appp = new Vue({
+        el: '#layouttt',
+        data: {
+            user: "",
+            picPath: "",
+            notifyCount:0,
+            message:[],
+        },
+        methods: {
+            showNotify:function() {
+                this.notifyCount = 0;
+                notificationHello.classList.remove("bellNotififShow");
+            },
+            closeNotify:function(index) {
+                this.message.splice(index, 1);
+            },
+            checkUser:function() {
+                if (helloMember === "False") {
+                    Swal.fire({
+                        icon: 'error',
+                        title: '需要登入',
+                        text: '請先登入網站會員！'
+                    });
+                    return;
+                }
+                if (fullShow === "False") {
+                    Swal.fire({
+                        icon: 'error',
+                        title: '沒有權限',
+                        text: '請把會員資料填寫完整！'
+                    });
+                    return;
+                }
+                else {
+                    window.location.href = "/Product/Index";
+                }
+            },
+            logout: function() {
+                axios.delete("/api/LoginAndRegister").then(() => {
+                    window.location.href = "/Home/Index";
+                });
+            },
+        },
+        mounted: function (){
+            let self = this;
+            axios.get("/api/LoginAndRegister/")
+                .then((resp) => {
+                    self.user = resp.data; })
+                .catch((res)=>res.response.data);
+            axios.get("/api/MemberCenter/")
+                .then((resp) => { self.picPath = resp.data })
+                .catch((res)=>res.response.data);
+            axios.get("/MemberCenter/GetIndexNotify").then((resp) => { this.message = resp.data });
+        }
+
+    });
 
     //if (app.onreload) {
     //    app.onreload = false;
@@ -669,10 +774,10 @@
     //第一次進入頁面查找好友是否在線
     connection.on('GetOnlineUserList', msg => {
         if (Object.keys(msg).length === 0) {
-            console.log('目前尚未有好友在線中')
+            console.log('目前尚未有好友在線中');
         }
         else {
-/*            console.log('這個是使用者目前好友在線名單');*/
+            /*            console.log('這個是使用者目前好友在線名單');*/
             //目前好友在線名單
             //將使用者在線房間id存成物件
             var useronlineobject = [];
@@ -683,12 +788,12 @@
             }
             //將目前該名使用者好友清單與在線清單比對
             for (let i = 0; i < app.cotactpersons.length; i++) {
-               
+
                 var result = useronlineobject.find(x => x == app.cotactpersons[i].chatRoomId);
-                if (result != null && app.cotactpersons[i].chatRoomTitle==null) {
+                if (result != null && app.cotactpersons[i].chatRoomTitle == null) {
                     app.cotactpersons[i].users[0].status = true;
                 }
-            }    
+            }
         }
     })
 
@@ -700,11 +805,13 @@
         messagesobject.createDate = new Intl.DateTimeFormat('zh-TW', options).format(date)
         messagesobject.nickName = currentUser;
         messagesobject.friendMessage = message;
-        messagesobject.PicPath = '/MemberPicture/'+currentUserImg;
+        messagesobject.PicPath = '/MemberPicture/' + currentUserImg;
         messagesobject.myMessages = null;
         if (app.chatMessageTitle == currentUser) {
             app.messages.push(messagesobject);
         }
+        //聊天室視窗自動下滑
+        getChatheight();
     })
 
     /* 接收其他使用者傳來的圖片訊息*/
@@ -720,20 +827,74 @@
         if (app.chatMessageTitle == userName) {
             app.messages.push(messagesobject);
         }
+                                //聊天室視窗自動下滑
+                        getChatheight();
     })
 
 
 
     ////監聽事件查看好友是否上線
-    connection.on('SendOnlineUserList', msg => {
-        if (Object.keys(msg).length !== 0) {
-            console.log('您的好友' + msg.name + '已上線囉!' + 'id為' + msg.id);
-            /*TODO*/
-            if (!!document.getElementById('' + msg.id)) {
-                /*                app.cotactpersons.chatRoomId.find(x => x.chatRoomId == msg.id).status = true;*/
-                document.getElementById('' + msg.id).innerHTML = '<i class="fa fa-circle online"></i> 在線狀態';
+    connection.on('SendOnlineUserList',
+        msg => {
+            if (Object.keys(msg).length !== 0) {
+                console.log('您的好友' + msg.name + '已上線囉!' + 'id為' + msg.id);
+                /*TODO*/
+                if (!!document.getElementById('' + msg.id)) {
+                    /*                app.cotactpersons.chatRoomId.find(x => x.chatRoomId == msg.id).status = true;*/
+                    document.getElementById('' + msg.id).innerHTML = '<i class="fa fa-circle online"></i> 在線狀態';
+                }
             }
         }
-    })
+    )
+    //聊天室視窗自動下滑
+    function getChatheight() {
+        app.$nextTick(function () {
+            var result = document.getElementById('history')
+            result.scrollTop = result.scrollHeight;
+        })
+    }
+  
+
+
+    connection.on("ReceiveMessage", function (user, message) {
+        var msg = message;
+        var encodedMsg = user + msg;
+        let notify = {
+            content: encodedMsg
+        }
+
+        layout.message.unshift(notify);
+        layout.notifyCount += 1;
+
+        //抓取鈴鐺通知給予class
+        var ball = document.getElementById("ball");
+        var group = document.getElementById("group");
+        var notificationHello = document.getElementById("notificationHello");
+        ball.classList.add('bellball');
+        group.classList.add('bellgroup');
+        notificationHello.classList.add('bellNotififShow');
+        setTimeout(() => {
+            ball.classList.remove('bellball');
+            group.classList.remove('bellgroup');
+
+            if (layout.notifyCount == 0) {
+                notificationHello.classList.remove("bellNotififShow");
+            }
+        }, 3000);
+
+
+
+        console.log(encodedMsg);
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#bell").click(function () {
+            $("#demo-notification").toggle();
+        });
+    });
+
+
 
 </script>

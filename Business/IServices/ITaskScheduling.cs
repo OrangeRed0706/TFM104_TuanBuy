@@ -4,5 +4,6 @@
     {
         void Print();
         void DailyBirthday();
+        void PullProduct();
     }
 }

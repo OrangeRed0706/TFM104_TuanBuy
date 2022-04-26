@@ -1,5 +1,5 @@
-﻿var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
-/* 傳送通知事件*/
+﻿///*var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+*//* 傳送通知事件*/
 //connection.on("ReceiveMessage", function (user, message) {
 //    var msg = message;
 //    document.getElementById("notifyBell").click();
@@ -8,12 +8,12 @@
 //});
 // 連接事件
 
-//先抓取目前連線使用者並註冊Hub
-var userid = 0;
-var userAccount = '';
-var userName = '';
-var userPicPath = '';
-var userConnectionId = '';
+////先抓取目前連線使用者並註冊Hub
+//var userid = 0;
+//var userAccount = '';
+//var userName = '';
+//var userPicPath = '';
+//var userConnectionId = '';
 //將目前登入使用者連線Hub
 //$.ajax({
 //    type: "GET",

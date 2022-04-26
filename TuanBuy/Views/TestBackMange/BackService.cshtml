@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     Layout = "~/Views/Shared/_BackstageLayout.cshtml";
 }
 
@@ -29,7 +28,7 @@
             <div class="row">
                 <!-- Basic Form-->
                 <div class="col-lg-6">
-                    <div class="card" >
+                    <div class="card">
                         <div class="card-header couponstitle">
                             <div class="card-close">
                                 <div class="dropdown">
@@ -70,7 +69,7 @@
                 <!-- Horizontal Form-->
                 <div class="col-lg-6">
                     <div class="card">
-                        <div class="card-header linebot" >
+                        <div class="card-header linebot">
                             <div class="card-close">
                                 <div class="dropdown">
                                     <button class="dropdown-toggle text-sm" type="button" id="closeCard1" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>
@@ -81,25 +80,25 @@
                         </div>
                         <div class="card-body">
                             <p class="text-sm">發送LINE訊息給使用者</p>
-                            <form class="form-horizontal">
+                            <div>
                                 @*<div class="row gy-2 mb-4">
                                     <label class="col-sm-3 form-label" for="inputHorizontalElOne">Email</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control" id="inputHorizontalElOne" type="email" placeholder="Email Address"><small class="form-text">傳送給所有使用者</small>
+                                    <input class="form-control" id="inputHorizontalElOne" type="email" placeholder="Email Address"><small class="form-text">傳送給所有使用者</small>
                                     </div>
-                                </div>*@
+                                    </div>*@
                                 <div class="row gy-2 mb-4">
                                     <label class="col-sm-3 form-label" for="inputHorizontalElTwo">訊息輸入</label>
                                     <div class="col-sm-9">
-                                        <textarea class="form-control linetext" placeholder="輸入內容" ></textarea><small class="form-text">發送提醒通知or促銷廣告給使用者</small>
+                                        <textarea class="form-control linetext" placeholder="輸入內容" v-model="message.text"></textarea><small class="form-text">發送提醒通知or促銷廣告給使用者</small>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-9 ms-auto">
-                                        <input class="btn btn-primary" type="submit" value="發送">
+                                        <input class="btn btn-primary" type="submit" value="發送" v-on:click="pushLineMessage">
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -464,18 +463,25 @@
         vouchersDiscount = 0;
         vouchersAvlAmount = 0;
     }
+    class lineMessage {
+        text='';
+    }
     var app = new Vue({
         el: '#app',
         data: {
             user: "",
             picPath: "",
             vouchers: new Vouchers(),
+            message:{text:""},
         },
         mounted: function () {
 
         },
         methods: {
             AddVoucher: function () {
+                let a = new lineMessage();
+                a.text = "您好～"+app.vouchers.voucherDescribe+"！請輸入 「"+app.vouchers.voucherName+"」 兌換優惠卷！";
+                
                 //判斷資料是否有填寫完
                 for (let i in app.vouchers) {
                     if (app.vouchers[i] === '' || app.vouchers[i] == 0) {
@@ -495,11 +501,19 @@
                                 VouchersAvlAmount: app.vouchers.vouchersAvlAmount,
                             },
                             success: function (response) {
-                                alert('優惠卷新增成功');
-                                connection.invoke("SendMessage", "系統：", `優惠卷發放！請輸入：「${app.vouchers.voucherName}」兌換優惠卷！！！`).catch(function (err) {
+
+                                axios.post("/api/LineWebHook/Line/LinePushMessage", a ).catch(res=>res.data);
+
+                                Swal.fire(
+                                    'Good job!',
+                                    '優惠卷新增成功',
+                                    'success'
+                                ).then((result) => {
+                                });
+                                
+                                connection.invoke("SendMessage", "即時通知：", `優惠卷發放！請輸入：「${app.vouchers.voucherName}」兌換優惠卷！！！`).catch(function (err) {
                                     return console.error(err.toString());
                                 });
-                                window.location.reload();
                             },
                             error: function (response) {
                                 alert('發生例外錯誤');
@@ -509,6 +523,15 @@
                     }
                 }
             },
+            pushLineMessage:function() {
+                let self = this;
+                axios.post("/api/LineWebHook/Line/LinePushMessage", self.message).then((res) => {
+                    console.log(res);
+
+                }).catch((err) => {
+                    console.log(err);
+                });
+            }
         }
     });
 </script>
