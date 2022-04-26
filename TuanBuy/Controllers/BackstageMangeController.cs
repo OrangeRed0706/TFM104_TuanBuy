@@ -178,7 +178,7 @@ namespace TuanBuy.Controllers
                 ).GroupBy(x=>x.ord.name.Product.UserId).Select(x => new SellerRanking
                 {
                     SellerId = x.Key,
-                    PicPath = x.FirstOrDefault(y => y.ord.name.Product.User.Id == x.Key).ord.name.Product.User.PicPath,
+                    PicPath = "/MemberPicture/" + x.FirstOrDefault(y => y.ord.name.Product.User.Id == x.Key).ord.name.Product.User.PicPath,
                     SellerName = x.FirstOrDefault(y=>y.ord.name.Product.User.Id==x.Key).ord.name.Product.User.Name,
                     Price =  x.Sum(y=>y.ord.name.Count * y.ord.name.Product.Price),
                 }).OrderByDescending(x => x.Price).Take(3).ToList<SellerRanking>();
