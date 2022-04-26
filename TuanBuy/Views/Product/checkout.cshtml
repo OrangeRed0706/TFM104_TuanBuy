@@ -343,6 +343,7 @@
                     shoppingObject.productPicPath = '/ProductPicture/' + resp.data[i].productPicPath;
                     shoppingObject.productPrice = resp.data[i].productPrice;
                     app.productShoppings.push(shoppingObject);
+                    app.checkProduct.push(resp.data[i].productId);
                 }
             })
         },
