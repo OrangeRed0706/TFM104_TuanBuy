@@ -209,6 +209,7 @@ namespace TuanBuy.Controllers
                         var order = _dbContext.Order.Single(x => x.Id == convertModel.MerchantOrderNo);
                         order.StateId = 6;
                         _dbContext.SaveChanges();
+                        HttpContext.Session.Remove("ShoppingCart");
                     }
                 }
 
@@ -232,6 +233,8 @@ namespace TuanBuy.Controllers
 
         public ActionResult ReturnMemberCenter()
         {
+            //先將先前session清除
+            HttpContext.Session.Remove("ShoppingCart");
             return RedirectToAction("MyBuyProduct","MemberCenter");
         }
         /// <summary>
