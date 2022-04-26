@@ -73,6 +73,8 @@ namespace Topic.Hubs
             //找出在線中並且擁有該聊天室ID的使用者
             var userlist = _userservice.GetUserList();
             var user = _userservice.GetUserList().Find(x => (x.ChatId.Select(X => X).Contains(Guid.Parse(nowChatRoomId))) && x.Sid != Context.ConnectionId);
+            //即將寄送給誰的標題名稱
+            //var title = _userDa
             if (user != null)
             {
                 string userId = user.Sid;
@@ -80,7 +82,7 @@ namespace Topic.Hubs
                 var currentUserImg = Context.User.Claims.FirstOrDefault(x => x.Type == "PicPath").Value;
                 _userservice.CreateMessage(Guid.Parse(nowChatRoomId), userid, message);
                 //await this.Clients.Client(userId).SendAsync("PrivateMsgRecevied", message, currentUser, currentUserImg);
-                await this.Clients.GroupExcept(nowChatRoomId, Context.ConnectionId).SendAsync("PrivateMsgRecevied", message, currentUser, currentUserImg);
+                await this.Clients.GroupExcept(nowChatRoomId, Context.ConnectionId).SendAsync("PrivateMsgRecevied", message, currentUser, currentUserImg, nowChatRoomId);
             }
             else
             {
@@ -96,7 +98,7 @@ namespace Topic.Hubs
                 string userId = user.Sid;
                 //string currentUser = sendUserName;
                 //var currentUserImg = sendUserPicPath;
-                await this.Clients.GroupExcept(nowChatRoomId, userConnectionId).SendAsync("PrivateImgMsgRecevied", messagecontext, userName, userPicPath, imgMsgPicPath);
+                await this.Clients.GroupExcept(nowChatRoomId, userConnectionId).SendAsync("PrivateImgMsgRecevied", messagecontext, userName, userPicPath, imgMsgPicPath, nowChatRoomId);
             }
         }
 
