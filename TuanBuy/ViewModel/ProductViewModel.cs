@@ -80,8 +80,6 @@ namespace TuanBuy.ViewModel
         public string HotProductDescribe { get; set; }
         //熱門產品剩餘開團時間
         public string HotProductLastTime { get; set; }
-        //熱門產品圖片路徑
-        public string HotProductHref { get; set; }
 
         //熱門產品累積金額
         public dynamic HotProductPrice { get; set; }

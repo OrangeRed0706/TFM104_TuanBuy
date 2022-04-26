@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -252,13 +251,12 @@ namespace TuanBuy.Controllers
             var currentOrder = order.FirstOrDefault(x => x.Id == id);
 
             var sender = _dbContext.User.FirstOrDefault(x => x.Id == currentOrder.OrderDetails.Product.UserId);
-            var notifyMessage = "";
-
 
             if (currentOrder != null)
             {
                 currentOrder.StateId = 3;
                 //找賣家ID
+                var notifyMessage = "";
                 //通知訊息
                 notifyMessage = $"您訂購的商品{currentOrder.OrderDetails.Product.Name}已經出貨囉！";
 
@@ -277,29 +275,10 @@ namespace TuanBuy.Controllers
                 var redis3 = _redisdb.GetRedisDb(3);
                 var listKey = "Notify_" + currentOrder.User.Id;
                 redis3.SaveMessage(listKey, notifyMessage);
-
-
-
             }
 
-            var userNotify = new UserNotifyViewModel()
-            {
-                Email = currentOrder.User.Email,
-                Message = notifyMessage
-            };
-
-
-
-
-            return Ok(userNotify);
+            return Ok("訂單狀態已被改變");
         }
-
-        public class UserNotifyViewModel
-        {
-            public string Email { get; set; }
-            public string Message { get; set; }
-        }
-
 
         [HttpPost]
         [AllowAnonymous]

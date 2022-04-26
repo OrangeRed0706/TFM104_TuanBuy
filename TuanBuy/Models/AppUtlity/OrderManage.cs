@@ -88,8 +88,7 @@ namespace TuanBuy.Models.Entities
                     ProductPrice = x.OrderDetails.Product.Price,
                     ProductPath = "/productpicture/" +x.OrderDetails.Product.ProductPics.FirstOrDefault().PicPath,
                     ProductId = x.OrderDetails.Product.Id,
-                    OrderPrice = x.OrderDetails.Product.Price,
-                    OrderPriceSum = x.OrderDetails.Product.Price * x.OrderDetails.Count,
+                    OrderPrice = x.OrderDetails.Product.Price
                 }).ToList();
 
             #region 垃圾

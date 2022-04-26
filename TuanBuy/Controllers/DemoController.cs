@@ -53,48 +53,27 @@ namespace TuanBuy.Controllers
             _taskScheduling = taskScheduling;
         }
 
-        public IActionResult CheckTask()
-        {
-            var a = _dbContext.User.Where(x => x.Birth == DateTime.Today).ToList();
-            return Ok(a);
-        }
-
-
-        public void TestTask(int day, int category)
+        public void TestTask(int day)
         {
             var AAA = "";
             switch (day)
             {
                 case 1:
-                    //每天12:00
                     AAA = "0 0 * * *";
                     break;
                 case 2:
-                    //每小時
-                    AAA = "0 * * * *";
-                    break;
-                case 3:
-                    //每分鐘
                     AAA = "* * * * *";
                     break;
-                default:
-                    break;
-            }
-            switch (category)
-            {
-                case 1:
-                    _recurringJobManager.AddOrUpdate(
-                        "Run every minute", () =>
-                            _taskScheduling.DailyBirthday(), AAA);
-                    break;
-                case 2:
-                    break;
                 case 3:
+                    AAA = "0 * * * *";
                     break;
                 default:
                     break;
+
             }
-          
+            _recurringJobManager.AddOrUpdate(
+                "Run every minute",()=>
+                _taskScheduling.DailyBirthday(), AAA);
         }
 
         public IActionResult SingalR()

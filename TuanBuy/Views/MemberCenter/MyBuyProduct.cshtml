@@ -113,7 +113,7 @@
 
                             <div class="col-12 purchaseend">
                                 <div class="purchaseorder">訂單金額:</div>
-                                <div class="purchaseallmoney">${{item.orderPriceSum}}</div>
+                                <div class="purchaseallmoney">${{item.orderPrice}}</div>
                                 @*<div class="purchaseallmoney">${{productShoppingSum(index)}}</div>*@
                             </div>
                         </div>
@@ -157,7 +157,7 @@
                             </div>
                             <div class="col-12 purchaseend">
                                 <div class="purchaseorder">訂單金額:</div>
-                                <div class="purchaseallmoney">${{item.orderPriceSum}}</div>
+                                <div class="purchaseallmoney">${{item.orderPrice}}</div>
                                 @*<div class="purchaseallmoney">${{productShoppingSum(index)}}</div>*@
                             </div>
                         </div>
@@ -279,8 +279,7 @@
                 productPath: 0,
                 productPrice: 0,
                 sellerId: 0,
-                sellerName: "",
-                orderPriceSum:0,
+                sellerName: ""
             },
             user: {
                 name: "",
@@ -293,14 +292,8 @@
         },
         mounted: function () {
             let self = this;
-            axios.get("/api/MemberCenter/").then((resp) => {
-                self.user = resp.data
-                console.log(resp);
-            });
-            axios.get("/MemberCenter/GetMyOrder/").then((resp) => {
-                self.orderList = resp.data
-                console.log(resp.data);
-            });
+            axios.get("/api/MemberCenter/").then((resp) => { self.user = resp.data });
+            axios.get("/MemberCenter/GetMyOrder/").then((resp) => { self.orderList = resp.data });
         },
         computed: {
             //計算商品單價總額

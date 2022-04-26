@@ -115,11 +115,13 @@
                     },
                     success: function (response) {
                         console.log(response);
-
+                        console.log(index);
+                        if (response == "訂單狀態已被改變") {
                             self.orders[index].orderState = 3;
-                            connection.invoke("SendPrivateNotify", response.email, response.message).catch(function (err) {
-                                return console.error(err.toString());
-                            });
+
+
+
+                        }
                     },
                     error: function (response) {
                         alert(response);

@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var pieChartExample = new Chart(DOUGHNUTCHARTEXMPLE, {
         type: "doughnut",
         options: {
-            cutoutPercentage: 100,
+            cutoutPercentage: 70,
         },
         data: {
             labels: ["A", "B", "C", "D"],

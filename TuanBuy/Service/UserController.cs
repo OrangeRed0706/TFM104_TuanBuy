@@ -55,10 +55,9 @@ namespace TuanBuy.Service
                 Name = user.Name,
                 Password = user.Password
             };
-            
-            
             var vrCode = GoEncrytion.encrytion(user.Email);
 
+            string completeUrl = Request.GetDisplayUrl().ToString();
             var allUrl= new StringBuilder()
                 .Append(HttpContext.Request.Scheme)
                 .Append("://")
@@ -77,9 +76,6 @@ namespace TuanBuy.Service
             Mail.SendMail(user.Email, "TuanBuy註冊會員，啟動網址", mailbody + allUrl);
             _userService.Add(userEntity);
             _userService.SaveChanges();
-            _userService.CreateTuanButChat(_userService.GeUser(user.Email).Id);
-            _userService.SaveChanges();
-
         }
 
         // PUT api/<UserController>/5
