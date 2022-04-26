@@ -830,13 +830,15 @@
 
 
     ////監聽事件查看好友是否上線
-    connection.on('SendOnlineUserList', msg => {
-        if (Object.keys(msg).length !== 0) {
-            console.log('您的好友' + msg.name + '已上線囉!' + 'id為' + msg.id);
-            /*TODO*/
-            if (!!document.getElementById('' + msg.id)) {
-                /*                app.cotactpersons.chatRoomId.find(x => x.chatRoomId == msg.id).status = true;*/
-                document.getElementById('' + msg.id).innerHTML = '<i class="fa fa-circle online"></i> 在線狀態';
+    connection.on('SendOnlineUserList',
+        msg => {
+            if (Object.keys(msg).length !== 0) {
+                console.log('您的好友' + msg.name + '已上線囉!' + 'id為' + msg.id);
+                /*TODO*/
+                if (!!document.getElementById('' + msg.id)) {
+                    /*                app.cotactpersons.chatRoomId.find(x => x.chatRoomId == msg.id).status = true;*/
+                    document.getElementById('' + msg.id).innerHTML = '<i class="fa fa-circle online"></i> 在線狀態';
+                }
             }
         }
     })
@@ -847,6 +849,39 @@
             result.scrollTop = result.scrollHeight;
         })
     }
+  
+
+
+    connection.on("ReceiveMessage", function (user, message) {
+        var msg = message;
+        var encodedMsg = user + msg;
+        let notify = {
+            content: encodedMsg
+        }
+
+        layout.message.unshift(notify);
+        layout.notifyCount += 1;
+
+        //抓取鈴鐺通知給予class
+        var ball = document.getElementById("ball");
+        var group = document.getElementById("group");
+        var notificationHello = document.getElementById("notificationHello");
+        ball.classList.add('bellball');
+        group.classList.add('bellgroup');
+        notificationHello.classList.add('bellNotififShow');
+        setTimeout(() => {
+            ball.classList.remove('bellball');
+            group.classList.remove('bellgroup');
+
+            if (layout.notifyCount == 0) {
+                notificationHello.classList.remove("bellNotififShow");
+            }
+        }, 3000);
+
+
+
+        console.log(encodedMsg);
+    });
 </script>
 
 <script>
