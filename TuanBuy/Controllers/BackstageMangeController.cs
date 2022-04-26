@@ -159,7 +159,8 @@ namespace TuanBuy.Controllers
                    HotProductName = x.product.Name,
                    HotProductCount = x.order.Sum(y => y.Count)
                }).OrderByDescending(x => x.HotProductCount).Take(3).ToList<HotProduct>();
-            //團主銷售排行
+            //
+            //銷售排行
             var SellerRankingResult = _dbcontext.Order.ToList().GroupJoin(_dbcontext.OrderDetail,
                     ord => ord.Id,
                     orddetail => orddetail.OrderId,

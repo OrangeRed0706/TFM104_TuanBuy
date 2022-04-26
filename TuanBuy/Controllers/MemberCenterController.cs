@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Xml;
 using Business.IServices;
 using Data;
 using Data.Entities;
@@ -298,6 +299,22 @@ namespace TuanBuy.Controllers
         {
             public string Email { get; set; }
             public string Message { get; set; }
+        }
+
+        //用戶完成訂單
+        public IActionResult OrderDone([FromBody]OrderCheck order)
+        {
+
+            var target = _dbContext.Order.FirstOrDefault(x => x.Id == order.OrderId);
+            if (target == null) return BadRequest();
+            target.StateId = 4;
+            _dbContext.SaveChanges();
+            return Ok();
+        }
+
+        public class OrderCheck
+        {
+            public string OrderId { get; set; }
         }
 
 
