@@ -1,5 +1,5 @@
 ﻿///*var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
-*//* 傳送通知事件*/
+//* 傳送通知事件*/
 //connection.on("ReceiveMessage", function (user, message) {
 //    var msg = message;
 //    document.getElementById("notifyBell").click();
