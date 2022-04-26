@@ -147,7 +147,7 @@ namespace TuanBuy.Controllers
                  orderdetil => orderdetil.ord.Order.Id,
                  ord => ord.OrderDetails.OrderId,
                  (orderdetil, ord) => new { orderdetil, ord }
-                ).Where(x => x.orderdetil.ord.Order.StateId == 3).ToList().Sum(x =>
+                ).Where(x => x.orderdetil.ord.Order.StateId == 3 || x.orderdetil.ord.Order.StateId == 4).ToList().Sum(x =>
                         x.orderdetil.prd.Sum(y => y.Price * x.orderdetil.ord.Count)
                 ));
             var hotProduct = _dbcontext.Product.ToList().GroupJoin(_dbcontext.OrderDetail,
@@ -165,7 +165,7 @@ namespace TuanBuy.Controllers
                     ord => ord.Id,
                     orddetail => orddetail.OrderId,
                     (ord, orddetail) => new { Ord = ord, detail = orddetail }
-                ).Where(x => x.Ord.StateId == 3).ToList().GroupJoin(_dbcontext.Product,
+                ).Where(x => x.Ord.StateId == 3 || x.Ord.StateId == 4).ToList().GroupJoin(_dbcontext.Product,
                     ord => ord.Ord.OrderDetails.ProductId,
                     prd => prd.Id,
                     (ord, prd) => new { ord.detail, ord.Ord }
@@ -188,7 +188,7 @@ namespace TuanBuy.Controllers
                     ord => ord.Id,
                     orddetail => orddetail.OrderId,
                     (ord, orddetail) => new { Ord = ord, detail = orddetail }
-                ).Where(x => x.Ord.StateId == 3).ToList().GroupJoin(_dbcontext.Product,
+                ).Where(x => x.Ord.StateId == 3 || x.Ord.StateId == 4).ToList().GroupJoin(_dbcontext.Product,
                     ord => ord.Ord.OrderDetails.ProductId,
                     prd => prd.Id,
                     (ord, prd) => new { ord.detail, ord.Ord }
