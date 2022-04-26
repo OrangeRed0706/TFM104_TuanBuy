@@ -1,63 +1,63 @@
 ﻿<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <body class="colerwhite">
-    <div id="productCard">
-        <!-- 圖片輪播 -->
-        <div class="container mt2rem">
-            <div id="demo" class="carousel slide" data-ride="carousel">
-                <!-- Indicators -->
-                <ul class="carousel-indicators">
-                    <li data-target="#demo" data-slide-to="0" class="active"></li>
-                    <li data-target="#demo" data-slide-to="1"></li>
-                    <li data-target="#demo" data-slide-to="2"></li>
-                </ul>
+<div id="productCard">
+    <!-- 圖片輪播 -->
+    <div class="container mt2rem">
+        <div id="demo" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ul class="carousel-indicators">
+                <li data-target="#demo" data-slide-to="0" class="active"></li>
+                <li data-target="#demo" data-slide-to="1"></li>
+                <li data-target="#demo" data-slide-to="2"></li>
+            </ul>
 
 
-                <!-- The slideshow -->
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="https://picsum.photos/1000/400" alt="Los Angeles" width=100% height=auto>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://picsum.photos/1000/400" alt="Chicago" width=100% height=auto>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://picsum.photos/1000/400" alt="New York" width=100% height=auto>
-                    </div>
+            <!-- The slideshow -->
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="https://picsum.photos/1000/400" alt="Los Angeles" width=100% height=auto>
                 </div>
-
-                <!-- Left and right controls -->
-                <a class="carousel-control-prev" href="#demo" data-slide="prev">
-                    <span class="carousel-control-prev-icon"></span>
-                </a>
-                <a class="carousel-control-next" href="#demo" data-slide="next">
-                    <span class="carousel-control-next-icon"></span>
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 熱門按鈕 -->
-        <
-        <div class="container ">
-            <div class="bt pt3 tc mb3 mb0-l bb">
-                <div class="db nowrap overflow-auto pb3 pt1">
-                    <a class="f6 ph3 pv2 b link mid-gray mh1" style="cursor: pointer" v-on:click="filterClass(event)" id="全部">全部</a>
-                    <a class="f6 ph3 pv2 b link mid-gray mh1" style="cursor: pointer" v-on:click="filterClass(event)" id="精選">精選</a>
-                    <a class="f6 ph3 pv2 b link mid-gray mh1" style="cursor: pointer" v-on:click="filterClass(event)" id="乾糧">乾糧</a>
-                    <a class="f6 ph3 pv2 b link mid-gray mh1" style="cursor: pointer" v-on:click="filterClass(event)" id="票卷">票卷</a>
-                    <a class="f6 ph3 pv2 b link mid-gray mh1" style="cursor: pointer" v-on:click="filterClass(event)" id="美食">美食</a>
-                    <a class="f6 ph3 pv2 b link mid-gray mh1" style="cursor: pointer" v-on:click="filterClass(event)" id="用品">用品</a>
-                    <a class="f6 ph3 pv2 b link mid-gray mh1" style="cursor: pointer" v-on:click="filterClass(event)" id="3C">3C</a>
+                <div class="carousel-item">
+                    <img src="https://picsum.photos/1000/400" alt="Chicago" width=100% height=auto>
+                </div>
+                <div class="carousel-item">
+                    <img src="https://picsum.photos/1000/400" alt="New York" width=100% height=auto>
                 </div>
             </div>
+
+            <!-- Left and right controls -->
+            <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a class="carousel-control-next" href="#demo" data-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </a>
         </div>
+    </div>
 
 
-        <!-- 商品卡 -->
-        @*https://picsum.photos/300/150*@
-        <!-- 商品卡 -->
-        @*https://picsum.photos/300/150*@
+    <!-- 熱門按鈕 -->
+    <
+    <div class="container ">
+        <div class="bt pt3 tc mb3 mb0-l bb">
+            <div class="db nowrap overflow-auto pb3 pt1">
+                <a class="f6 ph3 pv2 b link mid-gray mh1" style="cursor: pointer" v-on:click="filterClass(event)" id="全部">全部</a>
+                <a class="f6 ph3 pv2 b link mid-gray mh1" style="cursor: pointer" v-on:click="filterClass(event)" id="精選">精選</a>
+                <a class="f6 ph3 pv2 b link mid-gray mh1" style="cursor: pointer" v-on:click="filterClass(event)" id="乾糧">乾糧</a>
+                <a class="f6 ph3 pv2 b link mid-gray mh1" style="cursor: pointer" v-on:click="filterClass(event)" id="票卷">票卷</a>
+                <a class="f6 ph3 pv2 b link mid-gray mh1" style="cursor: pointer" v-on:click="filterClass(event)" id="美食">美食</a>
+                <a class="f6 ph3 pv2 b link mid-gray mh1" style="cursor: pointer" v-on:click="filterClass(event)" id="用品">用品</a>
+                <a class="f6 ph3 pv2 b link mid-gray mh1" style="cursor: pointer" v-on:click="filterClass(event)" id="3C">3C</a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 商品卡 -->
+    @*https://picsum.photos/300/150*@
+    <!-- 商品卡 -->
+    @*https://picsum.photos/300/150*@
 
 
     <div class="container">
@@ -88,7 +88,7 @@
                 </div>
             </div>
             @*熱門商品陣列*@
-            <div class="col-md-4" v-for="items in hotProducts"  v-if="search=='精選' || items.category ==search ">
+            <div class="col-md-4" v-for="items in hotProducts" v-if="search=='精選' || items.category ==search ">
                 <div class="card ">
                     <a v-bind:href="items.href">
                         <img class="card-img-top"
@@ -114,34 +114,25 @@
                 </div>
             </div>
         </div>
-        <div>
-            <div class="row" style="justify-content: center">
-                <button v-if="moreShowBoolen" v-on:click="moreShow">查看更多</button>
+    </div>
+
+    <!-- 上一頁、下一頁 -->
+    <div class="container">
+        <div class="row">
+            <div class="center col-lg-12">
+                <div class="margin-3">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item"><a class="page-link" href="#">上一頁</a> </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">下一頁</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-        @*<div>
-            <div class="row" style="justify-content: center">
-                <button>查看更多</button>
-            </div>
-        </div>*@
-        <!-- 上一頁、下一頁 -->
-        @*<div class="container">
-            <div class="row">
-                <div class="center col-lg-12">
-                    <div class="margin-3">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item"><a class="page-link" href="#">上一頁</a> </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">下一頁</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>*@
-    </div>
+</div>
 </body>
 <script>
     var app = new Vue({
@@ -151,8 +142,6 @@
             products: [],
             search: '',
             hotProducts: [],
-            moreShowBoolen: false,
-            nowPage: 1
         },
         methods: {
             filterClass: function (event) {
