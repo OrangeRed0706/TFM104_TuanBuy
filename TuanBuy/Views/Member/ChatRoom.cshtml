@@ -819,16 +819,18 @@
 
 
     ////監聽事件查看好友是否上線
-    connection.on('SendOnlineUserList', msg => {
-        if (Object.keys(msg).length !== 0) {
-            console.log('您的好友' + msg.name + '已上線囉!' + 'id為' + msg.id);
-            /*TODO*/
-            if (!!document.getElementById('' + msg.id)) {
-                /*                app.cotactpersons.chatRoomId.find(x => x.chatRoomId == msg.id).status = true;*/
-                document.getElementById('' + msg.id).innerHTML = '<i class="fa fa-circle online"></i> 在線狀態';
+    connection.on('SendOnlineUserList',
+        msg => {
+            if (Object.keys(msg).length !== 0) {
+                console.log('您的好友' + msg.name + '已上線囉!' + 'id為' + msg.id);
+                /*TODO*/
+                if (!!document.getElementById('' + msg.id)) {
+                    /*                app.cotactpersons.chatRoomId.find(x => x.chatRoomId == msg.id).status = true;*/
+                    document.getElementById('' + msg.id).innerHTML = '<i class="fa fa-circle online"></i> 在線狀態';
+                }
             }
-        }
-    })
+        });
+
 
     connection.on("ReceiveMessage", function (user, message) {
         var msg = message;
@@ -856,6 +858,10 @@
             }
         }, 3000);
 
+
+
+        console.log(encodedMsg);
+    });
 </script>
 
 <script>
