@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Business.IServices;
 using Business.Services.Extensions;
 using Data;
 using Data.Entities;
@@ -27,10 +28,13 @@ namespace TuanBuy.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly TuanBuyContext _dbContext;
-        public HomeController(ILogger<HomeController> logger, TuanBuyContext dbContext)
+        private readonly IUserService _userService;
+
+        public HomeController(ILogger<HomeController> logger, TuanBuyContext dbContext, IUserService userService)
         {
             _logger = logger;
             _dbContext = dbContext;
+            _userService = userService;
         }
         //首頁
         public IActionResult Index()
@@ -143,6 +147,10 @@ namespace TuanBuy.Controllers
                 };
                 var userMange = new UserMange(_dbContext);
                 userMange.CreateOAuthUser(user);
+
+
+                _userService.CreateTuanButChat(user.Id);
+                _userService.SaveChanges();
 
                 var claims = new List<Claim>
                 {
