@@ -266,7 +266,7 @@
                                     <div class="name">{{user.nickName}}</div>
                                     @*vue判斷式判斷使用者目前是否在線中*@
                                     <div class="status" :id="user.id" v-if="user.status">
-                                        <i class="fa fa-circle online"></i>online
+                                        <i class="fa fa-circle online"></i>在線狀態
                                     </div>
                                     <div class="status" :id="user.id" v-else>
                                         <i class="fa fa-circle offline"></i>離線狀態
