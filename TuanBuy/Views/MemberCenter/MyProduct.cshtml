@@ -9,7 +9,7 @@
         <div class="col-lg-10 form-row">
             @*商品卡從這邊動態*@
             <div class="col-lg-4 display" v-for="item in products">
-                <div class="card"  >
+                <div class="card">
                     <img class="card-img-top" v-bind:src="item.picPath" alt="Card image" style="width: 100%">
                     <div class="card-body">
                         @*商品創立時間*@
@@ -63,7 +63,7 @@
                                             取消
                                         </button>
                                         <!--觸發事件修改-->
-                                        <button type="button" class="btn btn-ddd"  v-on:click="readyUpdate">修改</button>
+                                        <button type="button" class="btn btn-ddd" v-on:click="readyUpdate">修改</button>
                                     </div>
                                 </div>
                             </div>
@@ -88,7 +88,7 @@
                                         確定刪除?
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
+                                        <button type="button" class="btn btn-secondary "style="margin-top:15px;"
                                                 data-dismiss="modal">
                                             取消
                                         </button>
@@ -102,6 +102,19 @@
                 </div>
             </div>
             @*商品卡從這結束*@
+
+            @*<div class="container">
+                <ul class="pagination">
+                    <li class="page-item" v-bind:class="{'disabled': (currPage === 1)}"
+                        @@click.prevent="setPage(currPage-1)"><a class="page-link" href="#">Previous</a></li>
+                    <li v-for="n in totalPage"
+                        v-bind:class="{'active': (currPage === (n))}"
+                        @@click.prevent="setPage(n)"><a class="page-link" href="#">{{n}}</a></li>
+                    <li class="page-item" v-bind:class="{'disabled': (currPage === totalPage)}"
+                        @@click.prevent="setPage(currPage+1)"><a class="page-link" href="#">Next</a></li>
+                </ul>
+            </div>*@
+
         </div>
     </div>
 </div>
@@ -131,6 +144,8 @@
                 uploadPicPath: ""
             },
             target: null,
+            //currPage: 1,
+            //countOfPage: 6,
             updateProducthref:'/Product/UpdateProduct/',
         },
         methods: {
@@ -170,7 +185,13 @@
                     })
                     .catch((res) => console.log(res));
                 window.location.reload();
-            }
+            },
+            //setPage: function (idx) {
+            //    if (idx <= 0 || idx > this.totalPage) {       //限制頁數
+            //        return;
+            //    }
+            //    this.currPage = idx;
+            //},
         },
         computed: {
             productDate: {
@@ -182,7 +203,14 @@
                     return this.product.endTime = moment(value).format('YYYY-MM-DD');
                 }
                 
-            }
+            },
+            //pageStart: function () {
+            //    return (this.currPage - 1) * this.countOfPage;                 //當前頁面的起始筆數
+            //},
+            //totalPage: function () {
+            //    return Math.ceil(this.users.length / this.countOfPage);  //陣列長度除以每頁設定的筆數
+            //},
+
         },
         //Vue 實體與掛載完成時執行
         mounted: function () {
