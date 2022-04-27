@@ -32,10 +32,15 @@
     -moz-transition: .5s;
     -o-transition: .5s;
     -webkit-transition: .5s;
-    transition: .5s
+    transition: .5s;
+    height: 64vh;
+    overflow: auto;
+ 
 }
 
-
+::-webkit-scrollbar {
+    display: none;
+}
 .chat-history {
     height:41vh;
     overflow-x: auto
