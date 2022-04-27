@@ -330,7 +330,7 @@
                                     <span class="input-group-text"><i class="fa fa-send"></i></span>
                                 </div>
                                 <temlate v-if="preview!==null">
-                                    <img v-bind:src="preview" width="100" height="100" / hidden="hidden">
+                                    <img v-bind:src="preview" width="100" height="100"  hidden="hidden">
                                 </temlate>
                                 <input type="text" id="msg" v-on:keyup.enter="sendMessage" class="form-control" placeholder="Enter text here..." />
                             </div>
@@ -677,33 +677,40 @@
                 var messagecontext = document.getElementById("msg").value;
                 //todo 使用者傳送訊息圖片
                     //如果使用者寄發圖片則發ajax請求新增在呼叫Hub方式
-                    var bodyFormData = new FormData();
-                    bodyFormData.append('nowChatRoomId', app.nowChatRoomId);
-                    bodyFormData.append('userid', userid);
-                    bodyFormData.append('message', messagecontext);
-                    bodyFormData.append('connectionId', userConnectionId)
-                    bodyFormData.append('picPath', messageimgahe);
-                    axios({
-                        method: "post",
-                        url: "/Member/CreateChatMessage",
-                        data: bodyFormData,
-                        headers: { "Content-Type": "multipart/form-data" }
-                    }).then((resp) => {
+                var bodyFormData = new FormData();
+                bodyFormData.append('nowChatRoomId', app.nowChatRoomId);
+                bodyFormData.append('userid', userid);
+                bodyFormData.append('message', messagecontext);
+                bodyFormData.append('connectionId', userConnectionId)
+                bodyFormData.append('picPath', messageimgahe);
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Member/CreateChatMessage",
+                    data: bodyFormData,
+                    processData: false,
+                    contentType: false,
+                    success: function (resp) {
+                        console.log(resp);
                         app.preview = null;
                         var message = new Message();
                         const date = new Date(Date.now());
                         message.createDate = new Intl.DateTimeFormat('zh-TW', options).format(date)
                         message.PicPath = userPicPath;
                         message.myMessages = messagecontext;
-                        message.myMessageImage = resp.data;
+                        message.myMessageImage = resp;
                         app.messages.push(message);
                         //清除輸入框
                         document.getElementById("msg").value = '';
                         //觸發HUB接收事件
-                        connection.invoke("SendPrivateImageMessage", app.nowChatRoomId, userid, userName, userPicPath, messagecontext, userConnectionId, resp.data);
+                        connection.invoke("SendPrivateImageMessage", app.nowChatRoomId, userid, userName, userPicPath, messagecontext, userConnectionId, resp);
                         //聊天室視窗自動下滑
                         getChatheight();
-                    })
+                    },
+                    error: function (response) {
+                        alert(response);
+                    }
+                });
             }
         },
     });
@@ -798,7 +805,7 @@
     })
 
     /* 接收其他使用者傳來訊息*/
-    connection.on('PrivateMsgRecevied', (message, currentUser, currentUserImg, getnowChatRoomId) => {
+    connection.on('PrivateMsgRecevied', (message, currentUser, currentUserImg, getTodaynowChatRoomId) => {
         console.log(currentUser);
         var messagesobject = new Message();
         const date = new Date(Date.now());
@@ -808,8 +815,8 @@
         messagesobject.PicPath = '/MemberPicture/' + currentUserImg;
         messagesobject.myMessages = null;
         console.log('接收訊息' + message + "標題" + currentUser)
-        if (app.nowChatRoomId == getnowChatRoomId) {
-            console.log('接收成功' + getnowChatRoomId)
+        if (app.nowChatRoomId == getTodaynowChatRoomId) {
+            console.log('接收成功' + getTodaynowChatRoomId)
             app.messages.push(messagesobject);
         }
         //聊天室視窗自動下滑
@@ -817,7 +824,7 @@
     })
 
     /* 接收其他使用者傳來的圖片訊息*/
-    connection.on('PrivateImgMsgRecevied', (messagecontext, userName, userPicPath, imgMsgPicPath, getnowChatRoomId) => {
+    connection.on('PrivateImgMsgRecevied', (messagecontext, userName, userPicPath, imgMsgPicPath, getTodaynowChatRoomId) => {
         var messagesobject = new Message();
         const date = new Date(Date.now());
         messagesobject.createDate = new Intl.DateTimeFormat('zh-TW', options).format(date)
@@ -826,7 +833,7 @@
         messagesobject.PicPath = userPicPath;
         messagesobject.friendMessageImage = imgMsgPicPath;
         messagesobject.myMessages = null;
-        if (app.nowChatRoomId == getnowChatRoomId) {
+        if (app.nowChatRoomId == getTodaynowChatRoomId) {
             app.messages.push(messagesobject);
         }
                                 //聊天室視窗自動下滑
