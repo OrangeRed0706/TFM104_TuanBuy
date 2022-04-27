@@ -67,7 +67,7 @@ namespace Business.Services
         /// 新增團buy聊天室
         /// </summary>
         /// <param name="MemberId"></param>
-        public void CreateWTuanButChat(int MemberId)
+        public void CreateTuanButChat(int MemberId)
         {
             var result = _dbContext.ChatRooms.FirstOrDefault(x => x.ChatRoomTitle == "團Buy廣場");
             if (result == null)
@@ -88,7 +88,6 @@ namespace Business.Services
                 _dbContext.Member_Chats.Add(chatRoomMembers);
                 _dbContext.SaveChanges();
             }
-
         }
     }
 }
