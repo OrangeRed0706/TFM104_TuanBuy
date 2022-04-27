@@ -109,20 +109,38 @@
                 bodyFormData.append("PicPath", u.uploadPicPath);
                 bodyFormData.append("NickName", u.nickName);
                 console.log(bodyFormData);
-                axios({
-                    method: "post",
+
+                $.ajax({
+                    type: "POST",
                     url: "/api/MemberCenter",
                     data: bodyFormData,
-                    headers: { "Content-Type": "multipart/form-data" }
-                })
-                    .then((resp) => {
+                    processData: false,
+                    contentType: false,
+                    success: function(resp) {
                         Swal.fire(
                             '更新成功！',
                             '已升級成正式會員',
                             'success'
-                        ).then((result) => {window.location.reload();});
-                    })
-                    .catch((resp) => alert(resp));
+                        ).then((result) => { window.location.reload() });
+                    },
+                    error: function(response) {
+                        alert(response);
+                    }
+                });
+                //axios({
+                //    method: "post",
+                //    url: "/api/MemberCenter",
+                //    data: bodyFormData,
+                //    headers: { "Content-Type": "multipart/form-data" }
+                //})
+                //    .then((resp) => {
+                //        Swal.fire(
+                //            '更新成功！',
+                //            '已升級成正式會員',
+                //            'success'
+                //        ).then((result) => {window.location.reload();});
+                //    })
+                //    .catch((resp) => console.log(resp));
             },
             up: function (event) {
                 console.log(event);
