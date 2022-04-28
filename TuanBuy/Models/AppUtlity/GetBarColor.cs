@@ -14,34 +14,34 @@ namespace TuanBuy.Models.AppUtlity
             switch (result)
             {
                 case 1:
-                    color = "#96FED1";
+                    color = "#54fa2e";
                     break;
                 case 2:
-                    color = "#1AFD9C";
+                    color = "#54fa2e";
                     break;
                 case 3:
-                    color = "#02DF82";
+                    color = "#54fa2e";
                     break;
                 case 4:
-                    color = "#46A3FF";
+                    color = "#e8ec3c";
                     break;
                 case 5:
-                    color = "#0080FF";
+                    color = "#e8ec3c";
                     break;
                 case 6:
-                    color = "#7D7DFF";
+                    color = "#e8ec3c";
                     break;
                 case 7:
-                    color = "#FF5151";
+                    color = "#ffae0f";
                     break;
                 case 8:
-                    color = "#FF0000";
+                    color = "#ffae0f";
                     break;
                 case 9:
-                    color = "#FF7575";
+                    color = "#ffae0f";
                     break;
                 case 10:
-                    color = "#FF5151";
+                    color = "#ff0a1b";
                     break;
                 default:
                     color = "#F5FFE8";

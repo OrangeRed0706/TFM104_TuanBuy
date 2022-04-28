@@ -85,7 +85,6 @@ namespace TuanBuy.Controllers
 
         public async Task<IActionResult> ResponseAsync()
         {
-            Console.WriteLine("進來ㄌ");
             
             var res = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
