@@ -214,7 +214,7 @@ namespace TuanBuy.Models
                         ChatRoom = x.ChatRoom,
                         MemberId = x.MemberId
                     }).ToList();
-                    //IEnumerable<ChatRoomMember> result = seller.Intersect<ChatRoomMember>(member).Select(x => x);
+                    IEnumerable<ChatRoomMember> result = member.Intersect<ChatRoomMember>(seller).Where(x=>x.ChatRoom.ChatRoomTitle==null);
                     //var result = (from sellers in _dbContext.Member_Chats
                     //              join chat in _dbContext.ChatRooms on sellers.ChatRoomId equals chat.ChatRoomId
                     //              where(member.Select(x=>x.ChatRoomId).Contains(sellers.ChatRoomId))
@@ -227,6 +227,8 @@ namespace TuanBuy.Models
                     //             && member.Select(x=>x.MemberId).Contains(sellers.MemberId))
                     //             select new { sellers,chat}).ToList().GroupBy(x=>x.sellers.ChatRoomId);
                     //如果沒有相同聊天室才加
+                    if (result.Count() == 0)
+                    {
                               ChatRoom chatRoom = new ChatRoom() { };
                               List<ChatRoomMember> chatRoomMembers = new List<ChatRoomMember>()
                               {
@@ -236,7 +238,7 @@ namespace TuanBuy.Models
                              chatRoom.ChatRoomMembers = chatRoomMembers;
                              _dbContext.ChatRooms.Add(chatRoom);
                              _dbContext.SaveChanges();
-                         
+                    }
 
 
 
